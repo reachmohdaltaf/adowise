@@ -5,7 +5,6 @@ import { authCheck } from "./redux/features/authThunk"; // Assuming authCheck is
 
 import SeekerLayout from "./seeker/components/layout/SeekerLayout";
 import ExpertLayout from "./expert/components/Layout/ExpertLayout";
-import Layout from "./components/layout/layout";
 
 // Import your pages...
 import HomePage from "./pages/HomePage";
@@ -61,6 +60,7 @@ import UpdateServicePage from "./expert/pages/UpdateServicePage";
 import ExpertSchedulePage from "./expert/pages/ExpertSchedulePage";
 import ExpertCalendarPage from "./expert/pages/ExpertCalendarPage";
 import ExpertAvailabilityPage from "./expert/pages/ExpertAvailabilityPage";
+import Layout from "./components/layout/Layout";
 
 const App = () => {
   const dispatch = useDispatch();
