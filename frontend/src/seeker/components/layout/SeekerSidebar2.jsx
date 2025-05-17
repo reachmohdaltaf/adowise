@@ -17,8 +17,12 @@ import {
 import React from 'react';
 import { BsStars } from "react-icons/bs";
 import { TbMessageStar } from "react-icons/tb";
-import { Link, useLocation } from 'react-router-dom';
+import { Link,  useLocation, useNavigate } from 'react-router-dom';
 import { RiUserStarLine } from 'react-icons/ri';
+import { useDispatch, useSelector } from 'react-redux';
+import { authCheck, logout } from '@/redux/features/authThunk';
+import { updateUserRole } from '@/redux/features/userThunk';
+import { toast } from 'react-toastify';
 
 
 const sidebarItems = [
@@ -43,7 +47,28 @@ const sidebarItems = [
 ];
 
 const SeekerSidebar2 = ({isOpen, setIsOpen}) => {
+    const user = useSelector((state) => state.auth.user);
+    const navigate = useNavigate();
+    console.log({"userID in sidebar": user._id, "role": user.role});  
+   const dispatch = useDispatch();
   const location = useLocation();
+
+    const handleLogout = () => {
+      
+      dispatch(logout());
+    };
+
+    const handleRoleChange = async () => {
+        try {
+          await dispatch(updateUserRole({ userId: user._id, role: "expert" })).unwrap();
+          await dispatch(authCheck()).unwrap();  
+          navigate("/expert/dashboard/home");
+        } catch (error) {
+          console.log("Role change failed", error);
+          toast.error("Role change failed");
+        }
+      };
+
 
   return (
     <aside className=" h-screen  w-72 overflow-y-auto bg-background  flex flex-col justify-between z-10">
@@ -74,26 +99,26 @@ const SeekerSidebar2 = ({isOpen, setIsOpen}) => {
             )
           )}
         </ul>
-         <Link to="/logout">
                   <Button
                     size="lg"
                     className="mt-3 rounded-full font-semibold py-5  w-full"
                     variant=""
+                    onClick={handleRoleChange} 
                   >
                 <RiUserStarLine className='!h-5 !w-5' />
                          Expert Dashboard
                         </Button>
-                </Link>
 
-        <Link to="/logout">
+   
           <Button
             size="lg"
             className="flex gap-4 mb-9 mt-20 rounded-r-none rounded-l-2xl justify-start w-full"
             variant="secondary"
+            onClick={handleLogout}
           >
             <LogOutIcon /> Logout
           </Button>
-        </Link>
+       
       </div>
 
       <div className="p-4 border-t"></div>
