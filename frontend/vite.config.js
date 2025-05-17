@@ -1,6 +1,7 @@
 import path from "path"
 import tailwindcss from "@tailwindcss/vite"
 import react from "@vitejs/plugin-react"
+console.log('React plugin:', react);
 import { defineConfig } from "vite"
 
 // https://vite.dev/config/
