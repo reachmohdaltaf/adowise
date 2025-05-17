@@ -48,6 +48,7 @@ const sidebarItems = [
 
 const SeekerSidebar2 = ({isOpen, setIsOpen}) => {
     const user = useSelector((state) => state.auth.user);
+      const userRoleChanging = useSelector((state) => state.user.loading);
     const navigate = useNavigate();
     console.log({"userID in sidebar": user._id, "role": user.role});  
    const dispatch = useDispatch();
@@ -99,16 +100,21 @@ const SeekerSidebar2 = ({isOpen, setIsOpen}) => {
             )
           )}
         </ul>
-                  <Button
-                    size="lg"
-                    className="mt-3 rounded-full font-semibold py-5  w-full"
-                    variant=""
-                    onClick={handleRoleChange} 
-                  >
-                <RiUserStarLine className='!h-5 !w-5' />
-                         Expert Dashboard
-                        </Button>
-
+                    <Button
+                             onClick={handleRoleChange}
+                             size="lg"
+                             className="mt-3 rounded-full font-semibold py-5 w-full flex items-center justify-center gap-2"
+                             variant=""
+                             disabled={userRoleChanging} // disable button while loading
+                           >
+                             {userRoleChanging ? (
+                               <span className="animate-spin rounded-full h-4 w-4 border-2 border-t-transparent border-black"></span>
+                             ) : (
+                               <RiUserStarLine className="!h-5 !w-5" />
+                             )}
+                             {userRoleChanging ? "Switching..." : "Expert Dashboard"}
+                           </Button>
+                   
    
           <Button
             size="lg"

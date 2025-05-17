@@ -18,10 +18,11 @@ import {
 import React from "react";
 import { BsStars } from "react-icons/bs";
 import { RiFileList3Line, RiUserStarLine } from "react-icons/ri";
-import { TbMessageStar } from "react-icons/tb";
+import { TbMessageStar, TbUserStar } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { Link,  useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { HiUsers } from "react-icons/hi2";
 
 const sidebarItems = [
   {
@@ -30,13 +31,8 @@ const sidebarItems = [
     path: "/seeker/dashboard/home",
   },
   {
-    label: "Messages",
-    icon: <Mail className="!h-5 !w-5" />,
-    path: "/seeker/dashboard/messages",
-  },
-  {
-    label: "Listing",
-    icon: <RiFileList3Line className="!h-5 !w-5" />,
+    label: "Mentors",
+    icon: <HiUsers  className="!h-5 !w-5" />,
     path: "/seeker/dashboard/listing",
   },
   {
@@ -151,19 +147,19 @@ const SeekerSidebar = () => {
           )}
         </ul>
 
-          <Button
-          onClick={handleRoleChange}
+             <Button
+            onClick={handleRoleChange}
             size="lg"
-            className="mt-3 rounded-full font-semibold py-5  w-full"
+            className="mt-3 rounded-full font-semibold py-5 w-full flex items-center justify-center gap-2"
             variant=""
-            disabled={userRoleChanging}
+            disabled={userRoleChanging} // disable button while loading
           >
-            <RiUserStarLine className="!h-5 !w-5" />
             {userRoleChanging ? (
               <span className="animate-spin rounded-full h-4 w-4 border-2 border-t-transparent border-black"></span>
             ) : (
-              "Switch to Expert"
+              <RiUserStarLine className="!h-5 !w-5" />
             )}
+            {userRoleChanging ? "Switching..." : "Expert Dashboard"}
           </Button>
   
 

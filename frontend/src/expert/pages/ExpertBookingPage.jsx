@@ -18,13 +18,13 @@ const ExpertBookingPage = () => {
     <div className='py-6'>
       <h1 className='text-2xl font-semibold mb-4 px-2'>Booking</h1>
 
-      <div className='flex justify-between gap-4 mb-6'>
+      <div className='flex items-center justify-between  mb-6'>
         <div className='gap-3 flex'>
           <Link to="upcoming">
-            <Button variant={isUpcoming ? 'default' : 'outline'}>Upcoming (10)</Button>
+            <Button className={'md:px-6 px-4'} variant={isUpcoming ? 'default' : 'outline'}>Upcoming (10)</Button>
           </Link>
           <Link to="completed">
-            <Button variant={!isUpcoming ? 'default' : 'outline'}>Completed (0)</Button>
+            <Button className={'md:px-6 px-4'} variant={!isUpcoming ? 'default' : 'outline'}>Completed (0)</Button>
           </Link>
         </div>
 

@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { deleteServiceById, fetchServiceById, updateService } from "@/redux/features/serviceThunk";
+import { SaveIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -321,7 +322,7 @@ const UpdateServicePage = () => {
         </div>
 
         {/* ✅ Update Button */}
-        <Button type="submit" className="w-44">Save Changes</Button>
+        <Button type="submit" className="w-44"><SaveIcon/> Save Changes</Button>
       </form>
 
       {/* ❌ Delete Service Button */}
