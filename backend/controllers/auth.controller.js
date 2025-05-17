@@ -1,7 +1,7 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/jwt/generateToken.js";
-// import { Calendar } from "../models/Calendar.model.js";
+import { Calendar } from "../models/Calendar.model.js";
 
 /**
  * @function signup
@@ -47,14 +47,14 @@ export const signup = async (req, res) => {
     if (!user) {
       return res.status(500).json({ error: "Internal server error" });
     }
-    // const calendar = await Calendar.create({
-    //   userId: user._id,
-    //   timezone: "Asia/Kolkata",
-    //   reschedulePolicy: "request",
-    //   minNoticeForReschedule: "24 hrs",
-    //   bookingPeriod: "1 month",
-    //   schedules: [],
-    // });
+    const calendar = await Calendar.create({
+      userId: user._id,
+      timezone: "Asia/Kolkata",
+      reschedulePolicy: "request",
+      minNoticeForReschedule: "24 hrs",
+      bookingPeriod: "1 month",
+      schedules: [],
+    });
 
     //@step generate token and save cookies
     const token = generateToken(user._id);
@@ -66,7 +66,7 @@ export const signup = async (req, res) => {
     });
 
     // @success Return created user
-    res.status(201).json(user);
+    res.status(201).json(user, calendar);
   } catch (error) {
     console.error("Error in signup:", error);
     res.status(500).json({ error: "Internal server error" });
