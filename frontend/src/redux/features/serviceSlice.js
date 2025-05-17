@@ -28,6 +28,7 @@ const serviceSlice = createSlice({
         .addCase(fetchAllServices.pending, (state) => {
             state.loading = true
             state.error = null
+              console.log('loading true');
         })
         .addCase(fetchAllServices.fulfilled, (state, action) => {
             state.services = action.payload

@@ -107,6 +107,7 @@ const sidebarItems = [
 
 const ExpertSidebar = () => {
   const user = useSelector((state) => state.auth.user);
+  const userRoleChanging = useSelector((state) => state.user.loading);
   console.log({ user: user.id, role: user.role });
   const location = useLocation();
   const navigate = useNavigate();
@@ -158,15 +159,21 @@ const ExpertSidebar = () => {
           )}
         </ul>
 
-        <Button
-          onClick={handleRoleChange}
-          size="lg"
-          className="mt-3 rounded-full font-semibold py-5 w-full"
-          variant=""
-        >
-          <RiUserStarLine className="!h-5 !w-5" />
-          Seeker Dashboard
-        </Button>
+      <Button
+  onClick={handleRoleChange}
+  size="lg"
+  className="mt-3 rounded-full font-semibold py-5 w-full flex items-center justify-center gap-2"
+  variant=""
+  disabled={userRoleChanging} // disable button while loading
+>
+  {userRoleChanging ? (
+    <span className="animate-spin rounded-full h-4 w-4 border-2 border-t-transparent border-black"></span>
+  ) : (
+    <RiUserStarLine className="!h-5 !w-5" />
+  )}
+  {userRoleChanging ? "Switching..." : "Seeker Dashboard"}
+</Button>
+
 
         <Link onClick={handleLogout} to="/login">
           <Button

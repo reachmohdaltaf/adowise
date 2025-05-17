@@ -4,14 +4,17 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { BsGoogle, BsLinkedin } from "react-icons/bs";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.auth)
+  const { error, loading } = useSelector((state) => state.auth)
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -44,7 +47,28 @@ const LoginPage = () => {
         />
 
         <div className="w-full">
-          <Button type="submit" className="h-12 w-full">Login</Button>
+          <Button
+            type="submit"
+            className="h-12 w-full flex items-center justify-center gap-2"
+            disabled={loading}
+          >
+            {loading ? (
+              //text with loader please wait text change
+              <>
+                <span className="animate-spin rounded-full h-4 w-4 border-2 border-t-transparent border-black"></span>
+                <p>Please wait...</p>
+              </>
+            ) : (
+              <>
+                <p>Log in</p>
+              </>
+            )}
+          </Button>
+          {loading && (
+            <p className="w-full flex px-1 mt-2 cursor-pointer text-destructive justify-end text-sm">
+              Please wait...
+            </p>
+          )}
           <p className="w-full flex px-1 mt-2 cursor-pointer text-destructive justify-end text-sm">
             Forgot Password?
           </p>

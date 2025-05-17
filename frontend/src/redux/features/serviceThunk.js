@@ -7,7 +7,6 @@ export const createService = createAsyncThunk(
     async(formData, thunkAPI) => {
         try {
             const res = await axiosInstance.post('service/create', formData);
-            toast.success("Service created successfully")
             console.log("service created", res.data)
             return res.data
         } catch (error) {
@@ -23,8 +22,6 @@ export const updateService = createAsyncThunk(
         console.log("Service ID:", serviceId);  // This will help you confirm if the ID is missing
         try {
             const res = await axiosInstance.put(`service/update/${serviceId}`, formData);
-            toast.success("Service updated successfully")
-            toast.success("Service updated successfully")
             console.log("service updated", res.data)
             return res.data
         } catch (error) {

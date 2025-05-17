@@ -1,36 +1,45 @@
-import { Card } from "@/components/ui/card";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchAllServices } from "@/redux/features/serviceThunk";
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import ServiceCard from "../components/ServiceCard";
 import { Link } from "react-router-dom";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 const PriorityDmServicePage = () => {
   const dispatch = useDispatch();
-  const [services, setServices] = useState([]);
+  const { services, loading } = useSelector((state) => state.service);
 
-  // Fetching services using dispatch
   useEffect(() => {
-    dispatch(fetchAllServices()).then((response) => {
-      // Filter out services with type "dm"
-      const filteredServices = response.payload.slice().
-      filter((service) => service.type === "dm")
-      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      setServices(filteredServices); // Set the filtered services
-    });
+    dispatch(fetchAllServices());
   }, [dispatch]);
+
+  const filteredServices = services
+    .filter((service) => service.type === "dm")
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
+  if (filteredServices.length === 0) {
+    return (
+      <div className="text-center text-gray-500 mt-10 text-lg">
+        No services found.
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-4">
-    
-        {services.map((service) => (
-            <Link
-            className="md:w-2/3"
-            to={`/expert/dashboard/services/update/${service._id}`}
-          >
-          <ServiceCard key={service._id} service={service} />
-          </Link>
-        ))}
+      {filteredServices.map((service) => (
+        <Link
+          key={service._id}
+          className="md:w-2/3"
+          to={`/expert/dashboard/services/update/${service._id}`}
+        >
+          <ServiceCard service={service} />
+        </Link>
+      ))}
     </div>
   );
 };

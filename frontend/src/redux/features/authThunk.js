@@ -19,7 +19,6 @@ export const loginUser = createAsyncThunk(
     async(FormData, thunkAPI) => {
         try {
             const res = await axiosInstance.post('auth/login', FormData);
-            toast.success("Login successful")
             return res.data
         } catch (error) {
             toast.error(error.response.data.message)
@@ -33,7 +32,6 @@ export const logout = createAsyncThunk(
     async(_, thunkAPI) => {
         try {
             const res = await axiosInstance.post('auth/logout');
-            toast.success(res.data.message)
             return res.data
         } catch (error) {
             toast.error(error.response.data.message)
