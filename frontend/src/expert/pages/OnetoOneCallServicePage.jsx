@@ -1,4 +1,4 @@
-import { fetchAllServices } from '@/redux/features/serviceThunk';
+import { MyServices } from '@/redux/features/serviceThunk';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ServiceCard from '../components/ServiceCard';
@@ -10,7 +10,7 @@ const OnetoOneCallServicePage = () => {
   const { services, loading } = useSelector((state) => state.service);
 
   useEffect(() => {
-    dispatch(fetchAllServices());
+    dispatch(MyServices());
   }, [dispatch]);
 
   // Filter services with type "1:1"

@@ -110,3 +110,14 @@ export const DeleteServiceById = async (req, res) =>{
   }
 }
 
+export const fetchAllServices = async (req, res) => {
+  try {
+    const services = await Service.find({})
+      .populate("expertId", "name username email image profession about skills");
+
+    res.status(200).json(services);
+  } catch (error) {
+    console.error("Error in fetchAllServices:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};

@@ -31,7 +31,11 @@ const LeadRocketCard = () => {
 
   return (
     <Card className="expert bg-primary h-86 w-full  md:w-1/2 rounded-2xl text-primary-foreground p-6 flex flex-col items-center gap-4 relative">
-      <div className="w-24 h-24 rounded-full bg-secondary flex items-center justify-center text-secondary-foreground text-3xl font-bold shadow-inner">
+     <div className=''>
+  <img src="/rockets.svg" className='absolute top-0 left-0 h-full z-0 pointer-events-none' alt="" />
+</div>
+
+      <div className="w-24 h-24  rounded-full bg-secondary flex items-center justify-center text-secondary-foreground text-3xl font-bold shadow-inner">
         <img src="/rocket.gif" className="h-20" />
       </div>
       <h1 className="text-2xl font-semibold text-center">
@@ -40,7 +44,7 @@ const LeadRocketCard = () => {
       <p className="text-sm text-muted text-center">
         Share your expertise and make an impact. Announce your page to the world!
       </p>
-     <Link className='w-full' to={'/userId'}> <Button variant="outline" className="w-full mt-2 text-foreground font-medium rounded-lg">
+     <Link className='w-full' to={'/userId'}> <Button variant="outline" className="w-full  mt-2 text-foreground font-medium rounded-lg">
         Your Page <ArrowUpRight className="ml-2 h-4 w-4" />
       </Button></Link>
       <ConfettiButton className="confetti-button absolute top-0 z-0 opacity-0">

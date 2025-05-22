@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createService, deleteServiceById, fetchAllServices, updateService } from "./serviceThunk";
+import { createService, deleteServiceById, fetchAllServices, MyServices, updateService } from "./serviceThunk";
 
 const serviceSlice = createSlice({
     name: 'service',
@@ -24,6 +24,19 @@ const serviceSlice = createSlice({
             state.error = action.payload
         })
 
+        // @fetch my services
+        .addCase(MyServices.pending, (state) => {
+            state.loading = true
+            state.error = null
+        })
+        .addCase(MyServices.fulfilled, (state, action) => {
+            state.services = action.payload
+            state.loading = false
+        })
+        .addCase(MyServices.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.payload
+        })
         // @fetch all services
         .addCase(fetchAllServices.pending, (state) => {
             state.loading = true

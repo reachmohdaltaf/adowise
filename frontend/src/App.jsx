@@ -21,7 +21,6 @@ import SeekerUpcomingBooking from "./seeker/pages/SeekerUpcomingBooking";
 import { SeekerCompletedBooking } from "./seeker/pages/SeekerCompletedBooking";
 import SeekerCalendarPage from "./seeker/pages/SeekerCalendarPage";
 import SeekerNotificationsPage from "./seeker/pages/SeekerNotificationsPage";
-import ExpertPage from "./seeker/pages/ExpertPage";
 import SeekerAiSearch from "./seeker/pages/SeekerAiSearch";
 import SeekerSettingPage from "./seeker/pages/SeekerSettingPage";
 import SeekerRewardPage from "./seeker/pages/SeekerRewardPage";
@@ -61,6 +60,7 @@ import ExpertSchedulePage from "./expert/pages/ExpertSchedulePage";
 import ExpertCalendarPage from "./expert/pages/ExpertCalendarPage";
 import ExpertAvailabilityPage from "./expert/pages/ExpertAvailabilityPage";
 import Layout from "./components/layout/Layout";
+import ExpertServiceDetails from "./seeker/pages/ExpertServiceDetailPage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -82,22 +82,24 @@ const App = () => {
 
   return (
     <BrowserRouter>
-     <ToastContainer
-  position="top-right"
-  autoClose={2000}
-  hideProgressBar={false}
-  newestOnTop={false}
-  closeOnClick={false}
-  rtl={false}
-  pauseOnFocusLoss
-  draggable
-  pauseOnHover
-  theme={user?.role === "seeker" ? "dark" : "light"}
-  transition={Slide}
-/>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme={user?.role === "seeker" ? "dark" : "light"}
+        transition={Slide}
+      />
 
       <ScrollToTop />
       <Routes>
+        <Route path="/:userId" element={<ExpertLeadPage />} />
+
         <Route path="/" element={<Layout />}>
           <Route
             index
@@ -133,6 +135,10 @@ const App = () => {
               )
             }
           />
+          <Route
+            path=":username/service/:id"
+            element={<ExpertServiceDetails />}
+          />
 
           <Route
             path="register"
@@ -158,7 +164,7 @@ const App = () => {
           path="/seeker/dashboard"
           element={
             user?.role === "seeker" ? (
-              <SeekerLayout  />
+              <SeekerLayout />
             ) : (
               <Navigate to="/login" replace />
             )
@@ -173,8 +179,7 @@ const App = () => {
           </Route>
           <Route path="find-people" element={<SeekerFindPeople />} />
           <Route path="listing" element={<SeekerListingPage />} />
-          <Route path="profile" element={<SeekerProfile  />} />
-          <Route path="profile/:id" element={<ExpertPage />} />
+          <Route path="profile" element={<SeekerProfile />} />
           <Route path="calendar" element={<SeekerCalendarPage />} />
           <Route path="notifications" element={<SeekerNotificationsPage />} />
           <Route path="aisearch" element={<SeekerAiSearch />} />
@@ -195,7 +200,7 @@ const App = () => {
           path="/expert/dashboard"
           element={
             user?.role === "expert" ? (
-              <ExpertLayout  />
+              <ExpertLayout />
             ) : (
               <Navigate to="/login" replace />
             )
@@ -237,10 +242,10 @@ const App = () => {
             <Route index element={<Navigate to="calendar" replace />} />
             <Route path="calendar" element={<ExpertCalendarPage />} />
             <Route path="schedule" element={<ExpertSchedulePage />} />
-          </Route>          <Route path="profile" element={<ExpertProfile />} />
+          </Route>{" "}
+          <Route path="profile" element={<ExpertProfile />} />
           <Route path="messages" element={<ExpertMessagePage />} />
         </Route>
-        <Route path="userId" element={<ExpertLeadPage />} />
       </Routes>
     </BrowserRouter>
   );

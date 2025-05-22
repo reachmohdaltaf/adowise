@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <nav className='h-14 px-2 md:px-6 justify-between flex items-center w-full bg-transparent rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-20'>
       <Link to={'/'} className="logo">
-        <img src="/logo.png" className='h-14' alt="Logo" />
+        <img src="/logo2.svg" className='h-8' alt="Logo" />
       </Link>
       <div className='buttons items-center flex gap-2'>
         {/* Login Redirect */}
@@ -18,7 +18,7 @@ const Navbar = () => {
 
         {/* Sign Up Redirect */}
         <Link to="/register">
-          <Button>Sign Up</Button>
+          <Button variant={'colored'}>Sign Up</Button>
         </Link>
       </div>
     </nav>

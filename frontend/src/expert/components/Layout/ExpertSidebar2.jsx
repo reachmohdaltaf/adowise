@@ -183,7 +183,6 @@ const ExpertSidebar2 = ({isOpen, setIsOpen}) => {
                 </Button>
       
 
-        <Link to="/logout">
           <Button
             onClick={handleLogout}
             size="lg"
@@ -192,7 +191,6 @@ const ExpertSidebar2 = ({isOpen, setIsOpen}) => {
           >
             <LogOutIcon /> Logout
           </Button>
-        </Link>
       </div>
 
       <div className="p-4 border-t"></div>

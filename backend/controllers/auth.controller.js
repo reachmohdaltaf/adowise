@@ -20,44 +20,41 @@ export const signup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // @step Validate required fields
     if (!name || !email || !password) {
       return res.status(400).json({ error: "All fields are required" });
     }
 
-    // @step Check password length
-    if (password.length < 6) {
-      return res
-        .status(400)
-        .json({ error: "Password must be at least 6 characters long" });
-    }
-
-    // @step Check if user already exists
+    // Check if user exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: "User already exists" });
     }
 
-    // @step Hash the password
+    // Hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // @step Create new user
-    const user = await User.create({ name, email, password: hashedPassword });
-    if (!user) {
-      return res.status(500).json({ error: "Internal server error" });
-    }
-    // const calendar = await Calendar.create({
-    //   userId: user._id,
-    //   timezone: "Asia/Kolkata",
-    //   reschedulePolicy: "request",
-    //   minNoticeForReschedule: "24 hrs",
-    //   bookingPeriod: "1 month",
-    //   schedules: [],
-    // });
+   // Get first 3 characters of the name (or less if name is shorter)
+const prefix = name.substring(0, 3).toLowerCase();
 
-    //@step generate token and save cookies
+let username;
+do {
+  const randomNum = Math.floor(Math.random() * 1000); // 0 to 999
+  username = `${prefix}${randomNum}`;
+} while (await User.findOne({ username }));
+
+    // Create user
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      username,
+    });
+
+    // Generate token
     const token = generateToken(user._id);
+
+    // Set cookie
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -65,10 +62,12 @@ export const signup = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
-    // @success Return created user
-    res.status(201).json(user);
+    // Send user info without password
+    const { password: _, ...userWithoutPassword } = user.toObject();
+
+    res.status(201).json(userWithoutPassword);
   } catch (error) {
-    console.error("Error in signup:", error);
+    console.error("Signup error:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };

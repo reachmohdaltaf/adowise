@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import ExpertShowcase from './ExpertShowcase';
-import CategoryFilter from '../components/CategoryFilter';
+import React, { useEffect, useRef, useState } from "react";
+import ExpertShowcase from "./ExpertShowcase";
+import CategoryFilter from "../components/CategoryFilter";
 
 const SeekerListingPage = () => {
+  
   const sentinelRef = useRef(null);
   const [isSticky, setIsSticky] = useState(false);
 
@@ -35,7 +36,7 @@ const SeekerListingPage = () => {
       {/* Sticky Filter */}
       <div
         className={`sticky top-[-21px] md:top-[-14px] z-10 transition-all duration-300 py-2 md:py-4 bg-background ${
-          isSticky ? 'border-b bg-background scale-[1.02]' : ''
+          isSticky ? "border-b bg-background scale-[1.02]" : ""
         }`}
       >
         <CategoryFilter />

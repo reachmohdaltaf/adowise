@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllServices } from "@/redux/features/serviceThunk";
+import {  MyServices } from "@/redux/features/serviceThunk";
 import ServiceCard from "../components/ServiceCard";
 import { Link } from "react-router-dom";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
@@ -10,7 +10,7 @@ const PriorityDmServicePage = () => {
   const { services, loading } = useSelector((state) => state.service);
 
   useEffect(() => {
-    dispatch(fetchAllServices());
+    dispatch(MyServices());
   }, [dispatch]);
 
   const filteredServices = services
