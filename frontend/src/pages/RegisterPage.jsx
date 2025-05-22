@@ -57,7 +57,7 @@ const RegisterPage = () => {
         />
 
         <div className="w-full">
-          <Button className="h-12 w-full">Sign up</Button>
+          <Button variant={'colored'} className="h-12 w-full">Sign up</Button>
 
           <div className="flex items-start gap-2 mt-3 text-sm">
             <Checkbox id="agree" />

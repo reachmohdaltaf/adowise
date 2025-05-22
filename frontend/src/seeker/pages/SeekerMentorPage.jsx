@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import ExpertShowcase from "./ExpertShowcase";
 import CategoryFilter from "../components/CategoryFilter";
 
-const SeekerListingPage = () => {
+const SeekerMentorPage = () => {
   
   const sentinelRef = useRef(null);
   const [isSticky, setIsSticky] = useState(false);
@@ -50,4 +50,4 @@ const SeekerListingPage = () => {
   );
 };
 
-export default SeekerListingPage;
+export default SeekerMentorPage;

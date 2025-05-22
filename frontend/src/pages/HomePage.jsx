@@ -64,7 +64,7 @@ const HomePage = () => {
             </Button>
           </Card>
 
-          <Card className={"md:w-1/2 md:mt-0 mt-10 py-2 bg-transparent border-none"}>
+          <Card className={"md:w-2/3 md:mt-0 mt-10 py-2 bg-transparent border-none"}>
             <Marquee vertical={true} speed={60}>
               <TopExpertCard />
             </Marquee>

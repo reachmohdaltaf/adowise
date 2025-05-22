@@ -1,13 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createService, deleteServiceById, fetchAllServices, MyServices, updateService } from "./serviceThunk";
+import { createService, deleteServiceById, fetchAllServices, fetchServiceById, MyServices, updateService } from "./serviceThunk";
 
 const serviceSlice = createSlice({
     name: 'service',
     initialState: {
-        services: [],
-        loading: false,
-        error: null
-    },
+    services: [],
+    service: null, // 👈 add this
+    loading: false,
+    error: null,
+  },
     reducers: {},
     extraReducers: (builder) => {
         builder
@@ -37,6 +38,19 @@ const serviceSlice = createSlice({
             state.loading = false
             state.error = action.payload
         })
+           // @fetch single service by ID
+      .addCase(fetchServiceById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchServiceById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.service = action.payload;
+      })
+      .addCase(fetchServiceById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
         // @fetch all services
         .addCase(fetchAllServices.pending, (state) => {
             state.loading = true

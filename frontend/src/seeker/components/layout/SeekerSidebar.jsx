@@ -33,7 +33,7 @@ const sidebarItems = [
   {
     label: "Mentors",
     icon: <HiUsers  className="!h-5 !w-5" />,
-    path: "/seeker/dashboard/listing",
+    path: "/seeker/dashboard/mentors",
   },
   {
     label: "Bookings",

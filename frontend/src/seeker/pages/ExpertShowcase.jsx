@@ -29,6 +29,8 @@ if(!services){
       key={service._id}
     >
       <ExpertShowcaseCard
+        tags={service.tags}
+        type={service.type}
         username={service.expertId?.username}
         id={service._id}
         title={service.title}

@@ -51,6 +51,7 @@ const LoginPage = () => {
             type="submit"
             className="h-12 w-full flex items-center justify-center gap-2"
             disabled={loading}
+            variant={'colored'}
           >
             {loading ? (
               //text with loader please wait text change

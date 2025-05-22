@@ -15,7 +15,6 @@ import SeekerHomePage from "./seeker/pages/SeekerHomePage";
 import SeekerMessagePage from "./seeker/pages/SeekerMessagePage";
 import SeekerBookingPage from "./seeker/pages/SeekerBookingPage";
 import SeekerFindPeople from "./seeker/pages/SeekerFindPeople";
-import SeekerListingPage from "./seeker/pages/SeekerListingPage";
 import SeekerProfile from "./seeker/pages/SeekerProfile";
 import SeekerUpcomingBooking from "./seeker/pages/SeekerUpcomingBooking";
 import { SeekerCompletedBooking } from "./seeker/pages/SeekerCompletedBooking";
@@ -61,6 +60,7 @@ import ExpertCalendarPage from "./expert/pages/ExpertCalendarPage";
 import ExpertAvailabilityPage from "./expert/pages/ExpertAvailabilityPage";
 import Layout from "./components/layout/Layout";
 import ExpertServiceDetails from "./seeker/pages/ExpertServiceDetailPage";
+import SeekerMentorPage from "./seeker/pages/SeekerMentorPage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -98,6 +98,10 @@ const App = () => {
 
       <ScrollToTop />
       <Routes>
+         <Route
+            path=":username/service/:id"
+            element={<ExpertServiceDetails />}
+          />
         <Route path="/:userId" element={<ExpertLeadPage />} />
 
         <Route path="/" element={<Layout />}>
@@ -135,10 +139,7 @@ const App = () => {
               )
             }
           />
-          <Route
-            path=":username/service/:id"
-            element={<ExpertServiceDetails />}
-          />
+         
 
           <Route
             path="register"
@@ -178,7 +179,7 @@ const App = () => {
             <Route path="completed" element={<SeekerCompletedBooking />} />
           </Route>
           <Route path="find-people" element={<SeekerFindPeople />} />
-          <Route path="listing" element={<SeekerListingPage />} />
+          <Route path="mentors" element={<SeekerMentorPage/>} />
           <Route path="profile" element={<SeekerProfile />} />
           <Route path="calendar" element={<SeekerCalendarPage />} />
           <Route path="notifications" element={<SeekerNotificationsPage />} />

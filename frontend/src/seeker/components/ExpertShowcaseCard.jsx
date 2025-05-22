@@ -16,12 +16,12 @@ const ExpertShowcaseCard = ({
   description,
   image,
   author,
+  type,
+  tags,
 }) => {
   // Round rating to nearest half for better star display
   const filledStars = Math.floor(rating);
   const totalStars = 5;
-
-
 
   return (
     <div>
@@ -30,7 +30,7 @@ const ExpertShowcaseCard = ({
           "p-0 cursor-pointer hover:bg-gradient-to-tr duration-200 hover:from-muted hover:to-background hover:shadow-sm transition  py-2 px-0 gap-0"
         }
       >
-        <CardHeader  className={"px-2 mb-0"}>
+        <CardHeader className={"px-2 mb-0"}>
           <div className="flex gap-4">
             <div className="profile w-20 aspect-square  overflow-hidden rounded-md">
               <img
@@ -62,11 +62,26 @@ const ExpertShowcaseCard = ({
                     </div>
                   </span>
                 </div>
+                <div className="flex flex-col gap-2 mt-1">
+                  {/* Show only 3 tags */}
+                  <div className="flex gap-2">
+                    {tags?.slice(0, 3).map((tag, index) => (
+                      <Button
+                        variant={"outline"}
+                        size={'sm'}
+                        key={index}
+                        className="text-xs py-0 h-6 px-3 text-gray-500 font-semibold"
+                      >
+                        {tag}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </CardHeader>
-        <CardContent  className={"px-2  py-0"}>
+        <CardContent className={"px-2  py-0"}>
           <p className="text-sm text-destructive font-normal line-clamp-2">
             {description}
           </p>
@@ -75,7 +90,7 @@ const ExpertShowcaseCard = ({
           <p className="text-sm">
             by: <span className="font-normal text-sm">{author}</span>
           </p>
-          <Button size={"sm"}>Send DM</Button>
+          <Button size={"sm"}>{type == "1:1" ? "Book Now" : "DM Now"}</Button>
         </CardFooter>
       </Card>
     </div>
