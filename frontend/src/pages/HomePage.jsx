@@ -1,4 +1,4 @@
-import Footer from "@/components/layout/Footer";
+import AiChatContainer from "@/components/common/AiChatContainer";
 import { Marquee } from "@/components/magicui/marquee";
 import TopExpertCard from "@/components/TopExpertCard";
 import { Button } from "@/components/ui/button";
@@ -15,11 +15,7 @@ const HomePage = () => {
       <div className="absolute top-0 left-0 w-full h-full">
         <div className="w-full flex justify-between">
           <img src="/frame1.svg" className="h-[600px]  opacity-50 " alt="" />
-          <img
-            src="/frame2.svg"
-            className="h-[600px] md:block hidden opacity-50"
-            alt=""
-          />
+          <img src="/frame2.svg" className="h-[600px] md:block hidden opacity-50" alt="" />
         </div>
       </div>
 
@@ -32,35 +28,13 @@ const HomePage = () => {
       <section className="mt-18 md:mt-10 px-2 ">
         {/* glassmorphism container  */}
         <div className="max-w-screen-md px-4 mx-auto">
-          <h2 className="lg:text-sm text-sm sm:text-xs md:text-sm">
-            Looking for a mentor? Start by asking here...
-          </h2>
+          <h2 className="lg:text-sm text-sm sm:text-xs md:text-sm">Looking for a mentor? Start by asking here...</h2>
         </div>
-        <Card className="py-3 mt-3 max-w-screen-md h-26 mx-auto backdrop-blur-md bg-white/30    rounded-3xl shadow-md">
-          {/* Your content here */}
-
-          <CardHeader className={"flex px-4"}>
-            <Input
-              placeholder="Type something..."
-              className={"border-none shadow-none"}
-            />
-            <Button variant={""} className={"expert px-3"}>
-              <ArrowUp />
-            </Button>
-          </CardHeader>
-          <CardFooter className={"justify-between"}>
-            <Plus className="text-destructive" />
-            <Mic className="text-destructive" />
-          </CardFooter>
-        </Card>
+        <AiChatContainer />
       </section>
       <section className="relative justify  flex mt-20 md:mt-52 ">
         <div className="w-full flex justify-between">
-          <img
-            src="/frame1.svg"
-            className="h-[600px] hidden md:block opacity-50"
-            alt=""
-          />
+          <img src="/frame1.svg" className="h-[600px] hidden md:block opacity-50" alt="" />
           <img src="/frame2.svg" className="h-[600px] hidden" alt="" />
         </div>
         <div className="absolute gap-2 top-0 left-0 w-full h-full md:flex   justify-between gap-10 px-2 md:px-6">
@@ -75,9 +49,7 @@ const HomePage = () => {
             </Button>
           </Card>
 
-          <Card
-            className={"md:w-2/3 md:mt-0 mt-10 py-2 bg-transparent border-none"}
-          >
+          <Card className={"md:w-2/3 md:mt-0 mt-10 py-2 bg-transparent border-none"}>
             <Marquee vertical={true} speed={60}>
               <TopExpertCard />
             </Marquee>
@@ -86,6 +58,7 @@ const HomePage = () => {
       </section>
       <section className=" px-6  hidden md:block">
         <div className="relative">
+
           <h2 className="absolute top-[-150px] text-8xl font-bold w-60">
             <span className="expert text-muted-foreground">Your</span> Career
             Questions, Already Answered..
@@ -96,7 +69,7 @@ const HomePage = () => {
           <img src="/arrow.svg" className="h-[500px] mt-20" alt="" />
         </div>
       </section>
-
+      
       
     </div>
   );

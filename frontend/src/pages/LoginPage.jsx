@@ -27,7 +27,7 @@ const LoginPage = () => {
 
   return (
     <div className="flex flex-col gap-6 items-center py-20 h-screen px-4">
-      <h1 className="text-2xl">Log in</h1>
+      <h1 className="text-2xl pt-10">Log in</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full max-w-92">
         <Input
           name="email"
@@ -94,7 +94,7 @@ const LoginPage = () => {
         )}
       </form>
 
-      <p className="text-destructive text-sm text-center">
+      <p className="text-destructive py-10 text-sm text-center">
         Don't have an account?{" "}
         <span className="text-foreground cursor-pointer">Sign Up</span>
       </p>

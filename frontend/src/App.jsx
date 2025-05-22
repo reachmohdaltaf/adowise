@@ -61,6 +61,7 @@ import ExpertAvailabilityPage from "./expert/pages/ExpertAvailabilityPage";
 import Layout from "./components/layout/Layout";
 import ExpertServiceDetails from "./seeker/pages/ExpertServiceDetailPage";
 import SeekerMentorPage from "./seeker/pages/SeekerMentorPage";
+import SeekerChatBot from "./seeker/pages/SeekerChatBot";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -98,11 +99,12 @@ const App = () => {
 
       <ScrollToTop />
       <Routes>
+                  <Route path="chatbot" element={<SeekerChatBot />} />
+
          <Route
             path=":username/service/:id"
             element={<ExpertServiceDetails />}
           />
-        <Route path="/:userId" element={<ExpertLeadPage />} />
 
         <Route path="/" element={<Layout />}>
           <Route
@@ -172,6 +174,7 @@ const App = () => {
           }
         >
           <Route path="home" element={<SeekerHomePage />} />
+
           <Route path="messages" element={<SeekerMessagePage />} />
           <Route path="bookings" element={<SeekerBookingPage />}>
             <Route index element={<Navigate to="upcoming" replace />} />
@@ -218,6 +221,7 @@ const App = () => {
           <Route path="create/service" element={<CreateServicePage />}>
             <Route index element={<Navigate to="1-to-1" replace />} />
             <Route path="1-to-1" element={<CreateOneToOnepage />} />
+            
             <Route path="dm" element={<CreateDmPage />} />
             <Route path="webinar" element={<CreateWebinarPage />} />
           </Route>
@@ -239,6 +243,8 @@ const App = () => {
             />
           </Route>
           <Route path="settings" element={<ExpertSettingPage />} />
+                  <Route path=":userId" element={<ExpertLeadPage />} />
+
           <Route path="availability" element={<ExpertAvailabilityPage />}>
             <Route index element={<Navigate to="calendar" replace />} />
             <Route path="calendar" element={<ExpertCalendarPage />} />

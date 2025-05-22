@@ -5,7 +5,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 const FindExpertCard = () => {
   return (
-    <Link to={'/seeker/dashboard/mentors'}><Card className="w-full h-fit gap-2 p-2 bg-primary text-primary-foreground overflow-x-auto">
+    <Link to={'/seeker/dashboard/mentors'}><Card className="w-full h-fit gap-2 p-2 bg-primary text-primary-foreground rounded-md overflow-x-auto">
     <CardHeader className="px-2 mt-2">
      <Link to={'/seeker/dashboard/mentors'}><Button className="w-32 sm:w-40 text-xs sm:text-base text-foreground" variant="outline">
         <ArrowUpRight /> Find Expert

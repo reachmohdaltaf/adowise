@@ -30,7 +30,7 @@ const LeadRocketCard = () => {
   
 
   return (
-    <Card className="expert bg-primary h-86 w-full  md:w-1/2 rounded-2xl text-primary-foreground p-6 flex flex-col items-center gap-4 relative">
+    <Card className="expert bg-primary h-86 w-full  md:w-1/2 rounded-md text-primary-foreground p-6 flex flex-col items-center gap-4 relative">
      <div className=''>
   <img src="/rockets.svg" className='absolute top-0 left-0 h-full z-0 pointer-events-none' alt="" />
 </div>

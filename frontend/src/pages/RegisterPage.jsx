@@ -25,8 +25,8 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6 items-center py-20 h-screen px-4">
-      <h1 className="text-2xl text-center">Sign up. It's free!</h1>
+    <div className="flex flex-col gap-6  items-center py-20 h-screen px-4">
+      <h1 className="text-2xl pt-14 text-center">Sign up. It's free!</h1>
       <form
         onSubmit={handleSubmit}
         className="flex flex-col gap-4 w-full max-w-92"
@@ -88,7 +88,7 @@ const RegisterPage = () => {
         </Button>
       </form>
 
-      <p className="text-destructive text-sm text-center">
+      <p className="text-destructive text-sm py-10 text-center">
         Already have an account?{" "}
         <span className="text-foreground cursor-pointer">Log In</span>
       </p>

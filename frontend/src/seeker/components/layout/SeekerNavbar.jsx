@@ -37,7 +37,7 @@ const SeekerNavbar = () => {
   
 
   return (
-    <nav className='h-12 flex md:border-none    px-3 md:px-16 bg-background  items-center justify-between'>
+    <nav className='h-12 flex md:border-none    px-4 md:px-16 bg-background  items-center justify-between'>
       <Link to={'/seeker/dashboard/home'} className="logo flex items-center gap-1">
         <img src="/logo.svg" className='h-8 scale-98 hover:scale-100  transition cursor-pointer' alt="" />
       </Link>
