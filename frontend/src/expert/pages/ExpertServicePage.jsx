@@ -24,20 +24,20 @@ const ExpertServicePage = () => {
       <div className="flex sticky md:top-[-5px] top-[-20px] border-b py-2 bg-background justify-between gap-4 mb-6">
         <div className="gap-3 flex">
           <Link to="1-to-1">
-            <Button className={' rounded-2xl '} variant={is1to1 ? "default" : "outline"}>1 : 1</Button>
+            <Button size={''} className={' rounded-2xl md:px-6 px-3 '} variant={is1to1 ? "default" : "outline"}>1 : 1</Button>
           </Link>
           <Link to="dm">
-            <Button className={'  rounded-2xl '} variant={isDm ? "default" : "outline"}>Priority DM</Button>
+            <Button size={''} className={'  rounded-2xl md:px-6 px-3 '} variant={isDm ? "default" : "outline"}>Priority DM</Button>
           </Link>
           <Link to="webinar">
-            <Button className={'rounded-2xl '} variant={isWebinar ? "default" : "outline"}>Webinar</Button>
+            <Button size={''} className={'rounded-2xl md:px-6 px-3 '} variant={isWebinar ? "default" : "outline"}>Webinar</Button>
           </Link>
         </div>
 
-        <div className="md:flex hidden gap-3">
+        <div className="flex  gap-3">
           <Dialog className="">
             <DialogTrigger asChild>
-              <Button>Add +</Button>
+              <Button size={'icon'}>  +</Button>
             </DialogTrigger>
             <DialogContent className="h-auto max-w-2xl">
               <DialogHeader>
@@ -86,8 +86,8 @@ const ExpertServicePage = () => {
             </DialogContent>
           </Dialog>
 
-          <Dialog>
-            <DialogTrigger asChild>
+          <Dialog className="hidden">
+            <DialogTrigger className="hidden" asChild>
               <Button>Use Templates</Button>
             </DialogTrigger>
             <DialogContent className="h-auto max-w-2xl">

@@ -15,7 +15,7 @@ const ExpertShowcase = () => {
   console.log("services in showcase", services);
   useEffect(() => {
   dispatch(fetchAllServices());
-}, []);
+}, [dispatch]);
 
 if(!services){
   return <LoadingSpinner/>

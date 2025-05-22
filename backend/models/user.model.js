@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
     experience: { type: String, default: "", trim: true },
     skills: { type: [String], default: [] },
 
-    image: { type: String, default: "" },
+    image: { type: String, default: "https://picsum.photos/200" },
     bannerImage: { type: String, default: "" },
 
     location: {
