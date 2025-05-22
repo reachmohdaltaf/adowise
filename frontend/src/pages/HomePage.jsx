@@ -13,8 +13,8 @@ const HomePage = () => {
       {/* Background section */}
       <div className="absolute top-0 left-0 w-full h-full">
         <div className="w-full flex justify-between">
-          <img src="/frame1.svg" className="h-[600px] opacity-50 " alt="" />
-          <img src="/frame2.svg" className="h-[600px] opacity-50" alt="" />
+          <img src="/frame1.svg" className="h-[600px]  opacity-50 " alt="" />
+          <img src="/frame2.svg" className="h-[600px] md:block hidden opacity-50" alt="" />
         </div>
       </div>
 
@@ -49,10 +49,10 @@ const HomePage = () => {
       </section>
       <section className="relative justify  flex mt-20 md:mt-52 ">
         <div className="w-full flex justify-between">
-          <img src="/frame1.svg" className="h-[600px] opacity-50" alt="" />
-          <img src="/frame2.svg" className="h-[600px]" alt="" />
+          <img src="/frame1.svg" className="h-[600px] hidden md:block opacity-50" alt="" />
+          <img src="/frame2.svg" className="h-[600px] hidden" alt="" />
         </div>
-        <div className="absolute gap-2 top-0 left-0 w-full h-full md:flex   justify-between gap-10 md:px-6">
+        <div className="absolute gap-2 top-0 left-0 w-full h-full md:flex   justify-between gap-10 px-2 md:px-6">
           <Card className="h-96 md:w-1/3 bg-gradient-to-br expert from-primary/90 to-primary/10 backdrop-blur-xl rounded-3xl border-none  flex flex-col items-center justify-center text-white px-6">
             <h2 className="text-5xl font-bold mb-4">Apply to Jobs Referral</h2>
             <p className="text-base font-medium mb-8">
