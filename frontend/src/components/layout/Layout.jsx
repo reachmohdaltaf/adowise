@@ -10,9 +10,7 @@ const Layout = () => {
       <Navbar/>
       </div>
        <Outlet/>
-      <div className='relative bottom-0'>
-         <Footer/>
-      </div>
+     
     </div>
   )
 }
