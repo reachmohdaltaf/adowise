@@ -6,15 +6,18 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { deleteServiceById, fetchServiceById, updateService } from "@/redux/features/serviceThunk";
-import { SaveIcon } from "lucide-react";
+import { SaveIcon, Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateServicePage = () => {
   const { serviceId } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();  // Initialize navigate
+  const navigate = useNavigate();
+
+  // ✅ Get loading state from Redux store
+  const { loading } = useSelector((state) => state.service);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -32,10 +35,12 @@ const UpdateServicePage = () => {
   });
 
   const [tagInput, setTagInput] = useState("");
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   // 📦 Fetch service data by ID
   useEffect(() => {
     if (serviceId) {
+      setIsDataLoaded(false);
       dispatch(fetchServiceById(serviceId)).then((res) => {
         const service = res.payload;
         setFormData({
@@ -52,24 +57,24 @@ const UpdateServicePage = () => {
           type: service.type || "",
           tags: service.tags || [],
         });
+        setIsDataLoaded(true);
       });
     }
   }, [serviceId, dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitting with serviceId:", serviceId, "formData:", formData); // Log the values being sent
+    console.log("Submitting with serviceId:", serviceId, "formData:", formData);
     dispatch(updateService({ serviceId, formData }))
       .then(() => {
-        // Navigate to '/services' after successful service update
-       if(formData.type === "1:1"){
-        navigate("/expert/dashboard/services/1-to-1");
-       }
-       else if(formData.type === "dm"){
-        navigate("/expert/dashboard/services/dm");
-       }else(
-        navigate("/expert/dashboard/services/webinar")
-       )
+        if(formData.type === "1:1"){
+          navigate("/expert/dashboard/services/1-to-1");
+        }
+        else if(formData.type === "dm"){
+          navigate("/expert/dashboard/services/dm");
+        }else{
+          navigate("/expert/dashboard/services/webinar");
+        }
       })
       .catch((error) => {
         console.error("Error updating service:", error);
@@ -81,12 +86,12 @@ const UpdateServicePage = () => {
     .then(() => {
         if(formData.type === "1:1"){
             navigate("/expert/dashboard/services/1-to-1");
-           }
-           else if(formData.type === "dm"){
+          }
+          else if(formData.type === "dm"){
             navigate("/expert/dashboard/services/dm");
-           }else(
-            navigate("/expert/dashboard/services/webinar")
-           )
+          }else{
+            navigate("/expert/dashboard/services/webinar");
+          }
           })
           .catch((error) => {
             console.error("Error deleting service:", error);
@@ -116,6 +121,20 @@ const UpdateServicePage = () => {
       handleAddTag();
     }
   };
+
+  // ✅ Show loader while data is being fetched
+  if (loading && !isDataLoaded) {
+    return (
+      <Card className="px-2 border-none">
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="flex flex-col items-center gap-4">
+            <Loader2 className="h-8 w-8 animate-spin" />
+            <p className="text-gray-600">Loading service data...</p>
+          </div>
+        </div>
+      </Card>
+    );
+  }
 
   return (
     <Card className="px-2 border-none ">
@@ -322,17 +341,40 @@ const UpdateServicePage = () => {
         </div>
 
         {/* ✅ Update Button */}
-        <Button type="submit" className="w-44"><SaveIcon/> Save Changes</Button>
+        <Button type="submit" className="w-44" disabled={loading}>
+          {loading ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Saving...
+            </>
+          ) : (
+            <>
+              <SaveIcon className="mr-2 h-4 w-4" />
+              Save Changes
+            </>
+          )}
+        </Button>
       </form>
 
       {/* ❌ Delete Service Button */}
       <div className="mt-4">
-        <Button onClick={handleDelete} className="bg-red-400 w-44 hover:bg-red-500/90">
-          Delete Service
+        <Button 
+          onClick={handleDelete} 
+          className="bg-red-400 w-44 hover:bg-red-500/90"
+          disabled={loading}
+        >
+          {loading ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Deleting...
+            </>
+          ) : (
+            "Delete Service"
+          )}
         </Button>
       </div>
     </Card>
   );
 };
 
-export default UpdateServicePage;
+export default UpdateServicePage; 

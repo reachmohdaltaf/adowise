@@ -29,17 +29,11 @@ import { authCheck, logout } from '@/redux/features/authThunk';
 import { updateUserRole } from '@/redux/features/userThunk';
 import { toast } from 'react-toastify';
 
-
 const sidebarItems = [
   {
     label: "Home",
     icon: <HomeIcon className="!h-5 !w-5" />,
     path: "/expert/dashboard/home",
-  },
-  {
-    label: "Messages",
-    icon: <Mail className="!h-5 !w-5" />,
-    path: "/expert/dashboard/messages",
   },
   {
     label: "Bookings",
@@ -48,14 +42,15 @@ const sidebarItems = [
     activeCheck: (pathname) =>
       pathname.startsWith("/expert/dashboard/bookings"),
   },
-  { type: "divider" },
-  {
+   {
     label: "Priority Dm",
     icon: <TbMessageStar className="!h-5 !w-5" />,
     path: "/expert/dashboard/priority-dm/pending",
     activeCheck: (pathname) =>
       pathname.startsWith("/expert/dashboard/priority-dm/answered-by-experts"),
   },
+  { type: "divider" },
+ 
   {
     label: "services",
     icon: <Briefcase className="!h-5 !w-5" />,

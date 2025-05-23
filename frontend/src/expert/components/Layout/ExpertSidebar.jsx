@@ -32,25 +32,21 @@ const sidebarItems = [
     path: "/expert/dashboard/home",
   },
   {
-    label: "Messages",
-    icon: <Mail className="!h-5 !w-5" />,
-    path: "/expert/dashboard/messages",
-  },
-  {
     label: "Bookings",
     icon: <PhoneCall className="!h-5 !w-5" />,
     path: "/expert/dashboard/bookings/upcoming",
     activeCheck: (pathname) =>
       pathname.startsWith("/expert/dashboard/bookings"),
   },
-  { type: "divider" },
-  {
+   {
     label: "Priority Dm",
     icon: <TbMessageStar className="!h-5 !w-5" />,
     path: "/expert/dashboard/priority-dm/pending",
     activeCheck: (pathname) =>
       pathname.startsWith("/expert/dashboard/priority-dm/answered-by-experts"),
   },
+  { type: "divider" },
+ 
   {
     label: "services",
     icon: <Briefcase className="!h-5 !w-5" />,
