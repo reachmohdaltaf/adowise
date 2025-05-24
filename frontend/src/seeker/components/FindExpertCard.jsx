@@ -13,8 +13,9 @@ const FindExpertCard = ({user}) => {
       <Card className="w-full border-none gap-2 px-2  py-0  rounded-md overflow-x-auto">
         <CardHeader className="px-0  ">
         <div>
-          <div className="flex justify-between items-center w-full">
-              <p className="text-4xl sm:text-4xl font-normal">Hi, {user.name}</p>
+          <div className=" flex justify-between items-center w-full">
+            {/* show only first name  */}
+              <p className="text-4xl sm:text-4xl font-normal">Hi, {user.name.split(' ')[0]}</p>
                           <Button size={'sm'} className={'shimmer-button'} variant={'colored'}><GiElectric/> Mentor Match</Button>
 
           </div>
