@@ -49,14 +49,14 @@ const SeekerNavbar = () => {
   }, [isOpen]);
 
   return (
-    <nav className="h-12 flex md:border-none border py-6 px-4 md:px-16 bg-background items-center justify-between">
+    <nav className="h-14 flex md:border-none border py-6 px-4 md:px-16 bg-background items-center justify-between">
       <Link
         to={"/seeker/dashboard/home"}
         className="logo flex items-center gap-1"
       >
         <img
           src="/logo.svg"
-          className="h-6 scale-98 hover:scale-100 transition cursor-pointer"
+          className="h-8 scale-98 hover:scale-100 transition cursor-pointer"
           alt="logo"
         />
       </Link>
@@ -70,28 +70,28 @@ const SeekerNavbar = () => {
               focus:w-60 transition-all duration-500 ease-in-out"
             />
             <SearchIcon
-              size={20}
+              size={22}
               className="cursor-pointer hover:scale-100 scale-96 transition"
             />
           </div>
           <SearchIcon
-            size={20}
+            size={22}
             className="cursor-pointer md:hidden hover:scale-100 scale-96 transition"
           />
           <BsStars
-            size={20}
+            size={22}
             className="cursor-pointer hover:scale-100 scale-96 transition"
           />
           <Link to="/seeker/dashboard/notifications">
-            <FaRegBell size={20} className="cursor-pointer" />
+            <FaRegBell size={22} className="cursor-pointer" />
           </Link>
           <Link to="/seeker/dashboard/home">
-            <HomeIcon size={20} className="cursor-pointer hidden md:block" />
+            <HomeIcon size={22} className="cursor-pointer hidden md:block" />
           </Link>
         </div>
         <GiHamburgerMenu
           onClick={handleSidebar}
-          size={22}
+          size={24}
           className="cursor-pointer menu-btn"
         />
       </div>

@@ -1,8 +1,11 @@
 import React from "react";
 import FindExpertCard from "../components/FindExpertCard";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { useSelector } from "react-redux";
 
 const SeekerHomePage = () => {
+  const{user} = useSelector((state) => state.auth);
+  console.log("userinfo",user)
   // 1. Define the card data
   const cardData = [
     {
@@ -30,9 +33,9 @@ const SeekerHomePage = () => {
 
   return (
     <div className="md:py-6 gap-2 w-full flex flex-col">
-      <Card className="w-full border-none shadow-none gap-0 py-0 px-0">
+      <Card className="w-full border-none shadow-none mt-5 gap-0 py-0 px-0">
         <CardHeader className="px-0">
-          <FindExpertCard />
+          <FindExpertCard user={user} />
           <CardContent className="px-0   mt-6 ">
             <h2 className="text-4xl sm:text-3xl   gap-10 font-normal  ">
               <span className="font-bold ">Unlock</span> Guidence
