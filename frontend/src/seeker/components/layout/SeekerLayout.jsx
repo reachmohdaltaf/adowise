@@ -22,7 +22,7 @@ const SeekerLayout = () => {
           </div>
         </div>
         
-        <div id='seeker-scroll' className='flex-1 h-screen hidescroll md:px-10 px-2 py-4 md:py-1 lg:ml-68 overflow-y-auto'>
+        <div id='seeker-scroll' className='flex-1 h-screen hidescroll md:px-10 px-2 py-2 md:py-1 lg:ml-68 overflow-y-auto'>
   <div className="mb-20">
     <Outlet />
     {/* <div className='fixed bottom-0 left-0 right-0'>    <SeekerMobileFooter/>

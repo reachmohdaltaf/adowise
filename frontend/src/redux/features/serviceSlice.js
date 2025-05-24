@@ -15,9 +15,17 @@ const serviceSlice = createSlice({
     service: null, // 👈 add this
     loading: false,
     error: null,
-    hasFetched: false,
+    page: 1,
+    totalPages: 1,
   },
-  reducers: {},
+  reducers: {
+    resetServices:  (state) => {
+      state.services = [];
+      state.page = 1;
+      state.totalPages = 1;
+      state.error = null;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createService.pending, (state) => {
@@ -65,8 +73,9 @@ const serviceSlice = createSlice({
       })
       .addCase(fetchAllServices.fulfilled, (state, action) => {
         state.loading = false;
-        state.services = action.payload;
-        state.hasFetched = true;
+        state.services = [...state.services, ...action.payload.services];
+        state.page = action.payload.page;
+        state.totalPages = action.payload.totalPages;
       })
       .addCase(fetchAllServices.rejected, (state, action) => {
         state.loading = false;

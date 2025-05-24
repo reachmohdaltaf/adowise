@@ -45,17 +45,19 @@ export const MyServices = createAsyncThunk(
 )
 
 export const fetchAllServices = createAsyncThunk(
-    'service/getall',
-    async(_, thunkAPI) => {
-        try {
-            const res = await axiosInstance.get('service/getall');
-            console.log("get service data in thunk", res.data)
-            return res.data
-        } catch (error) {
-            return thunkAPI.rejectWithValue(error.response.data)
-        }
+  "service/getall",
+  async ({ page = 1, limit = 6 }, thunkAPI) => {
+    try {
+      const res = await axiosInstance.get(
+        `service/getall?page=${page}&limit=${limit}`
+      );
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
     }
-)
+  }
+);
+
 
 export const fetchServiceById = createAsyncThunk(
     'service/fetch',

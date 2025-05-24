@@ -27,7 +27,7 @@ const ExpertShowcaseCard = ({
     <div>
       <Card
         className={
-          "p-0 cursor-pointer hover:bg-gradient-to-tr duration-200 hover:from-muted hover:to-background hover:shadow-sm transition  py-2 px-0 gap-0"
+          "p-0 cursor-pointer h-50 hover:bg-gradient-to-tr duration-200 hover:from-muted hover:to-background hover:shadow-sm transition  py-2 px-0 gap-0"
         }
       >
         <CardHeader className={"px-2 mb-0"}>
@@ -36,12 +36,12 @@ const ExpertShowcaseCard = ({
               <img
                 src={image || "https:placeholder.com/150"}
                 alt="profile"
-                className="w-full h-full object-cover"
+                className="w-full h-20 object-cover"
               />
             </div>
 
             <div className="flex flex-col w-60">
-              <h2 className="font-bold    line-clamp-2">{title}</h2>
+              <h2 className="font-bold    line-clamp-2 h-12">{title}</h2>
 
               <div className="RatingandPrice w-60  ">
                 <div className="flex items-center justify-start gap-5">
@@ -82,11 +82,11 @@ const ExpertShowcaseCard = ({
           </div>
         </CardHeader>
         <CardContent className={"px-2  py-0"}>
-          <p className="text-sm text-destructive font-normal line-clamp-2">
+          <p className="text-sm h-10 text-destructive font-normal line-clamp-2">
             {description}
           </p>
         </CardContent>
-        <CardFooter className={"px-2 flex justify-between gap-2 py-2"}>
+        <CardFooter className={"px-2 flex items-end justify-between gap-2 py-2"}>
           <p className="text-sm">
             by: <span className="font-normal text-sm">{author}</span>
           </p>
