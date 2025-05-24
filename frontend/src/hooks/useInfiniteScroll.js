@@ -1,20 +1,24 @@
-// hooks/useInfiniteScroll.js
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 
-const useInfiniteScroll = (callback, isLoading) => {
+const useInfiniteScroll = (ref, callback, deps = []) => {
+  const handleScroll = useCallback(() => {
+    const container = ref.current;
+    if (!container) return;
+
+    if (
+      container.scrollTop + container.clientHeight >= container.scrollHeight - 5
+    ) {
+      callback();
+    }
+  }, [callback]);
+
   useEffect(() => {
-    const handleScroll = () => {
-      const nearBottom =
-        window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
+    const container = ref.current;
+    if (!container) return;
 
-      if (nearBottom && !isLoading) {
-        callback();
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [callback, isLoading]);
+    container.addEventListener("scroll", handleScroll);
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, [handleScroll, ...deps]); // ✅ Don't spread ref here
 };
 
 export default useInfiniteScroll;

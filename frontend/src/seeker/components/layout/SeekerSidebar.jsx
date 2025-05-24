@@ -119,7 +119,7 @@ const SeekerSidebar = () => {
   
 
   return (
-    <aside className=" h-screen  w-68 overflow-y-auto  bg-background flex flex-col justify-between z-10">
+    <aside className=" h-screen  w-68 overflow-y-auto   bg-background flex flex-col justify-between z-10">
       <div className="flex-1 px-2 mt-8">
         <ul className="flex flex-col gap-2">
           {sidebarItems.map((item, index) =>

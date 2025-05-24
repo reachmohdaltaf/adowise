@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 
 const CreateWebinarPage = () => {
   const [sessions, setSessions] = useState([{ date: "", time: "" }]);
+  const [loading, setLoading] = useState(false); // ⬅️ Add loading state
 
   const handleSessionChange = (index, field, value) => {
     const updatedSessions = [...sessions];
@@ -17,9 +18,28 @@ const CreateWebinarPage = () => {
     setSessions([...sessions, { date: "", time: "" }]);
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (loading) return;
+    setLoading(true);
+
+    try {
+      // fake API call or dispatch can be added here
+      // await dispatch(createWebinar(formData)); if you use Redux
+      console.log("Submitting webinar...");
+      await new Promise((res) => setTimeout(res, 2000)); // Simulating API call
+      // Navigate to next page or show success toast
+    } catch (err) {
+      console.error("Submission failed", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Card className="w-full mt-10 p-6 space-y-6">
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-1">
           <Label htmlFor="title" className="text-lg font-medium">
             Title
@@ -83,8 +103,8 @@ const CreateWebinarPage = () => {
         </div>
 
         <div className="flex justify-start mt-10">
-          <Button type="submit" className="h-10">
-            Next: Customize
+          <Button type="submit" className="h-10" disabled={loading}>
+            {loading ? "Creating..." : "Next: Customize"}
           </Button>
         </div>
       </form>

@@ -18,8 +18,13 @@ const CreateDmPage = () => {
     type: "dm",
   });
 
+  const [loading, setLoading] = useState(false); // ⬅️ loading state
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return; // prevent double submit
+    setLoading(true);
+
     const result = await dispatch(createService(formData));
 
     if (createService.fulfilled.match(result)) {
@@ -29,6 +34,8 @@ const CreateDmPage = () => {
       console.error("Service creation failed:", result);
       // Optional: show error toast/snackbar
     }
+
+    setLoading(false);
   };
 
   return (
@@ -65,8 +72,8 @@ const CreateDmPage = () => {
         </div>
 
         <div className="flex justify-start mt-10">
-          <Button type="submit" className="h-10">
-            Next: Customize
+          <Button type="submit" className="h-10" disabled={loading}>
+            {loading ? "Creating..." : "Next: Customize"}
           </Button>
         </div>
       </form>

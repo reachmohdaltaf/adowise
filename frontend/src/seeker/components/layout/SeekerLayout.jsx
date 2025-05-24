@@ -1,41 +1,57 @@
-// SeekerLayout.jsx
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import SeekerNavbar from './SeekerNavbar';
-import SeekerSidebar from './SeekerSidebar';
-import SeekerMobileFooter from './SeekerMobileFooter';
+import React, { useEffect, useRef } from "react";
+import { Outlet } from "react-router-dom";
+import SeekerNavbar from "./SeekerNavbar";
+import SeekerSidebar from "./SeekerSidebar";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllServices } from "@/redux/features/serviceThunk";
+import useInfiniteScroll from "@/hooks/useInfiniteScroll"; // 👈 Your custom hook
+
 const SeekerLayout = () => {
+  const dispatch = useDispatch();
+  const containerRef = useRef();
+  const { loading, page, totalPages } = useSelector((state) => state.service);
+
+  useEffect(() => {
+    dispatch(fetchAllServices({ page: 1, limit: 10 }));
+  }, [dispatch]);
+
+  useInfiniteScroll(
+    containerRef,
+    () => {
+      if (!loading && page < totalPages) {
+        dispatch(fetchAllServices({ page: page + 1, limit: 10 }));
+      }
+    },
+    [loading, page, totalPages]
+  );
 
   return (
-    <div className='max-w-screen-xl mx-auto md:px-10 relative'>
-      {/* Fixed navbar container */}
+    <div className="max-w-screen-xl mx-auto md:px-10 relative">
       <div className="fixed top-0 left-0 right-0 z-30 ">
         <div className="max-w-screen-xl bg-background mx-auto">
           <SeekerNavbar />
         </div>
       </div>
-      
-      <div className='pt-12'>
-        <div className='lg:flex hidden'>
+
+      <div className="pt-12">
+        <div className="lg:flex hidden">
           <div className="fixed ">
-            <SeekerSidebar  />
+            <SeekerSidebar />
           </div>
         </div>
-        
-        <div id='seeker-scroll' className='flex-1 h-screen hidescroll md:px-10 px-2 py-2 md:py-1 lg:ml-68 overflow-y-auto'>
-  <div className="mb-20">
-    <Outlet />
-    {/* <div className='fixed bottom-0 left-0 right-0'>    <SeekerMobileFooter/>
-    </div> */}
-  </div>
-</div>
 
+        <div
+          ref={containerRef}
+          id="seeker-scroll"
+          className="flex-1 h-screen hidescroll md:px-10 px-2 py-2 md:py-1 lg:ml-68 overflow-y-auto"
+        >
+          <div className="mb-20">
+            <Outlet />
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
 export default SeekerLayout;
-
-// SeekerNavbar.jsx - No changes needed to this component itself
-// as the fixed positioning is handled in the layout component

@@ -71,12 +71,18 @@ const serviceSlice = createSlice({
       .addCase(fetchAllServices.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchAllServices.fulfilled, (state, action) => {
-        state.loading = false;
-        state.services = [...state.services, ...action.payload.services];
-        state.page = action.payload.page;
-        state.totalPages = action.payload.totalPages;
-      })
+  .addCase(fetchAllServices.fulfilled, (state, action) => {
+  state.loading = false;
+
+  const incoming = action.payload.services;
+  const existingIds = new Set(state.services.map((s) => s._id));
+  const filtered = incoming.filter((s) => !existingIds.has(s._id));
+
+  state.services = [...state.services, ...filtered];
+  state.page = action.payload.page;
+  state.totalPages = action.payload.totalPages;
+})
+
       .addCase(fetchAllServices.rejected, (state, action) => {
         state.loading = false;
         // ✅ Optional: don't set error for "Already fetched"
