@@ -1,77 +1,117 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { FaRegBell } from "react-icons/fa";
 import { AiOutlineHome } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { BsStars } from 'react-icons/bs';
-import { HomeIcon, SearchIcon } from 'lucide-react';
-import SeekerSidebar from './SeekerSidebar';
-import SeekerSidebar2 from './SeekerSidebar2';
-import { Link } from 'react-router-dom';
-import { Input } from '@/components/ui/input';
+import { BsStars } from "react-icons/bs";
+import { HomeIcon, SearchIcon } from "lucide-react";
+import SeekerSidebar2 from "./SeekerSidebar2";
+import { Link } from "react-router-dom";
+import { Input } from "@/components/ui/input";
 
 const SeekerNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Handle opening and closing of the sidebar
+  // Toggle sidebar
   const handleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  // Close the sidebar when clicking outside
+  // Close sidebar when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (event.target.closest('.sidebar') || event.target.closest('.menu-btn')) {
+      if (
+        event.target.closest(".sidebar") ||
+        event.target.closest(".menu-btn")
+      ) {
         return;
       }
       setIsOpen(false);
     };
 
-    document.addEventListener('click', handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
 
-    // Cleanup the event listener
     return () => {
-      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, []);
 
-  
+  // Lock body scroll when sidebar is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
 
   return (
-    <nav className='h-12 flex md:border-none    px-4 md:px-16 bg-background  items-center justify-between'>
-      <Link to={'/seeker/dashboard/home'} className="logo flex items-center gap-1">
-        <img src="/logo.svg" className='h-8 scale-98 hover:scale-100  transition cursor-pointer' alt="" />
+    <nav className="h-12 flex md:border-none border py-6 px-4 md:px-16 bg-background items-center justify-between">
+      <Link
+        to={"/seeker/dashboard/home"}
+        className="logo flex items-center gap-1"
+      >
+        <img
+          src="/logo.svg"
+          className="h-6 scale-98 hover:scale-100 transition cursor-pointer"
+          alt="logo"
+        />
       </Link>
 
-      <div className="labels flex items-center gap-6">
-        <div className='flex gap-4 items-center'>
-         <div className="search  hidden md:flex items-center border rounded-3xl px-4">
-         <Input
-  placeholder="Search"
-  className="w-40 border-none ring-0  outline-none placeholder:text-foreground
-             focus:w-60 transition-all duration-500 ease-in-out"
-/>
-         <SearchIcon size={20} className='cursor-pointer hover:scale-100 scale-96 transition' />
-         </div>
-         <SearchIcon size={25} className='cursor-pointer md:hidden hover:scale-100 scale-96 transition' />
-          <BsStars size={25} className='cursor-pointer hover:scale-100 scale-96 transition' />
-          <Link to='/seeker/dashboard/notifications'>   <FaRegBell size={25} className='cursor-pointer' /></Link>
-         <Link to='/seeker/dashboard/home'><HomeIcon size={26} className='cursor-pointer hidden md:block'/></Link> 
+      <div className="labels flex items-center gap-2 md:gap-6">
+        <div className="flex gap-4 items-center">
+          <div className="search hidden md:flex items-center border rounded-3xl px-4">
+            <Input
+              placeholder="Search"
+              className="w-40 border-none ring-0 outline-none placeholder:text-foreground
+              focus:w-60 transition-all duration-500 ease-in-out"
+            />
+            <SearchIcon
+              size={20}
+              className="cursor-pointer hover:scale-100 scale-96 transition"
+            />
+          </div>
+          <SearchIcon
+            size={20}
+            className="cursor-pointer md:hidden hover:scale-100 scale-96 transition"
+          />
+          <BsStars
+            size={20}
+            className="cursor-pointer hover:scale-100 scale-96 transition"
+          />
+          <Link to="/seeker/dashboard/notifications">
+            <FaRegBell size={20} className="cursor-pointer" />
+          </Link>
+          <Link to="/seeker/dashboard/home">
+            <HomeIcon size={20} className="cursor-pointer hidden md:block" />
+          </Link>
         </div>
         <GiHamburgerMenu
           onClick={handleSidebar}
-          size={25}
-          className='cursor-pointer   menu-btn'
+          size={22}
+          className="cursor-pointer menu-btn"
         />
       </div>
 
+    <div
+  className={`fixed inset-0 z-40 bg-black/40 transition-opacity duration-300 
+    ${isOpen ? 'bg-opacity-20 opacity-100 visible pointer-events-auto' 
+             : 'bg-opacity-0 opacity-0 invisible pointer-events-none'}`}
+  onClick={() => setIsOpen(false)}
+/>
+
+
       {/* Sidebar */}
       <div
-        className={`sidebar fixed top-0  border right-0 w-72 h-full  z-50 
-          ${isOpen ? 'translate-x-0' : 'translate-x-full'} 
-          transition-transform duration-500 ease-in-out`}>
-        <div className="sidebar-content ">
-        <SeekerSidebar2 isOpen={isOpen} setIsOpen={setIsOpen} />
-        
+        className={`sidebar fixed top-0 border right-0 w-72 h-full z-50 
+          ${isOpen ? "translate-x-0" : "translate-x-full"} 
+          transition-transform duration-700 ease-in-out bg-white`}
+      >
+        <div className="sidebar-content">
+          <SeekerSidebar2 isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>
       </div>
     </nav>

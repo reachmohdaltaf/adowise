@@ -1,31 +1,34 @@
-import React from 'react'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
-import { ArrowUpRight } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
+import { Link } from "react-router-dom";
+import { GiElectric } from "react-icons/gi";
 const FindExpertCard = () => {
   return (
-    <Link to={'/seeker/dashboard/mentors'}><Card className="w-full h-fit gap-2 p-2 bg-primary text-primary-foreground rounded-md overflow-x-auto">
-    <CardHeader className="px-2 mt-2">
-     <Link to={'/seeker/dashboard/mentors'}><Button className="w-32 sm:w-40 text-xs sm:text-base text-foreground" variant="outline">
-        <ArrowUpRight /> Find Expert
-      </Button></Link> 
-    </CardHeader>
-  
-    <CardContent className="px-2 flex items-center justify-between gap-4">
-      
-      <h2 className="text-xl sm:text-4xl font-bold max-w-[12rem] sm:max-w-xs">
-        Boost your career, talk to real pros instantly
-      </h2>
-      <img loading='lazy' src="/lens.png" className="h-24 sm:h-40" alt="lens" />
-    </CardContent>
-  
-    <CardFooter className="px-2 text-xs sm:text-sm">
-      Earn 10% commission on every booking
-    </CardFooter>
-   
-  </Card></Link> 
-  )
-}
+      <Card className="w-full border-none gap-2 px-2  py-0  rounded-md overflow-x-auto">
+        <CardHeader className="px-0  ">
+        <div>
+          <div className="flex justify-between items-center w-full">
+              <p className="text-4xl sm:text-4xl font-normal">Hi, Altaf</p>
+                          <Button size={'sm'} className={'shimmer-button'} variant={'colored'}><GiElectric/> Mentor Match</Button>
 
-export default FindExpertCard
+          </div>
+
+          <span className="text-xs sm:text-sm text-destructive font-normal">
+            Welcome to Your Dashboard
+          </span>
+        </div>
+
+        </CardHeader>
+
+       
+      </Card>
+  );
+};
+
+export default FindExpertCard;
