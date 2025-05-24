@@ -131,7 +131,7 @@ const SeekerSidebar2 = ({ isOpen, setIsOpen }) => {
         <ul className="flex flex-col gap-2">
           {sidebarItems.map((item, index) =>
             item.type === "divider" ? (
-              <div key={index} className="h-[1px] w-full " />
+              <div key={index} className="h-[1px] bg-border w-full " />
             ) : (
               <Link
                 onClick={() => setIsOpen(!isOpen)}

@@ -97,7 +97,7 @@ const SeekerNavbar = () => {
       </div>
 
     <div
-  className={`fixed inset-0 z-40 bg-black/40 transition-opacity duration-300 
+  className={`fixed inset-0 z-40 bg-black/40 transition-opacity duration-700 
     ${isOpen ? 'bg-opacity-20 opacity-100 visible pointer-events-auto' 
              : 'bg-opacity-0 opacity-0 invisible pointer-events-none'}`}
   onClick={() => setIsOpen(false)}

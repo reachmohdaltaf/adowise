@@ -4,9 +4,10 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useSelector } from "react-redux";
 
 const SeekerHomePage = () => {
-  const{user} = useSelector((state) => state.auth);
-  console.log("userinfo",user)
-  // 1. Define the card data
+  const { user } = useSelector((state) => state.auth);
+  console.log("userinfo", user);
+
+  // Card data
   const cardData = [
     {
       title1: "Internships",
@@ -31,49 +32,55 @@ const SeekerHomePage = () => {
     },
   ];
 
+  // Background colors for each card
+  const cardColors = ["#f0f5fe", "#fff9db", "#ffeef2"]; // light blue, light yellow, light pink
+
   return (
     <div className="md:py-6 gap-2 w-full flex flex-col">
       <Card className="w-full border-none shadow-none mt-5 gap-0 py-0 px-0">
         <CardHeader className="px-0">
           <FindExpertCard user={user} />
-          <CardContent className="px-0   mt-6 ">
-            <h2 className="text-4xl sm:text-3xl   gap-10 font-normal  ">
-              <span className="font-bold ">Unlock</span> Guidence
+          <CardContent className="px-0 mt-6">
+            <h2 className="text-4xl sm:text-3xl gap-10 font-normal">
+              Unlock Guidance
             </h2>
             <p className="text-xs sm:text-sm text-destructive font-normal">
-              {" "}
               Book a session with unstoppable mentors across domains & work
             </p>
           </CardContent>
 
           <div className="grid grid-cols-1 mt-4 md:grid-cols-3 gap-2">
-            {/* 2. Map over cardData */}
-            {cardData.map((card, index) => (
-              <Card key={index} className="bg-muted px-4 rounded-2xl">
-                <div className="flex items-center">
-                  {/* Text Content */}
-                  <div className="flex-1">
-                    <p className="text-lg font-semibold">{card.title1}</p>
-                    <p className="text-lg font-semibold">{card.title2}</p>
-                    <p className="text-sm font-normal">{card.subtitle1}</p>
-                    <p className="text-sm font-normal">{card.subtitle2}</p>
-                  </div>
+            {cardData.map((card, index) => {
+              const bgColor = cardColors[index % cardColors.length]; // different color for each card
 
-                  {/* Image */}
-                  <img
-                    src={card.image}
-                    alt="Mentor"
-                    className="h-28 rounded-full object-cover "
-                  />
-                </div>
-              </Card>
-            ))}
-            <CardContent className="px-0   mt-5 ">
-              <h2 className="text-4xl sm:text-3xl   gap-10 font-normal  ">
-                <span className="font-bold ">Top</span> Mentors
+              return (
+                <Card
+                  key={index}
+                  className="px-4 rounded-2xl"
+                  style={{ backgroundColor: bgColor }}
+                >
+                  <div className="flex items-center">
+                    <div className="flex-1">
+                      <p className="text-lg font-semibold">{card.title1}</p>
+                      <p className="text-lg font-semibold">{card.title2}</p>
+                      <p className="text-sm font-normal">{card.subtitle1}</p>
+                      <p className="text-sm font-normal">{card.subtitle2}</p>
+                    </div>
+                    <img
+                      src={card.image}
+                      alt="Mentor"
+                      className="h-28 rounded-full object-cover"
+                    />
+                  </div>
+                </Card>
+              );
+            })}
+
+            <CardContent className="px-0 mt-5">
+              <h2 className="text-4xl sm:text-3xl gap-10 font-normal">
+                <span className="font-bold">Top</span> Mentors
               </h2>
               <p className="text-xs sm:text-sm text-destructive font-normal">
-                {" "}
                 In search of excellence
               </p>
             </CardContent>
