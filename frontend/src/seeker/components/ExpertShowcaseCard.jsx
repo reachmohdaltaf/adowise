@@ -41,10 +41,10 @@ const ExpertShowcaseCard = ({
             </div>
 
             <div className="flex flex-col w-60">
-              <h2 className="font-bold    line-clamp-2 h-12">{title}</h2>
+              <h2 className="font-bold h-6 line-clamp-1">{title}</h2>
 
               <div className="RatingandPrice w-60  ">
-                <div className="flex items-center justify-start gap-5">
+                <div className="flex items-center  justify-start gap-5">
                   <span className="font-normal text-xs">₹ {price}</span>
                   <span className="flex gap-1 items-center">
                     <CardDescription className="rating">
@@ -62,15 +62,16 @@ const ExpertShowcaseCard = ({
                     </div>
                   </span>
                 </div>
-                <div className="flex flex-col gap-2 mt-1">
+                <div className="flex flex-col py-2 gap-2 mt-1">
                   {/* Show only 3 tags */}
                   <div className="flex gap-2">
                     {tags?.slice(0, 3).map((tag, index) => (
                       <Button
                         variant={"outline"}
-                        size={'sm'}
+                       
                         key={index}
-                        className="text-xs py-0 h-6 px-3 text-gray-500 font-semibold"
+                        disabled
+                        className="text-xs shadow-none rounded-full disabled:border-destructive disabled:text-black  py-0 h-6 px-3 text-gray-500 font-semibold"
                       >
                         {tag}
                       </Button>
