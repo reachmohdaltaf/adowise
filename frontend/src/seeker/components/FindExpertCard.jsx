@@ -16,7 +16,7 @@ const FindExpertCard = ({user}) => {
           <div className=" flex justify-between items-center w-full">
             {/* show only first name  */}
               <p className="text-4xl sm:text-4xl font-normal">Hi, {user.name.split(' ')[0]}</p>
-                          <Button size={'sm'} className={'shimmer-button'} variant={'colored'}><GiElectric/> Mentor Match</Button>
+                          <Button size={'sm'} className={'shimmer-button'} variant={'colored'}><GiElectric/>Find Expert</Button>
 
           </div>
 

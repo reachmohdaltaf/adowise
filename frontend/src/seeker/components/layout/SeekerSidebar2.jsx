@@ -13,6 +13,7 @@ import {
   Settings,
   Star,
   User,
+  Users2,
   X,
 } from "lucide-react";
 import React from "react";
@@ -34,7 +35,7 @@ const sidebarItems = [
   },
   {
     label: "Mentors",
-    icon: <HiUsers className="!h-5 !w-5" />,
+    icon: <Users2 className="!h-5 !w-5" />,
     path: "/seeker/dashboard/mentors",
   },
   {
@@ -54,23 +55,12 @@ const sidebarItems = [
   },
 
   { type: "divider" },
-  {
-    label: "Find People",
-    icon: <Search className="!h-5 !w-5" />,
-    path: "/seeker/dashboard/find-people",
-  },
 
-  {
-    label: "Calender",
-    icon: <Calendar1 className="!h-5 !w-5" />,
-    path: "/seeker/dashboard/calendar",
-  },
   {
     label: "Ai Search",
     icon: <BsStars className="!h-5 !w-5" />,
     path: "/seeker/dashboard/aisearch",
   },
-  { type: "divider" },
   {
     label: "Rewards",
     icon: <Gift className="!h-5 !w-5" />,
@@ -81,6 +71,8 @@ const sidebarItems = [
     icon: <User className="!h-5 !w-5" />,
     path: "/seeker/dashboard/profile",
   },
+  { type: "divider" },
+
   {
     label: "Settings",
     icon: <Settings className="!h-5 !w-5" />,
@@ -120,7 +112,7 @@ const SeekerSidebar2 = ({ isOpen, setIsOpen }) => {
   };
 
   return (
-    <aside className=" h-screen w-72 md:w-82 overflow-y-auto bg-background  flex flex-col justify-between z-10">
+    <aside className=" h-screen cursor-pointer w-72 md:w-82 overflow-y-auto bg-background  flex flex-col justify-between z-10">
       <div
         onClick={() => setIsOpen(!isOpen)}
         className="flex justify-end mr-3 mt-6 cursor-pointer "

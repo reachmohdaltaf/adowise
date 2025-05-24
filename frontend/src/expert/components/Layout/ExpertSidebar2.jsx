@@ -133,7 +133,7 @@ const ExpertSidebar2 = ({isOpen, setIsOpen}) => {
 
 
   return (
-    <aside className=" h-screen  w-82 overflow-y-auto bg-white  flex flex-col justify-between z-10">
+    <aside className=" h-screen w-72 md:w-82 overflow-y-auto bg-white  flex flex-col justify-between z-10">
     <div onClick={() => setIsOpen(!isOpen)} className='flex justify-end mr-3 mt-6 cursor-pointer '><X/></div>
       <div className="flex-1 px-2 mt-6">
         <ul className="flex flex-col gap-2">

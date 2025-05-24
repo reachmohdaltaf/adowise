@@ -34,14 +34,14 @@ export const signup = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-   // Get first 3 characters of the name (or less if name is shorter)
-const prefix = name.substring(0, 3).toLowerCase();
+    // Get first 3 characters of the name (or less if name is shorter)
+    const prefix = name.substring(0, 3).toLowerCase();
 
-let username;
-do {
-  const randomNum = Math.floor(Math.random() * 1000); // 0 to 999
-  username = `${prefix}${randomNum}`;
-} while (await User.findOne({ username }));
+    let username;
+    do {
+      const randomNum = Math.floor(Math.random() * 1000); // 0 to 999
+      username = `${prefix}${randomNum}`;
+    } while (await User.findOne({ username }));
 
     // Create user
     const user = await User.create({

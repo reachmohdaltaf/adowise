@@ -76,7 +76,7 @@ const ExpertNavbar = () => {
               ref={copyRef}
               className="h-8 hidden lg:flex items-center text-sm select-none"
             >
-              https://expertify.io/mohd_altaf10
+              https://adowise.com/username66
             </span>
             <div>
               {copied ? (
@@ -113,7 +113,7 @@ const ExpertNavbar = () => {
         />
       </div>
         <div
-  className={`fixed inset-0 z-40 bg-black/40 transition-opacity duration-300 
+  className={`fixed inset-0 z-40 bg-black/40 transition-opacity duration-400 
     ${isOpen ? 'bg-opacity-20 opacity-100 visible pointer-events-auto' 
              : 'bg-opacity-0 opacity-0 invisible pointer-events-none'}`}
   onClick={() => setIsOpen(false)}
@@ -121,9 +121,9 @@ const ExpertNavbar = () => {
 
       {/* Sidebar */}
       <div
-        className={`sidebar fixed top-0 border right-0 w-82 h-full z-50 
+        className={`sidebar fixed top-0 border right-0 w-72 md:w-82 h-full z-50 
         ${isOpen ? "translate-x-0" : "translate-x-full"} 
-        transition-transform duration-300 ease-in-out`}
+        transition-transform duration-400 ease-in-out`}
       >
         <div className="sidebar-content">
           <ExpertSidebar2 isOpen={isOpen} setIsOpen={setIsOpen} />

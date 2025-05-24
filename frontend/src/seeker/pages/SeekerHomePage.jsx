@@ -4,8 +4,12 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useSelector } from "react-redux";
 
 const SeekerHomePage = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { user, loading } = useSelector((state) => state.auth);
   console.log("userinfo", user);
+
+  if(!user && loading){
+    return <div>Loading...</div>
+  }
 
   // Card data
   const cardData = [

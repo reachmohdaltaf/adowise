@@ -14,13 +14,14 @@ import {
   Search,
   Settings,
   User,
+  Users2,
 } from "lucide-react";
 import React from "react";
 import { BsStars } from "react-icons/bs";
 import { RiFileList3Line, RiUserStarLine } from "react-icons/ri";
 import { TbMessageStar, TbUserStar } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
-import { Link,  useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { HiUsers } from "react-icons/hi2";
 
@@ -32,7 +33,7 @@ const sidebarItems = [
   },
   {
     label: "Mentors",
-    icon: <HiUsers  className="!h-5 !w-5" />,
+    icon: <Users2 className="!h-5 !w-5" />,
     path: "/seeker/dashboard/mentors",
   },
   {
@@ -42,7 +43,7 @@ const sidebarItems = [
     activeCheck: (pathname) =>
       pathname.startsWith("/seeker/dashboard/bookings"),
   },
-  
+
   {
     label: "Priority DM",
     icon: <TbMessageStar className="!h-5 !w-5" />,
@@ -52,23 +53,12 @@ const sidebarItems = [
   },
 
   { type: "divider" },
-  {
-    label: "Find People",
-    icon: <Search className="!h-5 !w-5" />,
-    path: "/seeker/dashboard/find-people",
-  },
- 
-  {
-    label: "Calender",
-    icon: <Calendar1 className="!h-5 !w-5" />,
-    path: "/seeker/dashboard/calendar",
-  },
+
   {
     label: "Ai Search",
     icon: <BsStars className="!h-5 !w-5" />,
     path: "/seeker/dashboard/aisearch",
   },
-  { type: "divider" },
   {
     label: "Rewards",
     icon: <Gift className="!h-5 !w-5" />,
@@ -79,6 +69,8 @@ const sidebarItems = [
     icon: <User className="!h-5 !w-5" />,
     path: "/seeker/dashboard/profile",
   },
+  { type: "divider" },
+
   {
     label: "Settings",
     icon: <Settings className="!h-5 !w-5" />,
@@ -96,30 +88,28 @@ const SeekerSidebar = () => {
   const user = useSelector((state) => state.auth.user);
   const userRoleChanging = useSelector((state) => state.user.loading);
   const navigate = useNavigate();
-  console.log({"userID in sidebar": user._id, "role": user.role});  
+  console.log({ "userID in sidebar": user._id, role: user.role });
   const location = useLocation();
   const dispatch = useDispatch();
- 
 
   const handleLogout = () => {
-    
     dispatch(logout());
   };
   const handleRoleChange = async () => {
     try {
-      await dispatch(updateUserRole({ userId: user._id, role: "expert" })).unwrap();
-      await dispatch(authCheck()).unwrap();  
+      await dispatch(
+        updateUserRole({ userId: user._id, role: "expert" })
+      ).unwrap();
+      await dispatch(authCheck()).unwrap();
       navigate("/expert/dashboard/home");
     } catch (error) {
       console.log("Role change failed", error);
-            toast.error("Role change failed");
-      
+      toast.error("Role change failed");
     }
   };
-  
 
   return (
-    <aside className=" h-screen  w-68 overflow-y-auto pt-5   bg-background flex flex-col justify-between z-10">
+    <aside className=" h-screen   w-68 overflow-y-auto pt-5   bg-background flex flex-col justify-between z-10">
       <div className="flex-1 px-2 mt-8">
         <ul className="flex flex-col gap-2">
           {sidebarItems.map((item, index) =>
@@ -146,22 +136,21 @@ const SeekerSidebar = () => {
             )
           )}
         </ul>
-
-             <Button
-            onClick={handleRoleChange}
-            size="lg"
-            className="mt-3 rounded-full font-semibold py-5 w-full flex items-center justify-center gap-2"
-            variant=""
-            disabled={userRoleChanging} // disable button while loading
-          >
-            {userRoleChanging ? (
-              <span className="animate-spin rounded-full h-4 w-4 border-2 border-t-transparent border-black"></span>
-            ) : (
-              <RiUserStarLine className="!h-5 !w-5" />
-            )}
-            {userRoleChanging ? "Switching..." : "Expert Dashboard"}
-          </Button>
-  
+          
+        <Button
+          onClick={handleRoleChange}
+          size="sm"
+          className="mt-3 rounded-full font-semibold py-5 w-full flex items-center justify-center gap-2"
+          variant=""
+          disabled={userRoleChanging} // disable button while loading
+        >
+          {userRoleChanging ? (
+            <span className="animate-spin rounded-full h-4 w-4 border-2 border-t-transparent border-black"></span>
+          ) : (
+            <RiUserStarLine className="!h-5 !w-5" />
+          )}
+          {userRoleChanging ? "Switching..." : "Expert Dashboard"}
+        </Button>
 
         <Link onClick={handleLogout} to="/login">
           <Button
