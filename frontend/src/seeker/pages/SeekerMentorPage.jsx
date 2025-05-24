@@ -35,8 +35,8 @@ const SeekerMentorPage = () => {
 
       {/* Sticky Filter */}
       <div
-        className={`sticky top-[-21px] md:top-[-14px] z-10 transition-all duration-300 py-2 md:py-4 bg-background ${
-          isSticky ? "border-b bg-background scale-[1.02]" : ""
+        className={`sticky top-[-9px] md:top-[-1px] z-10 transition-all duration-300 py-3  md:py-4 bg-background ${
+          isSticky ? "shadow-sm bg-background scale-[1.02]" : ""
         }`}
       >
         <CategoryFilter />
