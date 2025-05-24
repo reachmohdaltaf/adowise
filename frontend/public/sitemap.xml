@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Public Routes -->
+  <url>
+    <loc>https://adowise.com/</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/login</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/register</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/chatbot</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Seeker Dashboard Routes -->
+  <url>
+    <loc>https://adowise.com/seeker/dashboard/home</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/seeker/dashboard/messages</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/seeker/dashboard/bookings</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/seeker/dashboard/bookings/upcoming</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/seeker/dashboard/bookings/completed</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/seeker/dashboard/find-people</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/seeker/dashboard/mentors</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/seeker/dashboard/profile</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/seeker/dashboard/calendar</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/seeker/dashboard/notifications</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/seeker/dashboard/aisearch</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/seeker/dashboard/settings</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/seeker/dashboard/rewards</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/seeker/dashboard/priority-dm</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/seeker/dashboard/priority-dm/sent-messages</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/seeker/dashboard/priority-dm/answered-by-experts</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Expert Dashboard Routes -->
+  <url>
+    <loc>https://adowise.com/expert/dashboard/home</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/services</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/services/1-to-1</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/services/dm</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/services/webinar</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/create/service</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/create/service/1-to-1</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/create/service/dm</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/create/service/webinar</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/create-service</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/analytics</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/testimonials</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/bookings</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/bookings/upcoming</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/bookings/completed</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/payments</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/priority-dm</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/priority-dm/pending</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/priority-dm/answered-by-expert</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/settings</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/availability</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/availability/calendar</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/availability/schedule</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/profile</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://adowise.com/expert/dashboard/messages</loc>
+    <lastmod>2024-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>
