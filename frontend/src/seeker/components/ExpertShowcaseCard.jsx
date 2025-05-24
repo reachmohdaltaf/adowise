@@ -69,7 +69,7 @@ const ExpertShowcaseCard = ({
                     {tags?.slice(0, 3).map((tag, index) => (
                       <Button
                         variant={"outline"}
-                       
+                        
                         key={index}
                         disabled
                         className="text-xs shadow-none rounded-full disabled:border-destructive disabled:text-black  py-0 h-6 px-3 text-gray-500 font-semibold"
@@ -92,7 +92,7 @@ const ExpertShowcaseCard = ({
           <p className="text-sm">
             by: <span className="font-normal text-sm">{author}</span>
           </p>
-          <Button size={"sm"}>{type == "1:1" ? "Book Now" : "DM Now"}</Button>
+          <Button className="text-xs px-4 h-8" size={""}>{type == "1:1" ? "Book Now" : "DM Now"}</Button>
         </CardFooter>
       </Card>
     </div>

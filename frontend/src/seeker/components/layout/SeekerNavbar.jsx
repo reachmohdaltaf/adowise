@@ -97,7 +97,7 @@ const SeekerNavbar = () => {
       </div>
 
     <div
-  className={`fixed inset-0 z-40 bg-black/40 transition-opacity duration-700 
+  className={`fixed inset-0 z-40 bg-black/40 transition-opacity duration-400 
     ${isOpen ? 'bg-opacity-20 opacity-100 visible pointer-events-auto' 
              : 'bg-opacity-0 opacity-0 invisible pointer-events-none'}`}
   onClick={() => setIsOpen(false)}
@@ -108,7 +108,7 @@ const SeekerNavbar = () => {
       <div
         className={`sidebar fixed top-0 border right-0 w-72 md:w-82 h-full z-50 
           ${isOpen ? "translate-x-0" : "translate-x-full"} 
-          transition-transform duration-700 ease-in-out bg-white`}
+          transition-transform duration-400 ease-in-out bg-white`}
       >
         <div className="sidebar-content">
           <SeekerSidebar2 isOpen={isOpen} setIsOpen={setIsOpen} />

@@ -44,6 +44,18 @@ const ExpertNavbar = () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+    // Lock body scroll when sidebar is open
+    useEffect(() => {
+      if (isOpen) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "auto";
+      }
+  
+      return () => {
+        document.body.style.overflow = "auto";
+      };
+    }, [isOpen]);
 
   return (
     <nav className="h-12 flex md:border-none px-3 md:px-16 bg-background items-center justify-between">
@@ -100,12 +112,18 @@ const ExpertNavbar = () => {
           className="cursor-pointer menu-btn"
         />
       </div>
+        <div
+  className={`fixed inset-0 z-40 bg-black/40 transition-opacity duration-300 
+    ${isOpen ? 'bg-opacity-20 opacity-100 visible pointer-events-auto' 
+             : 'bg-opacity-0 opacity-0 invisible pointer-events-none'}`}
+  onClick={() => setIsOpen(false)}
+></div>
 
       {/* Sidebar */}
       <div
-        className={`sidebar fixed top-0 border right-0 w-72 h-full z-50 
+        className={`sidebar fixed top-0 border right-0 w-82 h-full z-50 
         ${isOpen ? "translate-x-0" : "translate-x-full"} 
-        transition-transform duration-500 ease-in-out`}
+        transition-transform duration-300 ease-in-out`}
       >
         <div className="sidebar-content">
           <ExpertSidebar2 isOpen={isOpen} setIsOpen={setIsOpen} />
