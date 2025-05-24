@@ -32,16 +32,17 @@ const ExpertShowcaseCard = ({
       >
         <CardHeader className={"px-2 mb-0"}>
           <div className="flex gap-4">
-            <div className="profile w-20 aspect-square  overflow-hidden rounded-md">
-              <img
-                src={image || "https:placeholder.com/150"}
-                alt="profile"
-                className="w-full h-20 object-cover"
-              />
-            </div>
+          <div className="profile w-14 h-14 aspect-square overflow-hidden rounded-md">
+  <img
+    src={image || "https://via.placeholder.com/150"}
+    alt="profile"
+    className="w-full h-full object-cover"
+  />
+</div>
+
 
             <div className="flex flex-col w-60">
-              <h2 className="font-bold h-6 w-10 line-clamp-1">{title}</h2>
+              <h2 className="font-bold h-6 overflow-ellipsis line-clamp-1">{title}</h2>
 
               <div className="RatingandPrice w-60  ">
                 <div className="flex items-center  justify-start gap-5">

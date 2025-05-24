@@ -137,11 +137,11 @@ const ExpertSidebar = () => {
               <Link to={item.path} key={index}>
                 <Button
                   size="lg"
-                  className={`flex items-center gap-3 transition ease-in  font-semibold rounded-r-none rounded-l-2xl justify-start w-full
+                  className={`flex items-center gap-3  font-semibold rounded-r-none rounded-l-2xl justify-start w-full
                     ${
                       item.activeCheck?.(location.pathname) ||
                       location.pathname === item.path
-                        ? "bg-muted text-muted-foreground pointer-events-none transition-none"
+                        ? "bg-muted text-muted-foreground pointer-events-none "
                         : "hover:bg-secondary hover:text-foreground"
                     }
                   `}

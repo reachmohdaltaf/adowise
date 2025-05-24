@@ -6,10 +6,10 @@ import ExpertSidebar from './ExpertSidebar';
 const ExpertLayout = () => {
 
   return (
-    <div className='expert max-w-screen-xl mx-auto md:px-10 relative'>
+    <div className='expert max-w-screen-2xl mx-auto md:px-10 relative'>
       {/* Fixed navbar container */}
       <div className="fixed top-0 left-0 right-0 z-30 ">
-        <div className="max-w-screen-xl bg-background mx-auto">
+        <div className="max-w-screen-2xl bg-background mx-auto">
           <ExpertNavbar />
         </div>
       </div>

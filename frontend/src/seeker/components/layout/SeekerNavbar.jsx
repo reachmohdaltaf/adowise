@@ -106,7 +106,7 @@ const SeekerNavbar = () => {
 
       {/* Sidebar */}
       <div
-        className={`sidebar fixed top-0 border right-0 w-72 h-full z-50 
+        className={`sidebar fixed top-0 border right-0 w-72 md:w-82 h-full z-50 
           ${isOpen ? "translate-x-0" : "translate-x-full"} 
           transition-transform duration-700 ease-in-out bg-white`}
       >

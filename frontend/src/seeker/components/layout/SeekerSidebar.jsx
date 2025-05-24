@@ -119,7 +119,7 @@ const SeekerSidebar = () => {
   
 
   return (
-    <aside className=" h-screen  w-68 overflow-y-auto   bg-background flex flex-col justify-between z-10">
+    <aside className=" h-screen  w-68 overflow-y-auto pt-5   bg-background flex flex-col justify-between z-10">
       <div className="flex-1 px-2 mt-8">
         <ul className="flex flex-col gap-2">
           {sidebarItems.map((item, index) =>
@@ -129,11 +129,11 @@ const SeekerSidebar = () => {
               <Link to={item.path} key={index}>
                 <Button
                   size="lg"
-                  className={`flex items-center gap-3 transition ease-in  font-semibold rounded-r-none rounded-l-2xl justify-start w-full
+                  className={`flex items-center gap-3    font-semibold rounded-r-none rounded-l-2xl justify-start w-full
                     ${
                       item.activeCheck?.(location.pathname) ||
                       location.pathname === item.path
-                        ? "bg-muted text-muted-foreground pointer-events-none transition-none"
+                        ? "bg-muted text-muted-foreground pointer-events-none "
                         : "hover:bg-secondary hover:text-foreground"
                     }
                   `}
