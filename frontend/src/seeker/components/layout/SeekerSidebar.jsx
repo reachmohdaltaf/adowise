@@ -27,7 +27,11 @@ import { toast } from "react-toastify";
 import { HiUsers } from "react-icons/hi2";
 import { PiSirenLight } from "react-icons/pi";
 
-const sidebarItems = [
+
+
+const SeekerSidebar = () => {
+  const user = useSelector((state) => state.auth.user);
+  const sidebarItems = [
   {
     label: "Home",
     icon: <HomeIcon className="!h-5 !w-5" />,
@@ -70,7 +74,7 @@ const sidebarItems = [
   {
     label: "Profile",
     icon: <User className="!h-5 !w-5" />,
-    path: "/seeker/dashboard/profile",
+    path: `/seeker/dashboard/profile/${user._id}`,
   },
   { type: "divider" },
 
@@ -91,9 +95,6 @@ const sidebarItems = [
   },
   { type: "divider" },
 ];
-
-const SeekerSidebar = () => {
-  const user = useSelector((state) => state.auth.user);
   const userRoleChanging = useSelector((state) => state.user.loading);
   const navigate = useNavigate();
   console.log({ "userID in sidebar": user._id, role: user.role });

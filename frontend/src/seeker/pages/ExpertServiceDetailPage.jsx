@@ -45,23 +45,23 @@ const ExpertServiceDetails = () => {
   if (!service) return <div>Service not found</div>;
 
   return (
-    <div className="px-4 text-foreground md:px-10 py-6 bg-primary min-h-screen flex gap-4 items-start justify-center">
+    <div className="px-2 text-foreground md:px-4 py-6 bg-primary min-h-screen flex gap-4 items-start justify-center">
       <Button
         variant="outline"
         onClick={() => navigate(-1)}
-        className="py-6 absolute left-6 md:left-10 md:top-12"
+        className="py-6 hidden lg:flex md:absolute left-6 md:left-10 md:top-12"
       >
         <ArrowLeft className="mr-2" /> Back
       </Button>
 
-      <div className="mt-20 md:mt-10 flex flex-col md:flex-row items-start gap-6 justify-center w-full">
+      <div className="mt-6 md:mt-10 flex flex-col md:flex-row items-start gap-6 justify-center w-full">
         {/* Service Card */}
-        <Card className="py-0 md:w-1/2 rounded-4xl text-start">
+        <Card className="py-0 md:w-1/2 w-full  rounded-4xl text-start">
           <CardHeader className="px-6 py-6 rounded-t-4xl bg-muted">
             <div className="flex justify-between gap-5 items-center">
               <div className="px-2">
-               <div className="flex items-start gap-2">
-                 <h1 className="md:text-4xl text-2xl font-bold">{service.title}</h1>
+               <div className="flex items-start justify-between gap-2">
+                 <h1 className="md:text-3xl md:w-3/4 text-2xl font-bold">{service.title}</h1>
                 <div className="min-w-[64px] min-h-[64px] w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden bg-muted flex items-center justify-center">
                   <img
                     src={

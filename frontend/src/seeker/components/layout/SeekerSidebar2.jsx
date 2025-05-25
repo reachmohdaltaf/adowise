@@ -27,68 +27,75 @@ import { authCheck, logout } from "@/redux/features/authThunk";
 import { updateUserRole } from "@/redux/features/userThunk";
 import { toast } from "react-toastify";
 import { HiUsers } from "react-icons/hi2";
+import { PiSirenLight } from "react-icons/pi";
 
-const sidebarItems = [
-  {
-    label: "Home",
-    icon: <HomeIcon className="!h-5 !w-5" />,
-    path: "/seeker/dashboard/home",
-  },
-  {
-    label: "Mentors",
-    icon: <Users2 className="!h-5 !w-5" />,
-    path: "/seeker/dashboard/mentors",
-  },
-  {
-    label: "Bookings",
-    icon: <PhoneCall className="!h-5 !w-5" />,
-    path: "/seeker/dashboard/bookings/upcoming",
-    activeCheck: (pathname) =>
-      pathname.startsWith("/seeker/dashboard/bookings"),
-  },
-
-  {
-    label: "Priority DM",
-    icon: <TbMessageStar className="!h-5 !w-5" />,
-    path: "/seeker/dashboard/priority-dm/sent-messages",
-    activeCheck: (pathname) =>
-      pathname.startsWith("/seeker/dashboard/priority-dm/answered-by-experts"),
-  },
-
-  { type: "divider" },
-
-  {
-    label: "Ai Search",
-    icon: <BsStars className="!h-5 !w-5" />,
-    path: "/seeker/dashboard/aisearch",
-  },
-  {
-    label: "Rewards",
-    icon: <Gift className="!h-5 !w-5" />,
-    path: "/seeker/dashboard/rewards",
-  },
-  {
-    label: "Profile",
-    icon: <User className="!h-5 !w-5" />,
-    path: "/seeker/dashboard/profile",
-  },
-  { type: "divider" },
-
-  {
-    label: "Settings",
-    icon: <Settings className="!h-5 !w-5" />,
-    path: "/seeker/dashboard/settings",
-  },
-  {
-    label: "Help",
-    icon: <HelpCircle className="!h-5 !w-5" />,
-    path: "/seeker/dashboard/help",
-  },
-  { type: "divider" },
-];
 
 const SeekerSidebar2 = ({ isOpen, setIsOpen }) => {
   const user = useSelector((state) => state.auth.user);
+    const sidebarItems = [
+    {
+      label: "Home",
+      icon: <HomeIcon className="!h-5 !w-5" />,
+      path: "/seeker/dashboard/home",
+    },
+    {
+      label: "Mentors",
+      icon: <Users2 className="!h-5 !w-5" />,
+      path: "/seeker/dashboard/mentors",
+    },
+   
+    {
+      label: "Bookings",
+      icon: <PhoneCall className="!h-5 !w-5" />,
+      path: "/seeker/dashboard/bookings/upcoming",
+      activeCheck: (pathname) =>
+        pathname.startsWith("/seeker/dashboard/bookings"),
+    },
+  
+    {
+      label: "Priority DM",
+      icon: <TbMessageStar className="!h-5 !w-5" />,
+      path: "/seeker/dashboard/priority-dm/sent-messages",
+      activeCheck: (pathname) =>
+        pathname.startsWith("/seeker/dashboard/priority-dm/answered-by-experts"),
+    },
+  
+    { type: "divider" },
+  
+    {
+      label: "Ai Search",
+      icon: <BsStars className="!h-5 !w-5" />,
+      path: "/seeker/dashboard/aisearch",
+    },
+    {
+      label: "Rewards",
+      icon: <Gift className="!h-5 !w-5" />,
+      path: "/seeker/dashboard/rewards",
+    },
+    {
+      label: "Profile",
+      icon: <User className="!h-5 !w-5" />,
+      path: `/seeker/dashboard/profile/${user._id}`,
+    },
+    { type: "divider" },
+  
+    {
+      label: "Settings",
+      icon: <Settings className="!h-5 !w-5" />,
+      path: "/seeker/dashboard/settings",
+    },
+     {
+      label: "What's New",
+      icon: <PiSirenLight  className="!h-5 !w-5" />,
+      path: "/seeker/dashboard/whatsnew",
+    },
+    {
+      label: "Help",
+      icon: <HelpCircle className="!h-5 !w-5" />,
+      path: "/seeker/dashboard/help",
+    },
+    { type: "divider" },
+  ];
   const userRoleChanging = useSelector((state) => state.user.loading);
   const navigate = useNavigate();
   console.log({ "userID in sidebar": user._id, role: user.role });
