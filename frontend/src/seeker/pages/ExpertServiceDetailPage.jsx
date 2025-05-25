@@ -29,8 +29,8 @@ const ExpertServiceDetails = () => {
       >
         <ArrowUp /> Visit Page
       </Button>
-      <div className=" mt-20 flex items-start gap-3 justify-between w-full md:w-2/3 h-full">
-        <Card className="w-full gap-0 py-0 rounded-4xl h-fit text-start">
+      <div className=" mt-20 flex items-start gap-3 justify-between w-full  h-full">
+        <Card className="w-1/2 gap-0 py-0 rounded-4xl h-fit text-start">
           <CardHeader className="px-6 flex justify-between py-6 rounded-t-4xl bg-muted h-fit">
             <div className="px-2 ">
               <h1 className=" text-2xl md:text-2xl font-bold">
@@ -77,10 +77,13 @@ const ExpertServiceDetails = () => {
                   ))}
               </div>
             </div>
-            <Button className="w-full shimmer-button py-6 mt-10">
+            <Button className="w-full shimmer-button py-4 mt-10">
               See Availability 
             </Button>
           </CardContent>
+        </Card>
+        <Card className={'w-1/2 rounded-4xl h-96'}>
+          asdsd
         </Card>
       </div>
     </div>
