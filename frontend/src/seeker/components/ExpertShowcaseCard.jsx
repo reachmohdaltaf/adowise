@@ -42,8 +42,8 @@ const ExpertShowcaseCard = ({
               />
             </div>
 
-            <div className="flex flex-col w-72">
-              <h2 className="font-bold h-6  text-lg overflow-ellipsis line-clamp-1">
+            <div className="flex flex-col w-58">
+              <h2 className="font-bold text-lg truncate overflow-hidden whitespace-nowrap">
                 {title}
               </h2>
 
@@ -58,7 +58,7 @@ const ExpertShowcaseCard = ({
                           key={index}
                           size={16}
                           fill={index < filledStars ? "#FFCE07" : "#ccc"}
-                          stroke={index< filledStars ? "#FFCE07" : "#ccc" }
+                          stroke={index < filledStars ? "#FFCE07" : "#ccc"}
                         />
                       ))}
                     </div>
@@ -85,27 +85,35 @@ const ExpertShowcaseCard = ({
             {description}
           </p>
         </CardContent>
-        <CardFooter
-          className={"px-2 py-2"}
-        >
-          <div  className="flex pt-3 w-full  justify-between items-end gap-2">
+        <CardFooter className={"px-2 py-2"}>
+          <div className="flex pt-3 w-full  justify-between items-end gap-2">
             <p className="text-sm">
-            by{" "}
-            <span className="font-normal text-destructive text-sm">
-              {author}
-            </span>
-          </p>
-         
-            {type == "1:1"? (
-              <div className="flex items-center gap-2 font-normal"> <p className="font-normal ">Schedule a 1:1</p><span> <Video size={20}/></span></div>
-            )
-            :
-            (
-              <div className="flex items-center gap-2 font-normal"> <p className="font-normal">Send a Dm</p><span> <TbMessageStar size={20}/></span></div>
-            )
-          }
+              by{" "}
+              <span className="font-normal text-destructive text-sm">
+                {author}
+              </span>
+            </p>
+
+            {type == "1:1" ? (
+              <div className="flex items-center gap-2 font-normal">
+                {" "}
+                <p className="font-normal ">Schedule a 1:1</p>
+                <span>
+                  {" "}
+                  <Video size={20} />
+                </span>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2 font-normal">
+                {" "}
+                <p className="font-normal">Send a Dm</p>
+                <span>
+                  {" "}
+                  <TbMessageStar size={20} />
+                </span>
+              </div>
+            )}
           </div>
-         
         </CardFooter>
       </Card>
     </div>
