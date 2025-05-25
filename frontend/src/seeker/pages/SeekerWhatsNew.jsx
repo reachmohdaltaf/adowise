@@ -1,9 +1,9 @@
 import React from 'react'
 
-const SeekerFindPeople = () => {
+const SeekerWhatsNew = () => {
   return (
     <div>SeekerFindPeople</div>
   )
 }
 
-export default SeekerFindPeople
+export default SeekerWhatsNew

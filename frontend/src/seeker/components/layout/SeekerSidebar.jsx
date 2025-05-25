@@ -9,6 +9,7 @@ import {
   HomeIcon,
   LogOutIcon,
   Mail,
+  Newspaper,
   Phone,
   PhoneCall,
   Search,
@@ -24,6 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { HiUsers } from "react-icons/hi2";
+import { PiSirenLight } from "react-icons/pi";
 
 const sidebarItems = [
   {
@@ -36,6 +38,7 @@ const sidebarItems = [
     icon: <Users2 className="!h-5 !w-5" />,
     path: "/seeker/dashboard/mentors",
   },
+ 
   {
     label: "Bookings",
     icon: <PhoneCall className="!h-5 !w-5" />,
@@ -75,6 +78,11 @@ const sidebarItems = [
     label: "Settings",
     icon: <Settings className="!h-5 !w-5" />,
     path: "/seeker/dashboard/settings",
+  },
+   {
+    label: "What's New",
+    icon: <PiSirenLight className="!h-5 !w-5" />,
+    path: "/seeker/dashboard/whatsnew",
   },
   {
     label: "Help",

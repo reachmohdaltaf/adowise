@@ -32,7 +32,7 @@ const ExpertServiceDetails = () => {
       <div className=" mt-20 flex items-start gap-3 justify-between w-full md:w-2/3 h-full">
         <Card className="w-full gap-0 py-0 rounded-4xl h-fit text-start">
           <CardHeader className="px-6 flex justify-between py-6 rounded-t-4xl bg-muted h-fit">
-            <div>
+            <div className="px-2 ">
               <h1 className=" text-2xl md:text-2xl font-bold">
                 {service.title}
               </h1>
@@ -78,7 +78,7 @@ const ExpertServiceDetails = () => {
               </div>
             </div>
             <Button className="w-full shimmer-button py-6 mt-10">
-              Book Now
+              See Availability 
             </Button>
           </CardContent>
         </Card>

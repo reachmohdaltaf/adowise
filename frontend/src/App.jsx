@@ -14,7 +14,7 @@ import RegisterPage from "./pages/RegisterPage";
 import SeekerHomePage from "./seeker/pages/SeekerHomePage";
 import SeekerMessagePage from "./seeker/pages/SeekerMessagePage";
 import SeekerBookingPage from "./seeker/pages/SeekerBookingPage";
-import SeekerFindPeople from "./seeker/pages/SeekerFindPeople";
+import SeekerWhatsNew from "./seeker/pages/SeekerWhatsNew";
 import SeekerProfile from "./seeker/pages/SeekerProfile";
 import SeekerUpcomingBooking from "./seeker/pages/SeekerUpcomingBooking";
 import { SeekerCompletedBooking } from "./seeker/pages/SeekerCompletedBooking";
@@ -181,7 +181,7 @@ const App = () => {
             <Route path="upcoming" element={<SeekerUpcomingBooking />} />
             <Route path="completed" element={<SeekerCompletedBooking />} />
           </Route>
-          <Route path="find-people" element={<SeekerFindPeople />} />
+          <Route path="whatsnew" element={<SeekerWhatsNew/>} />
           <Route path="mentors" element={<SeekerMentorPage/>} />
           <Route path="profile/:id" element={<SeekerProfile />} />
           <Route path="calendar" element={<SeekerCalendarPage />} />
