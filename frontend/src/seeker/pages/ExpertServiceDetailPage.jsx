@@ -33,28 +33,30 @@ const ExpertServiceDetails = () => {
         <Card className="w-full gap-0 py-0 rounded-4xl h-fit text-start">
           <CardHeader className="px-6 flex justify-between py-6 rounded-t-4xl bg-muted h-fit">
             <div>
-              <h1 className=" text-2xl md:text-3xl font-bold">
+              <h1 className=" text-2xl md:text-2xl font-bold">
                 {service.title}
               </h1>
               <p className="text-sm text-destructive">@{username}</p>
-              <p className="text-2xl md:text-3xl flex justify-between mt-3">
+              <p className="text-2xl md:text-2xl flex justify-between mt-3">
                 ₹{service.amount}
                 <span className="text-destructive flex items-center font-normal  text-sm md:text-lg gap-1">
                   <Timer /> {service.duration} mins meeting
                 </span>
               </p>
             </div>
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden flex items-center justify-center bg-muted">
+          <div className="flex items-center">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden flex items-center justify-center bg-muted">
               <img
                 src="https://dummyimage.com/600x400/000/fff"
                 alt="Profile"
                 className="w-full h-full object-cover"
               />
             </div>
+          </div>
           </CardHeader>
 
           <CardContent className="space-y-4 text-start items-start p-6">
-            <div className="text-lg md:text-xl font-normal text-destructive">
+            <div className="text-lg md:text-lg font-normal text-destructive">
               {service.description.split("\n").map((line, index) => (
                 <p key={index} className="mb-2 font-normal">
                   {line}
