@@ -113,7 +113,7 @@ const SeekerSidebar2 = ({ isOpen, setIsOpen }) => {
   };
 
   return (
-    <aside className=" h-screen cursor-pointer w-72 md:w-82 overflow-y-auto bg-background  flex flex-col justify-between z-10">
+    <aside className=" h-screen  w-72 md:w-82 overflow-y-auto bg-background  flex flex-col justify-between z-10">
       <div
         onClick={() => setIsOpen(!isOpen)}
         className="flex justify-end mr-3 mt-6 cursor-pointer "
@@ -122,7 +122,7 @@ const SeekerSidebar2 = ({ isOpen, setIsOpen }) => {
       </div>
 
       <div className="flex-1 px-2 mt-6">
-        <Link to={`/profile/${user._id}`} className="flex items-center gap-2 px-4 bg-muted py-4 rounded-xl">
+        <Link to={`/seeker/dashboard/profile/${user._id}`} onClick={() => setIsOpen(!isOpen)} className="flex items-center gap-2 px-4 bg-muted py-4 rounded-xl">
           <img
             src={
               "https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=76&q=80"
@@ -133,11 +133,11 @@ const SeekerSidebar2 = ({ isOpen, setIsOpen }) => {
           <div className="w-full">
             <div className="flex items-center justify-between w-full">
               <h2 className="text-lg font-semibold">{user.name}</h2>
-              <p className="flex bg-muted-foreground rounded-md text-white px-2 items-center gap-1">
-                <BsStarFill size={16} /> {user.rating || 6}
+              <p className="flex bg-muted-foreground rounded-md text-white px-2 items-center text-sm gap-1">
+                <BsStarFill size={10} /> {user.rating || 6}
               </p>
             </div>
-            <p className="text-destructive">@{user.username}</p>
+            <p className="text-destructive text-sm font-normal">@{user.username}</p>
           </div>
         </Link>
         <ul className="flex flex-col mt-4 gap-2">

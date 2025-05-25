@@ -183,7 +183,7 @@ const App = () => {
           </Route>
           <Route path="find-people" element={<SeekerFindPeople />} />
           <Route path="mentors" element={<SeekerMentorPage/>} />
-          <Route path="profile" element={<SeekerProfile />} />
+          <Route path="profile/:id" element={<SeekerProfile />} />
           <Route path="calendar" element={<SeekerCalendarPage />} />
           <Route path="notifications" element={<SeekerNotificationsPage />} />
           <Route path="aisearch" element={<SeekerAiSearch />} />
