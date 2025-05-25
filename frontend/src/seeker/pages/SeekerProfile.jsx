@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 
 const SeekerProfile = () => {
   const user = useSelector((state) => state.auth.user);
+  console.log("profile", user)
   return (
     <div className=" mx-auto md:mt-10 md:px-4">
       {/* Profile Card */}

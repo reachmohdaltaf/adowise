@@ -12,12 +12,13 @@ import {
   Search,
   Settings,
   Star,
+  StarIcon,
   User,
   Users2,
   X,
 } from "lucide-react";
 import React from "react";
-import { BsStars } from "react-icons/bs";
+import { BsStarFill, BsStars } from "react-icons/bs";
 import { TbMessageStar } from "react-icons/tb";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { RiUserStarLine } from "react-icons/ri";
@@ -119,8 +120,27 @@ const SeekerSidebar2 = ({ isOpen, setIsOpen }) => {
       >
         <X />
       </div>
+
       <div className="flex-1 px-2 mt-6">
-        <ul className="flex flex-col gap-2">
+        <Link to={`/profile/${user._id}`} className="flex items-center gap-2 px-4 bg-muted py-4 rounded-xl">
+          <img
+            src={
+              "https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=76&q=80"
+            }
+            alt="profile"
+            className="h-10 w-12 rounded-full object-cover"
+          />
+          <div className="w-full">
+            <div className="flex items-center justify-between w-full">
+              <h2 className="text-lg font-semibold">{user.name}</h2>
+              <p className="flex bg-muted-foreground rounded-md text-white px-2 items-center gap-1">
+                <BsStarFill size={16} /> {user.rating || 6}
+              </p>
+            </div>
+            <p className="text-destructive">@{user.username}</p>
+          </div>
+        </Link>
+        <ul className="flex flex-col mt-4 gap-2">
           {sidebarItems.map((item, index) =>
             item.type === "divider" ? (
               <div key={index} className="h-[1px] bg-border w-full " />

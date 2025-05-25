@@ -12,7 +12,7 @@ const ExpertHomePage = () => {
     
    <div className='flex md:flex-row flex-col gap-3 items-center'>
    <LeadRocketCard/>
-   {/* <CompleteExpertProfileCard/> */}
+   <CompleteExpertProfileCard/>
    </div>
 
 

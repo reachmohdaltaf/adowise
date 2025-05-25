@@ -64,7 +64,6 @@ const UpdateServicePage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitting with serviceId:", serviceId, "formData:", formData);
     dispatch(updateService({ serviceId, formData }))
       .then(() => {
         if(formData.type === "1:1"){
