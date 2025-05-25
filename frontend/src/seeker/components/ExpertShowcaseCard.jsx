@@ -96,7 +96,7 @@ const ExpertShowcaseCard = ({
             </span>
           </p>
           <Link to={`/${username}/service/${id}`}>
-            <Button className="text-xs bg-gradient-to-b from-primary to-muted-foreground  px-4 h-8" size={""}>
+            <Button className="text-xs  px-4 h-8" size={""}>
               {type == "1:1" ? "Book Now" : "DM Now"}
             </Button>
           </Link>
