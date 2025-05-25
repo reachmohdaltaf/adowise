@@ -41,7 +41,7 @@ const CategoryFilter = () => {
             key={index}
             variant={'outline'}
             onClick={() => handleButtonClick(index)}
-            className={selectedButtonIndex === index ? 'bg-muted hover:bg-muted hover:text-foreground-muted text-muted-foreground' : ''}>
+            className={selectedButtonIndex === index ? 'bg-muted hover:bg-muted hover:text-foreground-muted text-sm text-muted-foreground' : 'text-sm'}>
             {category}
           </Button>
         ))}

@@ -58,9 +58,21 @@ const ExpertServiceDetails = () => {
         {/* Service Card */}
         <Card className="py-0 md:w-1/2 rounded-4xl text-start">
           <CardHeader className="px-6 py-6 rounded-t-4xl bg-muted">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between gap-5 items-center">
               <div className="px-2">
-                <h1 className="text-2xl font-bold">{service.title}</h1>
+               <div className="flex items-start gap-2">
+                 <h1 className="md:text-4xl text-2xl font-bold">{service.title}</h1>
+                <div className="min-w-[64px] min-h-[64px] w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden bg-muted flex items-center justify-center">
+                  <img
+                    src={
+                      service.profileImage ||
+                      "https://dummyimage.com/600x400/000/fff"
+                    }
+                    alt="Profile"
+                    className="w-full h-full object-cover min-w-[64px] min-h-[64px]"
+                  />
+                </div>
+               </div>
                 <p className="text-sm text-destructive">@{username}</p>
                 <p className="text-2xl flex justify-between mt-3">
                   ₹{service.amount}
@@ -68,16 +80,6 @@ const ExpertServiceDetails = () => {
                     <Timer /> {service.duration} mins meeting
                   </span>
                 </p>
-              </div>
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden bg-muted flex items-center justify-center">
-                <img
-                  src={
-                    service.profileImage ||
-                    "https://dummyimage.com/600x400/000/fff"
-                  }
-                  alt="Profile"
-                  className="w-full h-full object-cover"
-                />
               </div>
             </div>
           </CardHeader>
@@ -104,18 +106,18 @@ const ExpertServiceDetails = () => {
                 ))}
             </div>
 
-             <Button
-                disabled={!(selectedDate && selectedTime)}
-                className="w-full py-6 md:flex hidden mt-10"
-              >
-                Book now
-              </Button>
+            <Button
+              disabled={!(selectedDate && selectedTime)}
+              className="w-full py-6 md:flex hidden mt-10"
+            >
+              Book now
+            </Button>
 
             <div className="mt-10  sm:flex flex-col gap-2">
               <Dialog>
                 <DialogTrigger asChild>
                   <Button className="w-full sm:block lg:hidden py-6">
-                    Book Now
+                    Check Availablity
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-md w-full p-6 rounded-xl">
@@ -163,8 +165,6 @@ const ExpertServiceDetails = () => {
                   <Button className={"py-6"}>Book Now</Button>
                 </DialogContent>
               </Dialog>
-
-             
             </div>
           </CardContent>
         </Card>
