@@ -6,14 +6,13 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { Star } from "lucide-react";
+import { Star, Video } from "lucide-react";
 import React from "react";
+import { TbMessageStar } from "react-icons/tb";
 import { Link } from "react-router-dom";
 
 const ExpertShowcaseCard = ({
   title,
-  id,
-  username,
   price,
   rating,
   description,
@@ -43,8 +42,8 @@ const ExpertShowcaseCard = ({
               />
             </div>
 
-            <div className="flex flex-col w-60">
-              <h2 className="font-bold h-6 text-lg overflow-ellipsis line-clamp-1">
+            <div className="flex flex-col w-72">
+              <h2 className="font-bold h-6  text-lg overflow-ellipsis line-clamp-1">
                 {title}
               </h2>
 
@@ -82,24 +81,31 @@ const ExpertShowcaseCard = ({
               </Button>
             ))}
           </div>
-          <p className="text-sm h-10 mt-1 text-destructive font-normal line-clamp-2">
+          <p className="text-sm h-10 mt-1 text-destructive font-normal line-clamp-1">
             {description}
           </p>
         </CardContent>
         <CardFooter
-          className={"px-2  flex items-end justify-between gap-2 py-2"}
+          className={"px-2 py-2"}
         >
-          <p className="text-sm">
+          <div  className="flex pt-3 w-full  justify-between items-end gap-2">
+            <p className="text-sm">
             by{" "}
             <span className="font-normal text-destructive text-sm">
               {author}
             </span>
           </p>
-          <Link to={`/${username}/service/${id}`}>
-            <Button className="text-xs  px-4 h-8" size={""}>
-              {type == "1:1" ? "Book Now" : "DM Now"}
-            </Button>
-          </Link>
+         
+            {type == "1:1"? (
+              <div className="flex items-center gap-2 font-normal"> <p className="font-normal ">Schedule a 1:1</p><span> <Video size={20}/></span></div>
+            )
+            :
+            (
+              <div className="flex items-center gap-2 font-normal"> <p className="font-normal">Send a Dm</p><span> <TbMessageStar size={20}/></span></div>
+            )
+          }
+          </div>
+         
         </CardFooter>
       </Card>
     </div>

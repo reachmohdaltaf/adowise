@@ -56,7 +56,7 @@ const ExpertServiceDetails = () => {
 
       <div className="mt-6 md:mt-10 flex flex-col md:flex-row items-start gap-6 justify-center w-full">
         {/* Service Card */}
-        <Card className="py-0 md:w-1/2 w-full  rounded-4xl text-start">
+        <Card className="py-0 px-0 md:w-1/2 w-full  rounded-4xl text-start">
           <CardHeader className="px-6 py-6 rounded-t-4xl bg-muted">
             <div className="flex justify-between gap-5 items-center">
               <div className="px-2">
@@ -120,7 +120,7 @@ const ExpertServiceDetails = () => {
                     Check Availablity
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-md w-full p-6 rounded-xl">
+                <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-md w-full p-2 rounded-xl">
                   <div>
                     <p className="text-lg font-semibold">See Availability:</p>
                     <Calendar
@@ -170,7 +170,7 @@ const ExpertServiceDetails = () => {
         </Card>
 
         {/* Availability Calendar */}
-        <Card className="p-4 hidden lg:block rounded-4xl">
+        <Card className="px-2 hidden lg:block rounded-4xl">
           <div>
             <p className="text-lg font-semibold">See Availability:</p>
             <Calendar
@@ -190,7 +190,7 @@ const ExpertServiceDetails = () => {
               </p>
               <p className="font-medium">Available Time Slots:</p>
               {filteredSlots.length > 0 ? (
-                <div className="gap-2 flex h-28 overflow-auto flex-col">
+                <div className="gap-2 flex h-32 overflow-auto flex-col">
                   {filteredSlots.map((slot, index) => (
                     <button
                       key={index}

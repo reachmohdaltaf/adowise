@@ -24,7 +24,7 @@ const ExpertShowcase = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
       {services.map((service) => (
-       
+       <Link to={`/${service.expertId?.username}/service/${service._id}`} key={service._id}>
           <ExpertShowcaseCard
             
             tags={service.tags}
@@ -38,7 +38,9 @@ const ExpertShowcase = () => {
             image={service.expertId?.image || "https://placehold.co/600x400"}
             author={service.expertId?.name || "Unknown"}
           />
+        </Link>
       ))}
+
       {loading && services.length > 0 && (
         <div className="flex justify-center items-center mt-4">
           <div className="loader"></div>

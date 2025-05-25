@@ -18,7 +18,7 @@ const SeekerHomePage = () => {
       title2: "Preparation",
       subtitle1: "practical",
       subtitle2: "Experience",
-      image: "/mentor1.png",
+      image: "/man2.png",
     },
     {
       title1: "Jobs",
@@ -83,8 +83,8 @@ const SeekerHomePage = () => {
                 >
                   <div className="flex items-center">
                     <div className="flex-1">
-                      <p className="text-2xl font-semibold">{card.title1}</p>
-                      <p className="text-2xl font-semibold">{card.title2}</p>
+                      <p className="text-2xl font-normal">{card.title1}</p>
+                      <p className="text-2xl font-normal">{card.title2}</p>
                       <p className="text-sm font-normal">{card.subtitle1}</p>
                       <p className="text-sm font-normal">{card.subtitle2}</p>
                     </div>
