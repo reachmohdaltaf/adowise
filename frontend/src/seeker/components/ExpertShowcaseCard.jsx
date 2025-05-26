@@ -45,7 +45,7 @@ const ExpertShowcaseCard = ({
               />
             </div>
             <div className="flex flex-col flex-1 min-w-0">
-              <h2 className="font-semibold text-xl line-clamp-2">
+              <h2 className="font-semibold text-lg line-clamp-2">
                 {title}
               </h2>
               <div className="RatingandPrice">
