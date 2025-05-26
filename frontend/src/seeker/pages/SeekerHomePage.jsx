@@ -2,6 +2,11 @@ import React from "react";
 import FindExpertCard from "../components/FindExpertCard";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useSelector } from "react-redux";
+import { Button } from "@/components/ui/button";
+import { BsLightning } from "react-icons/bs";
+import { Trophy } from "lucide-react";
+import { GiTrophy } from "react-icons/gi";
+import { HiTrophy } from "react-icons/hi2";
 
 const SeekerHomePage = () => {
   const { user, loading } = useSelector((state) => state.auth);
@@ -14,8 +19,8 @@ const SeekerHomePage = () => {
   // Card data
   const cardData = [
     {
-      title1: "Interview",
-      title2: "Preparation",
+      title1: "Perfect",
+      title2: "Mentor",
       subtitle1: "practical",
       subtitle2: "Experience",
       image: "/man2.png",
@@ -44,22 +49,27 @@ const SeekerHomePage = () => {
     {
       name: "Ankita Sharma",
       title: "Software Engineer @Google",
-      image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&auto=format&fit=crop&q=60",
+      image: "https://picsum.photos/200/300",
     },
     {
       name: "Rohit Verma",
       title: "Data Scientist @Amazon",
-      image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&auto=format&fit=crop&q=60",
+      image: "https://picsum.photos/200/300",
     },
     {
       name: "Sana Khan",
       title: "Product Manager @Meta",
-      image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&auto=format&fit=crop&q=60",
+      image: "https://picsum.photos/200/300",
+    },
+    {
+      name: "Sana Khan",
+      title: "Product Manager @Meta",
+      image: "https://picsum.photos/200/300",
     },
   ];
 
   return (
-    <div className="md:py-6 gap-2 w-full flex flex-col">
+    <div className="md:py-6 px-0 gap-2 w-full flex flex-col">
       <Card className="w-full border-none shadow-none mt-5 gap-0 py-0 px-0">
         <CardHeader className="px-1 mt2xl">
           <FindExpertCard user={user} />
@@ -72,13 +82,13 @@ const SeekerHomePage = () => {
             </p>
           </CardContent>
 
-          <div className="grid grid-cols-1 mt-4 md:grid-cols-3 gap-2">
+          <div className="grid grid-cols-1 mt-4 md:grid-cols-2 lg:grid-cols-3 gap-2">
             {cardData.map((card, index) => {
               const bgColor = cardColors[index % cardColors.length];
               return (
                 <Card
                   key={index}
-                  className="px-4 rounded-2xl"
+                  className="px-2 py-6 rounded-2xl"
                   style={{ backgroundColor: bgColor }}
                 >
                   <div className="flex items-center">
@@ -110,26 +120,55 @@ const SeekerHomePage = () => {
   </p>
 </CardContent>
 
-<div className="grid grid-cols-1 mt-2 md:grid-cols-3 gap-2">
-  {topMentors.map((mentor, index) => (
-    <Card
-      key={index}
-      className="rounded-2xl p-4 bg-white"
-    >
-      <div className="flex justify-between items-center">
-        <img
-          src={mentor.image}
-          alt={mentor.name}
-          className="h-20 w-20 object-cover rounded-full"
-        />
-        <div className="text-right">
-          <p className="text-lg font-semibold">{mentor.name}</p>
+{/* Carousel Container */}
+<div className="w-full overflow-hidden mt-4">
+  <div className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4" style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}>
+    {topMentors.map((mentor, index) => (
+      <div key={index} className="flex-shrink-0 snap-start">
+        <Card
+          className="rounded-2xl bg-[url('/bg33.png')] bg-cover bg-center shadow-md gap-2 py-4 px-4 w-72 text-center"
+        >
+          {/* Availability and Trophy */}
+          <div className="flex justify-between items-start">
+            <Button
+              variant="outline"
+              className="text-green-700 h-6 flex items-center text-sm"
+            >
+              <BsLightning className="mr-1" /> Available
+            </Button>
+            <span className="text-white text-2xl"><HiTrophy size={30} className=""/></span>
+          </div>
+
+          {/* Profile Image */}
+          <img
+            src={mentor.image}
+            alt={mentor.name}
+            className="h-32 w-32 object-cover rounded-full mx-auto border-4 border-gray-100"
+          />
+
+          {/* Name and Rating */}
+          <p className="text-lg font-semibold text-gray-800">
+            {mentor.name} <span className=" text-base">⭐ 4.9</span>
+          </p>
+
+          {/* Title */}
           <p className="text-sm text-gray-600">{mentor.title}</p>
-        </div>
+
+          {/* View Profile Button */}
+          <Button variant="outline" className="mt-2 py-6 rounded-full w-full">
+            View Profile
+          </Button>
+        </Card>
       </div>
-    </Card>
-  ))}
+    ))}
+  </div>
 </div>
+
+<style jsx>{`
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+`}</style>
 
         </CardHeader>
       </Card>
