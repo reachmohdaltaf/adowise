@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import FindExpertCard from "../components/FindExpertCard";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useSelector } from "react-redux";
@@ -7,9 +7,11 @@ import { BsLightning } from "react-icons/bs";
 import { Trophy } from "lucide-react";
 import { GiTrophy } from "react-icons/gi";
 import { HiTrophy } from "react-icons/hi2";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const SeekerHomePage = () => {
   const { user, loading } = useSelector((state) => state.auth);
+  const carouselRef = useRef(null);
   console.log("userinfo", user);
 
   if(!user && loading){
@@ -41,6 +43,18 @@ const SeekerHomePage = () => {
     },
   ];
 
+  const scrollLeft = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRight = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+    }
+  };
+
   // Background colors for each card
   const cardColors = ["#f0f5fe", "#fff9db", "#ffeef2"]; // light blue, light yellow, light pink
 
@@ -57,8 +71,8 @@ const SeekerHomePage = () => {
       image: "https://picsum.photos/200/300",
     },
     {
-      name: "Sana Khan",
-      title: "Product Manager @Meta",
+      name: "Rohit Verma",
+      title: "Data Scientist @Amazon",
       image: "https://picsum.photos/200/300",
     },
     {
@@ -121,8 +135,27 @@ const SeekerHomePage = () => {
 </CardContent>
 
 {/* Carousel Container */}
-<div className="w-full overflow-hidden mt-4">
-  <div className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4" style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}>
+<div className="relative w-full overflow-hidden mt-4">
+  {/* Navigation Arrows - Only visible on large screens */}
+  <button
+    onClick={scrollLeft}
+    className="absolute opacity-50 hover:opacity-100  cursor-pointer left-2 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg hover:bg-gray-50 transition-colors hidden lg:flex items-center justify-center"
+  >
+    <ChevronLeft size={20} className="text-gray-600" />
+  </button>
+  
+  <button
+    onClick={scrollRight}
+    className="absolute opacity-50 hover:opacity-100 cursor-pointer right-2 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg hover:bg-gray-50 transition-colors hidden lg:flex items-center justify-center"
+  >
+    <ChevronRight size={20} className="text-gray-600" />
+  </button>
+
+  <div 
+    ref={carouselRef}
+    className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4" 
+    style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}
+  >
     {topMentors.map((mentor, index) => (
       <div key={index} className="flex-shrink-0 snap-start">
         <Card
