@@ -11,7 +11,7 @@ const SeekerMentorPage = () => {
       </div>
 
       {/* Page Content */}
-      <div className="mt-5 md:px-2">
+      <div className=" px-0">
         <ExpertShowcase />
       </div>
     </div>

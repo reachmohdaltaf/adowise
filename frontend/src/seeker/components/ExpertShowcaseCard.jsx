@@ -29,7 +29,7 @@ const ExpertShowcaseCard = ({
     <div>
       <Card
         className={
-          "p-0 h-50 rounded-md hover:shadow-sm transition py-2 px-0 gap-0"
+          "p-0 h-46 shadow-none border-none rounded-lg   py-2 px-0 gap-0"
         }
       >
         <CardHeader className={"px-2 mb-0"}>
@@ -45,12 +45,12 @@ const ExpertShowcaseCard = ({
               />
             </div>
             <div className="flex flex-col flex-1 min-w-0">
-              <h2 className="font-semibold text-lg line-clamp-2">
+             <div className="Title h-12"> <h2 className="font-semibold text-lg line-clamp-2">
                 {title}
-              </h2>
-              <div className="RatingandPrice">
+              </h2></div>
+              <div className="RatingandPrice ">
                 <div className="flex items-center mt-2 justify-start gap-5">
-                  <span className="font-normal text-sm">₹ {price}</span>
+                  <span className="font-normal text-lg">₹ {price}</span>
                   <span className="flex gap-1 items-center">
                     <div className="rating flex items-center">{rating}</div>
                     <div className="flex items-center">
@@ -66,11 +66,13 @@ const ExpertShowcaseCard = ({
                   </span>
                 </div>
               </div>
-              <p className="text-sm h-10 mt-1 text-destructive font-normal line-clamp-1">
+             <div className="h-16">
+               <p className="text-sm h-10 mt-1 text-destructive font-normal line-clamp-1">
                 {description}
               </p>
-               <div className={"mt-5"}>
-          <div className="flex pt-3 w-full justify-between items-end gap-2">
+             </div>
+               <div className={""}>
+          <div className="flex  w-full justify-between items-end gap-2">
             <p className="text-sm">
               by{" "}
               <span className="font-normal text-destructive text-sm">
