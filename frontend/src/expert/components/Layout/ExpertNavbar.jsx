@@ -61,7 +61,7 @@ const ExpertNavbar = () => {
     <nav className="h-12 flex md:border-none px-3 md:px-16 bg-background items-center justify-between">
       <Link to={'/expert/dashboard/home'} className="logo">
         <img
-          src={"/logo2.svg"}
+          src={"/logo5.png"}
           className="h-8 hover:scale-100 scale-98 transition cursor-pointer"
           alt="Logo"
         />
