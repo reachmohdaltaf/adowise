@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
@@ -16,6 +17,7 @@ const SeekerProfile = () => {
   const [imagePreview, setImagePreview] = useState(user?.image || 'https://placehold.co/600x400')
   const [selectedImage, setSelectedImage] = useState(null)
   const fileInputRef = useRef(null)
+  const SuccessPopRef = useRef(null)
 
   const handleImageChange = (e) => {
     const file = e.target.files[0]
@@ -32,6 +34,7 @@ const SeekerProfile = () => {
   const handleUploadClick = () => {
     fileInputRef.current.click()
   }
+
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -54,6 +57,7 @@ const SeekerProfile = () => {
       })).then((response) => {
         if (response.meta.requestStatus === 'fulfilled') {
           console.log("Profile updated successfully:", response.payload)
+          SuccessPopRef.current.click() // Trigger the success dialog
           dispatch(authCheck())
         } else {
           console.error("Failed to update profile:", response.error)
@@ -62,6 +66,7 @@ const SeekerProfile = () => {
       return
     }
 
+    
     // If image is selected, convert it to base64 before dispatching
     const reader = new FileReader()
     reader.onloadend = () => {
@@ -213,6 +218,30 @@ const SeekerProfile = () => {
           <Button type='submit' variant='default' size='lg'><Save /> Save Changes</Button>
         </div>
       </form>
+    <Dialog>
+  <DialogTrigger asChild>
+    <button
+      ref={SuccessPopRef}
+      className='hidden'
+    >
+      updatedSuccess
+    </button>
+  </DialogTrigger>
+  <DialogContent className="flex flex-col items-center justify-center gap-4 text-center py-8">
+  <div className="bg-green-100 text-green-600 rounded-full p-4">
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+    </svg>
+  </div>
+  <h2 className="text-xl font-semibold text-green-700">Profile Updated!</h2>
+  <p className="text-gray-500 max-w-sm">
+    Your profile has been successfully updated. You can now continue exploring the platform.
+  </p>
+</DialogContent>
+
+</Dialog>
+
+
     </Card>
   )
 }
