@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const SeekerProfile = () => {
   const dispatch = useDispatch()
-  const { user } = useSelector((state) => state.auth)
+  const { user , loading } = useSelector((state) => state.auth)
   const [imagePreview, setImagePreview] = useState(user?.image || 'https://placehold.co/600x400')
   const [selectedImage, setSelectedImage] = useState(null)
   const fileInputRef = useRef(null)
@@ -96,7 +96,7 @@ const SeekerProfile = () => {
   }
 
   return (
-    <Card className='px-2 mt-2 md:mt-6 border-none gap-0 '>
+    <Card className='px-2 mt-5 md:mt-6 border-none gap-0 '>
       <h1 className='text-2xl font-semibold mb-4 px-2'>Personal Information</h1>
 
       {/* Tip Box */}
@@ -108,7 +108,7 @@ const SeekerProfile = () => {
           <h2 className='font-semibold'>Tips</h2>
           <ul className='list-disc'>
             <li className='font-normal'>Adding your photo and social media profiles helps mentors feel confident that you’re a real person (e.g. not a bot).</li>
-            <li className='font-normal hidden md:block'>Your profile is only visible to mentors that you send applications to. It is not indexed on search engines like Google.</li>
+            <li className='font-normal'>Your profile is only visible to mentors that you send applications to. It is not indexed on search engines like Google.</li>
           </ul>
         </div>
       </div>
@@ -131,7 +131,7 @@ const SeekerProfile = () => {
             alt="Profile"
             className='w-24 h-24 rounded-full object-cover'
           />
-          <Button variant='outline' size='lg' onClick={handleUploadClick}><Upload /> Upload Photo</Button>
+          <Button variant='outline' type='button' size='lg' onClick={handleUploadClick}><Upload /> Upload Photo</Button>
         </div>
 
         {/* Other Inputs */}
@@ -215,7 +215,17 @@ const SeekerProfile = () => {
         </div>
 
         <div className='flex justify-end mt-6'>
-          <Button type='submit' variant='default' size='lg'><Save /> Save Changes</Button>
+          {/* show loading if saving  */}
+         { loading ? (
+          <Button disabled className='bg-muted text-muted-foreground'>
+            <span className='animate-spin rounded-full h-4 w-4 border-2 border-t-transparent border-black'></span>
+            Saving...
+          </Button>
+         ) : (
+          <Button type='submit' className='bg-primary text-primary-foreground'>
+            <Save className='mr-2' /> Save Changes
+          </Button>
+         )}
         </div>
       </form>
     <Dialog>
