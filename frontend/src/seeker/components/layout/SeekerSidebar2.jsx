@@ -17,7 +17,7 @@ import {
   Users2,
   X,
 } from "lucide-react";
-import React from "react";
+import React, { useCallback } from "react";
 import { BsStarFill, BsStars } from "react-icons/bs";
 import { TbMessageStar } from "react-icons/tb";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -106,18 +106,17 @@ const SeekerSidebar2 = ({ isOpen, setIsOpen }) => {
     dispatch(logout());
   };
 
-  const handleRoleChange = async () => {
-    try {
-      await dispatch(
-        updateUserRole({ userId: user._id, role: "expert" })
-      ).unwrap();
-      await dispatch(authCheck()).unwrap();
-      navigate("/expert/dashboard/home");
-    } catch (error) {
-      console.log("Role change failed", error);
-      toast.error("Role change failed");
-    }
-  };
+const handleRoleChange = useCallback(async () => {
+  try {
+    await dispatch(updateUserRole({ userId: user._id, role: "expert" })).unwrap();
+    await dispatch(authCheck()).unwrap();
+    // Optional: dispatch an action to preserve current services data if needed
+    navigate("/expert/dashboard/home");
+  } catch (error) {
+    console.error("Role change failed", error);
+    toast.error("Role change failed");
+  }
+}, [dispatch, navigate, user._id]);
 
   return (
     <aside className=" h-screen  w-72 md:w-82 overflow-y-auto bg-background  flex flex-col justify-between z-10">

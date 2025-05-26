@@ -1,17 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect }  from "react";
 import ExpertShowcaseCard from "../components/ExpertShowcaseCard";
-import { useSelector } from "react-redux";
+import {  useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { fetchAllServices } from "@/redux/features/serviceThunk";
+import { resetServices } from "@/redux/features/serviceSlice";
 
 const ExpertShowcase = () => {
+  const dispatch = useDispatch();
   const { services, loading, page, totalPages } = useSelector(
     (state) => state.service
   );
- 
-  useEffect(() => {
-    console.log(services);
-  }, [services]);
+
+  console.log("ExpertShowcase services:", services);
+   useEffect(() => {
+    // Reset and fetch fresh services when this component mounts
+    dispatch(fetchAllServices({ page: 1, limit: 10 }));
+    dispatch(resetServices())
+  }, [dispatch]);
+  
 
   if (loading && services.length === 0) {
     return (

@@ -128,4 +128,5 @@ const serviceSlice = createSlice({
   },
 });
 
+export const { resetServices } = serviceSlice.actions;
 export default serviceSlice.reducer;

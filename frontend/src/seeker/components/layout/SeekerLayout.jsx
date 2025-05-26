@@ -10,10 +10,10 @@ const SeekerLayout = () => {
   const dispatch = useDispatch();
   const containerRef = useRef();
   const { loading, page, totalPages } = useSelector((state) => state.service);
-
+    const { user } = useSelector((state) => state.auth); // Add this line
   useEffect(() => {
     dispatch(fetchAllServices({ page: 1, limit: 10 }));
-  }, [dispatch]);
+  },[dispatch, user?.role]);
 
   useInfiniteScroll(
     containerRef,
