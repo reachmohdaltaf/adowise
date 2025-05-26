@@ -12,3 +12,14 @@ export const updateUserRole = createAsyncThunk(
         }
     }
 )
+export const updateProfile = createAsyncThunk(
+    'user/updateProfile',
+    async (formData, thunkAPI) => {
+        try {
+            const res = await axiosInstance.put('user/updateProfile', formData);
+            return res.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data);
+        }
+    }
+);
