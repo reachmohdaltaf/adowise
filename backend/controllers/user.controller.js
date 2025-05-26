@@ -40,7 +40,6 @@ export const UpdateUserRole = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const userId = req.user._id;
-
     const {
       name,
       email,
@@ -50,18 +49,31 @@ export const updateProfile = async (req, res) => {
       image, // Base64 or direct URL
     } = req.body;
 
+    // First, fetch the current user to check if they have an existing image
+    const currentUser = await User.findById(userId);
+    if (!currentUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
     let imageUrl;
 
-    // If image is provided, upload to Cloudinary
+    // If a new image is provided, handle Cloudinary upload
     if (image) {
+      // If the user already has an image in Cloudinary, delete it first
+      if (currentUser.image) {
+        // Extract the public_id from the Cloudinary URL
+        const publicId = currentUser.image.split('/').pop().split('.')[0];
+        await cloudinary.uploader.destroy(`user_profiles/${publicId}`);
+      }
+
+      // Upload the new image
       const uploadResult = await cloudinary.uploader.upload(image, {
         folder: 'user_profiles',
       });
-
       imageUrl = uploadResult.secure_url;
     }
 
-    // Dynamically build update object
+    // Build update object
     const allowedUpdates = {
       ...(name && { name }),
       ...(email && { email }),
@@ -78,17 +90,16 @@ export const updateProfile = async (req, res) => {
       { new: true, runValidators: true }
     );
 
-    if (!updatedUser) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
     res.status(200).json({
       message: 'Profile updated successfully',
       user: updatedUser,
     });
   } catch (error) {
     console.error('Update profile error:', error);
-    res.status(500).json({ message: 'Something went wrong', error });
+    res.status(500).json({ 
+      message: 'Something went wrong', 
+      error: process.env.NODE_ENV === 'development' ? error.message : null 
+    });
   }
 };
 
