@@ -24,35 +24,36 @@ const ExpertShowcaseCard = ({
   // Round rating to nearest half for better star display
   const filledStars = Math.floor(rating);
   const totalStars = 5;
-
+  
   return (
     <div>
       <Card
         className={
-          "p-0  h-50  rounded-md  hover:shadow-sm transition  py-2 px-0 gap-0"
+          "p-0 h-50 rounded-md hover:shadow-sm transition py-2 px-0 gap-0"
         }
       >
         <CardHeader className={"px-2 mb-0"}>
           <div className="flex gap-4">
-            <div className="profile w-14 h-14 aspect-square overflow-hidden rounded-md">
+            <div className="profile w-14 h-14 flex-shrink-0 overflow-hidden rounded-md bg-gray-200">
               <img
-                src={image || "https://via.placeholder.com/150"}
-                alt="profile"
+                src={image || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"}
+                alt={`${author}'s profile`}
                 className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.src = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face";
+                }}
               />
             </div>
-
-            <div className="flex flex-col w-58">
-              <h2 className="font-bold text-lg truncate overflow-hidden whitespace-nowrap">
+            <div className="flex flex-col flex-1 min-w-0">
+              <h2 className="font-semibold text-xl line-clamp-2">
                 {title}
               </h2>
-
-              <div className="RatingandPrice w-60  ">
-                <div className="flex items-center mt-2  justify-start gap-5">
+              <div className="RatingandPrice">
+                <div className="flex items-center mt-2 justify-start gap-5">
                   <span className="font-normal text-sm">₹ {price}</span>
                   <span className="flex gap-1 items-center">
-                    <div className="rating flex  items-center">{rating}</div>
-                    <div className="flex   items-center">
+                    <div className="rating flex items-center">{rating}</div>
+                    <div className="flex items-center">
                       {[...Array(totalStars)].map((_, index) => (
                         <Star
                           key={index}
@@ -65,56 +66,39 @@ const ExpertShowcaseCard = ({
                   </span>
                 </div>
               </div>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent className={"px-2  py-0"}>
-          <div className="flex mt-1 gap-2">
-            {tags?.slice(0, 3).map((tag, index) => (
-              <Button
-                variant={"outline"}
-                key={index}
-                disabled
-                className="text-xs  shadow-none rounded-full disabled:border-destructive disabled:text-black  py-0 h-6 px-3 text-gray-500 font-semibold"
-              >
-                {tag}
-              </Button>
-            ))}
-          </div>
-          <p className="text-sm h-10 mt-1 text-destructive font-normal line-clamp-1">
-            {description}
-          </p>
-        </CardContent>
-        <CardFooter className={"px-2 py-2"}>
-          <div className="flex pt-3 w-full  justify-between items-end gap-2">
+              <p className="text-sm h-10 mt-1 text-destructive font-normal line-clamp-1">
+                {description}
+              </p>
+               <div className={"mt-5"}>
+          <div className="flex pt-3 w-full justify-between items-end gap-2">
             <p className="text-sm">
               by{" "}
               <span className="font-normal text-destructive text-sm">
                 {author}
               </span>
             </p>
-
-            {type == "1:1" ? (
+            {type === "1:1" ? (
               <div className="flex items-center gap-2 font-normal">
-                {" "}
-                <p className="font-normal ">Schedule a 1:1</p>
+                <p className="font-normal text-sm">Schedule a 1:1</p>
                 <span>
-                  {" "}
                   <Video size={20} />
                 </span>
               </div>
             ) : (
               <div className="flex items-center gap-2 font-normal">
-                {" "}
                 <p className="font-normal">Send a Dm</p>
                 <span>
-                  {" "}
                   <TbMessageStar size={20} />
                 </span>
               </div>
             )}
           </div>
-        </CardFooter>
+        </div>
+            </div>
+          </div>
+        </CardHeader>
+        
+       
       </Card>
     </div>
   );
