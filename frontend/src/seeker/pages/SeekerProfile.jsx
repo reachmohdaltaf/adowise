@@ -139,10 +139,6 @@ const SeekerProfile = () => {
               Adding your photo and social media profiles helps mentors feel
               confident that you're a real person (e.g. not a bot).
             </li>
-            <li className="font-normal">
-              Your profile is only visible to mentors that you send applications
-              to. It is not indexed on search engines like Google.
-            </li>
           </ul>
         </div>
       </div>
