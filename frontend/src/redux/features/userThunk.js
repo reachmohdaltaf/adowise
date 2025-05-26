@@ -23,3 +23,15 @@ export const updateProfile = createAsyncThunk(
         }
     }
 );
+
+export const getUserProfile = createAsyncThunk(
+    'user/profile',
+    async (_, thunkAPI) => {
+        try {
+            const res = await axiosInstance.get('user/profile');
+            return res.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data);
+        }
+    }
+);

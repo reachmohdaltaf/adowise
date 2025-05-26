@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { updateProfile, updateUserRole } from "./userThunk";
+import { getUserProfile, updateProfile, updateUserRole } from "./userThunk";
 
 const userSlice = createSlice({
   name: "user",
   initialState: {
     user: null,
     loading: false,
+    updating: false, // for profile update
     error: null,
   },
   reducers: {},
@@ -25,17 +26,30 @@ const userSlice = createSlice({
       })
       // @step update profile
       .addCase(updateProfile.pending, (state) => {
-        state.loading = true;
+        state.updating = true; // use updating for profile updates
         state.error = null;
       })
       .addCase(updateProfile.fulfilled, (state, action) => {
         state.user = action.payload.user; // assuming updated user comes back here
-        state.loading = false;
+        state.updating = false;
       })
       .addCase(updateProfile.rejected, (state, action) => {
-        state.loading = false;
+        state.updating = false;
         state.error = action.payload;
       })
+      // @step get user profile
+      .addCase(getUserProfile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getUserProfile.fulfilled, (state, action) => {
+      state.user = action.payload;
+        state.loading = false;
+      })
+      .addCase(getUserProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
 });
 
