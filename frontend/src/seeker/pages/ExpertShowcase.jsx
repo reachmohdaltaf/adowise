@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ExpertShowcaseCard from "../components/ExpertShowcaseCard";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -8,10 +8,10 @@ const ExpertShowcase = () => {
   const { services, loading, page, totalPages } = useSelector(
     (state) => state.service
   );
-  console.log(
-    "Services IDs:",
-    services.map((s) => s._id)
-  );
+ 
+  useEffect(() => {
+    console.log(services);
+  }, [services]);
 
   if (loading && services.length === 0) {
     return (
@@ -23,23 +23,28 @@ const ExpertShowcase = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-      {services.map((service) => (
-       <Link to={`/${service.expertId?.username}/service/${service._id}`} key={service._id}>
-          <ExpertShowcaseCard
-            
-            tags={service.tags}
-            type={service.type}
-            username={service.expertId?.username}
-            id={service._id}
-            title={service.title}
-            price={service.amount}
-            rating={3.5}
-            description={service.description}
-            image={service.expertId?.image || "https://placehold.co/600x400"}
-            author={service.expertId?.name || "Unknown"}
-          />
-        </Link>
-      ))}
+     {services.map((service) => {
+  const expert = service.expertId;
+  return (
+    <Link
+      to={`/${expert?.username}/service/${service._id}`}
+      key={service._id}
+    >
+      <ExpertShowcaseCard
+        tags={service.tags}
+        type={service.type}
+        username={expert?.username}
+        id={service._id}
+        title={service.title}
+        price={service.amount}
+        rating={3.5}
+        description={service.description}
+        image={expert?.image || "https://placehold.co/600x400"}
+        author={expert?.name || "Unknown"}
+      />
+    </Link>
+  );
+})}
 
       {loading && services.length > 0 && (
         <div className="flex justify-center items-center mt-4">

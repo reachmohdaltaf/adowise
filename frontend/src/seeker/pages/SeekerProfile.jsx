@@ -1,68 +1,122 @@
-import { Card, CardHeader, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import React from 'react';
-import { useSelector } from 'react-redux';
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { Save, Upload } from 'lucide-react'
+import React from 'react'
+import { HiInformationCircle } from 'react-icons/hi2'
+import { useSelector } from 'react-redux'
 
 const SeekerProfile = () => {
-  const user = useSelector((state) => state.auth.user);
-  console.log("profile", user)
+  const {user} = useSelector((state) => state.auth)
+  console.log("User Profile:",user)
   return (
-    <div className=" mx-auto md:mt-10 md:px-4">
-      {/* Profile Card */}
-      <Card className="gap-0 px-0 py-0">
-        {/* Banner & Profile Image */}
-        <CardHeader className="px-0 py-0 relative">
-          <div className=" h-20 md:h-40 rounded-t-2xl bg-primary w-full" />
-
-          <img
-            src={user.image || 'https://dummyimage.com/600x400/000/fff'}
-            className="h-28 w-28 border-4 border-destructive rounded-full object-cover -mt-12 ml-4 bg-white shadow-md"
-            alt="Profile"
+   <Card className='px-2 mt-5 md:mt-6 border-none gap-0 '>
+      <h1 className='text-2xl font-semibold mb-4 px-2'>Personal Information</h1>
+      {/* tip container  */}
+      <div className='flex bg-muted py-3 rounded-md px-4 gap-4 mb-6 '>
+        <div>
+          <HiInformationCircle/>
+        </div>
+        <div className=' text-xs'>
+          <h2 className='font-semibold'>Tips</h2>
+          <ul className='list-disc '>
+            <li className='font-normal'> Adding your photo and social media profiles helps mentors feel confident that you’re a real person (e.g. not a bot). </li>
+            <li className='font-normal'>  Your profile is only visible to mentors that you send applications to. It is not indexed on search engines like Google.  </li>
+          </ul>
+        </div>
+      </div>
+      {/* Profile image */}
+      <div className='flex gap-4 justify-start items-center mb-6'>
+        <img
+          src={user?.image || 'https://placehold.co/600x400'}
+          alt="Profile"
+          className='w-24 h-24 rounded-full object-cover'
+        />
+        <Button variant={'outline'} size={'lg'}><Upload/> Upload Photo</Button>
+      </div>
+      {/* Personal Information Form */}
+      <div>
+        <Label className='flex flex-col mb-4 justify-start items-start'> 
+          Full Name
+          <Input
+            type="text"
+            placeholder='Enter your full name'
+            className='py-5'
+            defaultValue={user?.name || ''}
           />
-        </CardHeader>
+        </Label>
+      </div>
+      {/* email address */}
+      <div>
+        <Label className='flex flex-col  justify-start items-start'> 
+          Email Address
+          <Input
+            type="email"
+            placeholder='Enter your email address'
+            className='py-5'
+            defaultValue={user?.email || ''}
+          />
+          
+        </Label>
+        <p className='text-xs mt-1 text-destructive'>Only Visible to you</p>
+      </div>
+      {/* proffession */}
+      <div className='mt-6'>
+        <Label className='flex flex-col mb-4 justify-start items-start'> 
+          Proffession
+          <Input
+            type="text"
+            placeholder='Enter your proffession'
+            className='py-5'
+            defaultValue={user?.proffession || ''}
+          />
+        </Label>
+      </div>
+      
+      {/* About me */}
+      <div className='mt-6'>
+        <Label className='flex flex-col mb-4 justify-start items-start'> 
+          About Me
+          <Textarea
+            type="text"
+            placeholder='Tell us about yourself'
+            className='py-5 h-58'
+            defaultValue={user?.bio || ''}
+          />
+        </Label>  
+        </div>
+      {/* Social Media Links */}
+      <div className='mt-6'>
+        <Label className='flex flex-col mb-4 justify-start items-start'> 
+          Social Media Links
+          <Input
+            type="text"
+            placeholder='Enter your LinkedIn profile URL'
+            className='py-5 mb-4'
+            defaultValue={user?.socialLinks?.linkedin?.url || ''}
+          />
+          <Input
+            type="text"
+            placeholder='Enter your Twitter profile URL'
+            className='py-5 mb-4'
+            defaultValue={user?.socialLinks?.twitter?.url || ''}
+          />
+          <Input
+            type="text"
+            placeholder='Enter your GitHub profile URL'
+            className='py-5'
+            defaultValue={user?.socialLinks?.github?.url || ''}
+          />
+        </Label>
+      </div>
+      {/* Save Button */}
+      <div className='flex justify-end mt-6'>
+        <Button variant={'default'} size={'lg'}><Save/> Save Changes</Button>
+      </div>
+    </Card>
+  )
+}
 
-        {/* Profile Content */}
-        <CardContent className="px-4 pb-6">
-          {/* Top Row: Name + Button */}
-          <div className="flex justify-between items-start flex-wrap gap-3">
-            <div>
-              <h2 className="text-xl font-semibold">{user.name}</h2>
-              <p className="text-sm text-gray-500">{user.profession}</p>
-            </div>
-
-            <Button variant="outline" className="rounded-full text-sm">
-              ✏️ Edit Profile
-            </Button>
-          </div>
-
-          {/* Details */}
-          <div className="mt-4 text-sm  text-muted-foreground">
-            <p><strong>Location:</strong> New York, USA</p>
-            <p><strong>Email:</strong>{user.email}</p>
-          </div>
-
-          {/* Skills */}
-          <div className="mt-4">
-            <p className="font-medium mb-1">Skills:</p>
-            <div className="flex flex-wrap gap-2">
-              <span className="bg-secondary text-sm px-3 py-1 rounded-full">Figma</span>
-              <span className="bg-secondary text-sm px-3 py-1 rounded-full">Adobe XD</span>
-              <span className="bg-secondary text-sm px-3 py-1 rounded-full">UI Design</span>
-              <span className="bg-secondary text-sm px-3 py-1 rounded-full">Prototyping</span>
-            </div>
-          </div>
-
-          {/* Bio */}
-          <div className="mt-6">
-            <p className="font-medium mb-1">About:</p>
-            <p className="text-sm text-gray-700">
-              I'm a passionate designer focused on building accessible and beautiful interfaces with user-centric thinking.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
-};
-
-export default SeekerProfile;
+export default SeekerProfile
