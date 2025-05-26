@@ -96,7 +96,7 @@ const SeekerProfile = () => {
   }
 
   return (
-    <Card className='px-2 mt-5 md:mt-6 border-none gap-0 '>
+    <Card className='px-2 mt-2 md:mt-6 border-none gap-0 '>
       <h1 className='text-2xl font-semibold mb-4 px-2'>Personal Information</h1>
 
       {/* Tip Box */}
@@ -108,7 +108,7 @@ const SeekerProfile = () => {
           <h2 className='font-semibold'>Tips</h2>
           <ul className='list-disc'>
             <li className='font-normal'>Adding your photo and social media profiles helps mentors feel confident that you’re a real person (e.g. not a bot).</li>
-            <li className='font-normal'>Your profile is only visible to mentors that you send applications to. It is not indexed on search engines like Google.</li>
+            <li className='font-normal hidden md:block'>Your profile is only visible to mentors that you send applications to. It is not indexed on search engines like Google.</li>
           </ul>
         </div>
       </div>
