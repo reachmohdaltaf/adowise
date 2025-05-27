@@ -123,7 +123,6 @@ const SeekerHomePage = () => {
             })}
           </div>
 
-          {/* Top Mentors Section */}
         {/* Top Mentors Section */}
 <CardContent className="px-0 mt-5">
   <h2 className="text-4xl sm:text-3xl gap-10 font-normal">
@@ -158,40 +157,41 @@ const SeekerHomePage = () => {
   >
     {topMentors.map((mentor, index) => (
       <div key={index} className="flex-shrink-0 snap-start">
-        <Card
-          className="rounded-2xl bg-[url('/bg33.png')] bg-cover bg-center shadow-md gap-2 py-4 px-4 w-72 text-center"
-        >
-          {/* Availability and Trophy */}
-          <div className="flex justify-between items-start">
-            <Button
-              variant="outline"
-              className="text-green-700 h-6 flex items-center text-sm"
-            >
-              <BsLightning className="mr-1" /> Available
-            </Button>
-            <span className="text-white text-2xl"><HiTrophy size={30} className=""/></span>
-          </div>
+      <Card className="rounded-xl bg-[url('/bg33.png')] bg-cover bg-center shadow-md gap-2 py-3 px-3 w-60 text-center">
+  {/* Availability and Trophy */}
+  <div className="flex justify-between items-start">
+    <Button
+      variant="outline"
+      className="text-green-700 h-5 px-2 py-0 text-xs"
+    >
+      <BsLightning className="mr-1 h-3 w-3" /> Available
+    </Button>
+    <span className="text-white text-xl">
+      <HiTrophy size={22} />
+    </span>
+  </div>
 
-          {/* Profile Image */}
-          <img
-            src={mentor.image}
-            alt={mentor.name}
-            className="h-32 w-32 object-cover rounded-full mx-auto border-4 border-gray-100"
-          />
+  {/* Profile Image */}
+  <img
+    src={mentor.image}
+    alt={mentor.name}
+    className="h-24 w-24 object-cover rounded-full mx-auto border-2 border-gray-100"
+  />
 
-          {/* Name and Rating */}
-          <p className="text-lg font-semibold text-gray-800">
-            {mentor.name} <span className=" text-base">⭐ 4.9</span>
-          </p>
+  {/* Name and Rating */}
+  <p className="text-base font-semibold text-gray-800">
+    {mentor.name} <span className="text-sm">⭐ 4.9</span>
+  </p>
 
-          {/* Title */}
-          <p className="text-sm text-gray-600">{mentor.title}</p>
+  {/* Title */}
+  <p className="text-xs text-gray-600">{mentor.title}</p>
 
-          {/* View Profile Button */}
-          <Button variant="outline" className="mt-2 py-6 rounded-full w-full">
-            View Profile
-          </Button>
-        </Card>
+  {/* View Profile Button */}
+  <Button variant="outline" className="mt-2 py-4 text-sm rounded-full w-full">
+    View Profile
+  </Button>
+</Card>
+
       </div>
     ))}
   </div>
