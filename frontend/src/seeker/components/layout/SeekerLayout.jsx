@@ -89,7 +89,7 @@ const SeekerLayout = () => {
 
       {/* Sliding Mobile Footer */}
       <div
-        className={`md:hidden fixed bottom-0 w-full transition-transform duration-300 ${
+        className={`md:hidden fixed bottom-0 w-full transition-transform duration-500 ${
           showFooter ? "translate-y-0" : "translate-y-full"
         }`}
       >

@@ -35,7 +35,7 @@ const ExpertShowcaseCard = ({
           <div>
 
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-2">
             <div className="profile w-14 h-14 flex-shrink-0 overflow-hidden rounded-md bg-gray-200">
               <img
                 src={image || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"}
@@ -47,33 +47,28 @@ const ExpertShowcaseCard = ({
               />
             </div>
             <div className="flex flex-col flex-1 min-w-0">
-             <div className="Title h-12"> <h2 className="font-semibold text-lg text-[#212121]   line-clamp-2">
+             <div className="Title h-12"> <h2 className="font-semibold text-[16px] text-[#212121]   line-clamp-2">
                 {title}
               </h2></div>
               <div className="RatingandPrice ">
-                <div className="flex items-center mt-2 justify-start gap-5">
-                  <span className="font-normal text-sm">₹ {price}</span>
+                <div className="flex items-center mt-2 justify-start gap-2">
+                  <span className="font-normal text-sm">₹ 100</span>
                   <span className="flex gap-1 items-center">
-                    <div className="rating flex items-center">{rating}</div>
-                    <div className="flex items-center">
-                      {[...Array(totalStars)].map((_, index) => (
-                        <Star
-                          key={index}
-                          size={16}
-                          fill={index < filledStars ? "#FFCE07" : "#ccc"}
-                          stroke={index < filledStars ? "#FFCE07" : "#ccc"}
-                        />
-                      ))}
-                    </div>
+                    <div className="rating flex items-center text-xs border rounded-lg px-2 font-normal gap-2"> <Star size={12} /> <p className="">{rating}</p></div>
+                    
                   </span>
                 </div>
               </div>
-             <div className="h-18 py-2">
-               <p className="text-sm h-10 mt-1 text-destructive font-normal line-clamp-1">
+            
+            </div>
+          </div>
+        </CardHeader>
+         <div className="h-18 px-2 py-1">
+               <p className="text-sm h-10  text-destructive font-normal line-clamp-1">
                 {description}
               </p>
              </div>
-               <div className={""}>
+               <div className={"px-2"}>
           <div className="flex  w-full justify-between items-end gap-2">
             <p className="text-sm">
               by{" "}
@@ -98,10 +93,6 @@ const ExpertShowcaseCard = ({
             )}
           </div>
         </div>
-            </div>
-          </div>
-        </CardHeader>
-        
        
       </Card>
     </div>

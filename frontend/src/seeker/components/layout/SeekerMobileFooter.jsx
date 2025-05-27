@@ -34,9 +34,9 @@ const footerItems = [
   {
     label: "Category",
     icon: <TbCategory size={22} />,
-    path: "/seeker/dashboard/category",
+    path: "/seeker/dashboard/mentors",
     activeCheck: (pathname) =>
-      pathname.startsWith("/seeker/dashboard/category"),
+      pathname.startsWith("/seeker/dashboard/mentors"),
   },
 ];
 
