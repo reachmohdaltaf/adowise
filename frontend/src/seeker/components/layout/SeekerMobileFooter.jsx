@@ -44,7 +44,7 @@ const SeekerMobileFooter = () => {
   const location = useLocation();
 
   return (
-    <Card className="bg-background border-gray-200 shadow-sm rounded-none py-3">
+    <Card className="bg-background border-gray-200 shadow-sm rounded-t-2xl rounded-b-none py-3">
       <CardContent className="px-2 items-center gap-4 flex justify-around">
         {footerItems.map((item) => {
           const isActive = item.activeCheck(location.pathname);
