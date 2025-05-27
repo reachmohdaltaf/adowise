@@ -74,10 +74,7 @@ const SeekerNavbar = () => {
               className="cursor-pointer hover:scale-100 scale-96 transition"
             />
           </div>
-          <SearchIcon
-            size={22}
-            className="cursor-pointer md:hidden hover:scale-100 scale-96 transition"
-          />
+         
           <BsStars
             size={22}
             className="cursor-pointer hover:scale-100 scale-96 transition"

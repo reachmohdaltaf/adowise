@@ -18,7 +18,7 @@ const ExpertServicePage = () => {
   const isWebinar = pathname.includes("webinar");
 
   return (
-    <div className="py-6 ">
+    <div className="py-6 px-1 ">
       <h1 className="text-2xl font-semibold mb-6  px-2">Services</h1>
 
 <div className="flex sticky top-12 z-20 border-b py-2 bg-background justify-between gap-4 mb-6">
@@ -39,7 +39,7 @@ const ExpertServicePage = () => {
             <DialogTrigger asChild>
               <Button size={'icon'}>  +</Button>
             </DialogTrigger>
-            <DialogContent className="h-auto max-w-2xl">
+            <DialogContent className="h-auto  max-w-2xl">
               <DialogHeader>
                 <DialogTitle>What are you creating today?</DialogTitle>
                 <DialogDescription>Select a type to continue</DialogDescription>
@@ -62,16 +62,16 @@ const ExpertServicePage = () => {
       description: "Host one time or recurring group sessions",
       link: "/expert/dashboard/create/service/webinar",
     },
-    {
-      title: "Digital Product",
-      description: "Sell digital products, courses, paid videos & more",
-      link: "/expert/dashboard/create/service/digital-product",
-    },
-    {
-      title: "Package",
-      description: "Bundle your offerings into one",
-      link: "/expert/dashboard/create/service/package",
-    },
+    // {
+    //   title: "Digital Product",
+    //   description: "Sell digital products, courses, paid videos & more",
+    //   link: "/expert/dashboard/create/service/digital-product",
+    // },
+    // {
+    //   title: "Package",
+    //   description: "Bundle your offerings into one",
+    //   link: "/expert/dashboard/create/service/package",
+    // },
   ].map((item, index) => (
     <Link to={item.link} key={index}>
       <button

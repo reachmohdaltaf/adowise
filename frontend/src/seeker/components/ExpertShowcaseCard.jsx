@@ -19,7 +19,6 @@ const ExpertShowcaseCard = ({
   image,
   author,
   type,
-  tags,
 }) => {
   // Round rating to nearest half for better star display
   const filledStars = Math.floor(rating);

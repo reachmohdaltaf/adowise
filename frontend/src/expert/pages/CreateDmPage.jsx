@@ -39,7 +39,7 @@ const CreateDmPage = () => {
   };
 
   return (
-    <Card className="w-full mt-10 p-6 space-y-6">
+    <Card className="w-full mt-10 px-3 md:p-4 space-y-6">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex flex-col gap-1">
           <Label htmlFor="title" className="text-lg font-medium">
@@ -48,7 +48,7 @@ const CreateDmPage = () => {
           <Input
             id="title"
             placeholder="Enter the name of the service"
-            className="h-10"
+            className="h-10 border border-gray-200 shadow-none"
             value={formData.title}
             onChange={(e) =>
               setFormData({ ...formData, title: e.target.value })
@@ -63,7 +63,7 @@ const CreateDmPage = () => {
             id="amount"
             type="number"
             placeholder="e.g., 499"
-            className="h-10"
+            className="h-10 border border-gray-200 shadow-none"
             value={formData.amount}
             onChange={(e) =>
               setFormData({ ...formData, amount: e.target.value })
@@ -72,7 +72,7 @@ const CreateDmPage = () => {
         </div>
 
         <div className="flex justify-start mt-10">
-          <Button type="submit" className="h-10" disabled={loading}>
+          <Button size={''} type="submit" className="h-10 text-sm" disabled={loading}>
             {loading ? "Creating..." : "Next: Customize"}
           </Button>
         </div>

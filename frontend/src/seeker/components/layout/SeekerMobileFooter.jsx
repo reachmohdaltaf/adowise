@@ -1,19 +1,80 @@
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import { HomeIcon, Phone } from 'lucide-react'
-import React from 'react'
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import { HomeIcon, PhoneCall, Search } from "lucide-react";
+import { HiUser } from "react-icons/hi2";
+import { TbCategory } from "react-icons/tb";
+import { Card, CardContent } from "@/components/ui/card";
+
+const footerItems = [
+  {
+    label: "Home",
+    icon: <HomeIcon size={22} />,
+    path: "/seeker/dashboard/home",
+    activeCheck: (pathname) => pathname === "/seeker/dashboard/home",
+  },
+  {
+    label: "Bookings",
+    icon: <PhoneCall size={22} />,
+    path: "/seeker/dashboard/bookings/upcoming",
+    activeCheck: (pathname) =>
+      pathname.startsWith("/seeker/dashboard/bookings"),
+  },
+  {
+    label: "Search",
+    icon: <Search size={22} />,
+    path: "/seeker/dashboard/search",
+    activeCheck: (pathname) => pathname.startsWith("/seeker/dashboard/search"),
+  },
+  {
+    label: "Profile",
+    icon: <HiUser size={22} />,
+    path: "/seeker/dashboard/profile/id",
+    activeCheck: (pathname) => pathname.startsWith("/seeker/dashboard/profile/id"),
+  },
+  {
+    label: "Category",
+    icon: <TbCategory size={22} />,
+    path: "/seeker/dashboard/category",
+    activeCheck: (pathname) =>
+      pathname.startsWith("/seeker/dashboard/category"),
+  },
+];
 
 const SeekerMobileFooter = () => {
-  return (  
-    <Card className='bg-background py-3 '>
-      <CardContent className={'px-5  gap-4 flex justify-around'}>
-        <Button size={'lg'} variant={'outline'} className={'bg-accent w-14 h-10'}><HomeIcon/></Button>
-        <Button size={'lg'} variant={'outline'} className={'bg-accent w-14 h-10'}><Phone/></Button>
-        <Button size={'lg'} variant={'outline'} className={'bg-accent w-14 h-10'}><HomeIcon/></Button>
-        <Button size={'lg'} variant={'outline'} className={'bg-accent w-14 h-10'} ><HomeIcon/></Button>
+  const location = useLocation();
+
+  return (
+    <Card className="bg-background border-gray-200 shadow-sm rounded-none py-3">
+      <CardContent className="px-2 items-center gap-4 flex justify-around">
+        {footerItems.map((item) => {
+          const isActive = item.activeCheck(location.pathname);
+
+          return (
+            <Link
+              key={item.label}
+              to={item.path}
+              className="flex cursor-pointer flex-col gap-1 items-center"
+            >
+              <div
+                className={`${
+                  isActive ? "text-muted-foreground" : "text-foreground"
+                }`}
+              >
+                {item.icon}
+              </div>
+              <p
+                className={`text-[12px] ${
+                  isActive ? "text-muted-foreground" : "text-foreground"
+                }`}
+              >
+                {item.label}
+              </p>
+            </Link>
+          );
+        })}
       </CardContent>
     </Card>
-  )
-}
+  );
+};
 
-export default SeekerMobileFooter
+export default SeekerMobileFooter;
