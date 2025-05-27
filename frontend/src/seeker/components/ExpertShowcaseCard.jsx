@@ -29,10 +29,13 @@ const ExpertShowcaseCard = ({
     <div>
       <Card
         className={
-          "p-0 h-46 shadow-none border-none rounded-lg   py-2 px-0 gap-0"
+          " h-50 shadow-none  hover:shadow-sm transition duration-300 text-foreground border-gray-200 rounded-lg   py-2 px-0 gap-0"
         }
       >
         <CardHeader className={"px-2 mb-0"}>
+          <div>
+
+          </div>
           <div className="flex gap-4">
             <div className="profile w-14 h-14 flex-shrink-0 overflow-hidden rounded-md bg-gray-200">
               <img
@@ -45,12 +48,12 @@ const ExpertShowcaseCard = ({
               />
             </div>
             <div className="flex flex-col flex-1 min-w-0">
-             <div className="Title h-12"> <h2 className="font-semibold text-lg line-clamp-2">
+             <div className="Title h-12"> <h2 className="font-semibold text-lg text-[#212121]   line-clamp-2">
                 {title}
               </h2></div>
               <div className="RatingandPrice ">
                 <div className="flex items-center mt-2 justify-start gap-5">
-                  <span className="font-normal text-lg">₹ {price}</span>
+                  <span className="font-normal text-sm">₹ {price}</span>
                   <span className="flex gap-1 items-center">
                     <div className="rating flex items-center">{rating}</div>
                     <div className="flex items-center">
@@ -66,7 +69,7 @@ const ExpertShowcaseCard = ({
                   </span>
                 </div>
               </div>
-             <div className="h-16">
+             <div className="h-18 py-2">
                <p className="text-sm h-10 mt-1 text-destructive font-normal line-clamp-1">
                 {description}
               </p>
@@ -88,7 +91,7 @@ const ExpertShowcaseCard = ({
               </div>
             ) : (
               <div className="flex items-center gap-2 font-normal">
-                <p className="font-normal">Send a Dm</p>
+                <p className="font-normal text-sm">Send a Dm</p>
                 <span>
                   <TbMessageStar size={20} />
                 </span>

@@ -29,7 +29,7 @@ const ExpertShowcase = () => {
   }
 
   return (
-    <div className="grid bg-gray-100 px-1 md:px-4 pt-3 md:py-2 md:rounded-md rounded-none grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
+    <div className="grid   px-0 md:px-4 pt-3 md:py-2 md:rounded-md rounded-none grid-cols-1 md:grid-cols-2 gap-2 md:gap-2">
      {services.map((service) => {
   const expert = service.expertId;
   return (

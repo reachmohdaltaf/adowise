@@ -43,9 +43,9 @@ const SeekerLayout = () => {
         <div
           ref={containerRef}
           id="seeker-scroll"
-          className="flex-1 h-screen hidescroll md:px-10 px-0 py-2 md:py-1 lg:ml-68 overflow-y-auto"
+          className="flex-1 h-screen hidescroll md:px-10 px-2 py-2 md:py-1 lg:ml-68 overflow-y-auto"
         >
-          <div className="mb-20">
+          <div className="mb-20 ">
             <Outlet />
           </div>
         </div>
