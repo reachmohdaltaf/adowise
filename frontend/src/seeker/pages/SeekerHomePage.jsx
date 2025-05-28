@@ -35,9 +35,9 @@ const SeekerHomePage = () => {
   // Top mentors data
   const topMentors = [
     {
-      name: "Ankita Sharma",
-      title: "Software Engineer @Google",
-      image: "https://picsum.photos/200/300",
+      name: "Mohd Altaf",
+      title: "Software Engineer @adowise",
+      image: "https://avatars.githubusercontent.com/u/178491093?v=4",
     },
     {
       name: "Rohit Verma",
@@ -65,8 +65,8 @@ const SeekerHomePage = () => {
 
           {/* // card content  */}
           <Card className=" mt-6   bg- rounded-lg   gap-5 items-start w-full">
-          <CardContent className={'px-2 flex  w-4/5 justify-between'}>
-             <div className="flex flex-col  gap-5">
+          <CardContent className={'px-2 flex flex-row  items-center md:w-full  justify-between'}>
+             <div className="flex flex-col   gap-5">
              <p className="text-4xl md:text-5xl md:w-92 font-normal"><span className="text-primary font-semibold">Define</span> your path and let us guide you</p>
             <Button  variant={'secondary'} className={'bg-secondary w-44 py-4 md:py-6'}>Book a session  <GiPaperPlane  size={10} /> </Button>
            </div>
