@@ -21,7 +21,7 @@ const HomePage = () => {
 
       {/* Foreground content */}
       <section className="relative flex items-center justify-center mt-20 ">
-        <img src="/logo-gradient.svg" className="h-16 md:h-32 " alt="" />
+        <img src="/logo5.png" className="h-16 md:h-32 " alt="" />
       </section>
 
       {/* @section chat container */}

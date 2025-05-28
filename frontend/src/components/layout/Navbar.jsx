@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <nav className='h-14 px-2 md:px-6 justify-between flex items-center w-full bg-transparent rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-20'>
       <Link to={'/'} className="logo">
-        <img src="/logo2.svg" className='h-8' alt="Logo" />
+        <img src="/logo5.png" className='h-8' alt="Logo" />
       </Link>
       <div className='buttons items-center flex gap-2'>
         {/* Login Redirect */}
