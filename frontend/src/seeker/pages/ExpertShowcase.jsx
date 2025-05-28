@@ -21,16 +21,15 @@ const ExpertShowcase = () => {
   }, [dispatch]);
   
 
- if (!loading && services.length === 0) {
+if (loading && services.length === 0) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
       {Array(6).fill(0).map((_, i) => (
         <CardSkeleton key={i} />
       ))}
     </div>
   );
 }
-
 
   return (
     <div className="grid   px-0 md:px-4 pt-3 md:py-2 md:rounded-md rounded-none grid-cols-1 md:grid-cols-2 gap-2 md:gap-2">
