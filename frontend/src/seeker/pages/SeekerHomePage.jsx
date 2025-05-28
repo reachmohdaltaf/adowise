@@ -67,7 +67,7 @@ const SeekerHomePage = () => {
           <Card className=" mt-6   bg- rounded-lg   gap-5 items-start w-full">
           <CardContent className={'px-2 flex flex-row  items-center md:w-full  justify-between'}>
              <div className="flex flex-col   gap-5">
-             <p className="text-4xl md:text-5xl md:w-92 font-normal"><span className="text-primary font-semibold">Define</span> your path and let us guide you</p>
+             <p className="text-4xl md:text-5xl md:w-92 font-normal"><span className="text-primary font-semibold">Define</span> your path and let us guide <br /> you</p>
             <Button  variant={'secondary'} className={'bg-secondary w-44 py-4 md:py-6'}>Book a session  <GiPaperPlane  size={10} /> </Button>
            </div>
            <div>
