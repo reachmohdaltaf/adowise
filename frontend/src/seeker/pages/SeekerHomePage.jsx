@@ -160,6 +160,65 @@ const SeekerHomePage = () => {
           `}</style>
         </CardHeader>
       </Card>
+
+    
+        <Card className="h-92 bg-card border-2 border-primary/20 hover:border-primary transition-all duration-500 group overflow-hidden relative">
+  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-destructive/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+  
+  <CardContent className="relative z-10 px-8 py-12 flex flex-col items-center justify-center h-full">
+    {/* Floating Elements */}
+    <div className="absolute top-6 right-6 w-3 h-3 bg-primary/30 rounded-full animate-pulse"></div>
+    <div className="absolute top-12 right-12 w-2 h-2 bg-destructive/40 rounded-full animate-pulse delay-300"></div>
+    <div className="absolute bottom-8 left-6 w-4 h-4 bg-primary/20 rounded-full animate-pulse delay-700"></div>
+    
+    {/* Main Content */}
+    <div className="text-center space-y-6 max-w-sm">
+      {/* Badge */}
+      <div className="inline-flex items-center px-4 py-2 bg-destructive/10 text-destructive text-sm font-medium rounded-full border border-destructive/20">
+        <span className="w-2 h-2 bg-destructive rounded-full mr-2 animate-pulse"></span>
+        Mentorship Program
+      </div>
+      
+      {/* Title */}
+      <div className="space-y-2">
+        <h1 className="text-5xl font-bold bg-gradient-to-r from-primary via-primary/80 to-destructive bg-clip-text text-transparent leading-tight">
+          Resume
+        </h1>
+        <h2 className="text-3xl font-semibold text-foreground/90">
+          Review
+        </h2>
+      </div>
+      
+      {/* Subtitle */}
+      <div className="flex items-center justify-center space-x-3">
+        <div className="h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent flex-1"></div>
+        <span className="text-lg font-medium text-muted-foreground px-3">
+          For Freshers
+        </span>
+        <div className="h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent flex-1"></div>
+      </div>
+      
+      {/* Stats */}
+      <div className="flex justify-center space-x-8 pt-4">
+        <div className="text-center">
+          <div className="text-2xl font-bold text-primary">100+</div>
+          <div className="text-xs text-muted-foreground">Reviews</div>
+        </div>
+        <div className="w-px h-12 bg-border"></div>
+        <div className="text-center">
+          <div className="text-2xl font-bold text-destructive">4.9</div>
+          <div className="text-xs text-muted-foreground">Rating</div>
+        </div>
+      </div>
+    </div>
+    
+    {/* Bottom accent */}
+    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-destructive to-primary opacity-60 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700"></div>
+  </CardContent>
+</Card>
+
+
+     
     </div>
   );
 };
