@@ -124,7 +124,7 @@ const SeekerProfile = () => {
   };
 
   return (
-    <Card className="px-2 mt-5 md:mt-6 border-none gap-0 ">
+    <Card className="px-2 mt-1 md:mt-6 border-none gap-0 ">
       <h1 className="text-2xl font-semibold mb-4 px-2">Personal Information</h1>
 
       {/* Tip Box */}
@@ -132,7 +132,7 @@ const SeekerProfile = () => {
         <div>
           <HiInformationCircle />
         </div>
-        <div className="text-xs">
+        <div className="text-[10px]">
           <h2 className="font-semibold">Tips</h2>
           <ul className="list-disc">
             <li className="font-normal">

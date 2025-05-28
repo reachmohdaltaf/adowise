@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { HomeIcon, PhoneCall, Search } from "lucide-react";
-import { HiUser } from "react-icons/hi2";
+import { HomeIcon, PhoneCall, Search, User2 } from "lucide-react";
 import { TbCategory } from "react-icons/tb";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -27,7 +26,7 @@ const footerItems = [
   },
   {
     label: "Profile",
-    icon: <HiUser size={22} />,
+    icon: <User2 size={22} />,
     path: "/seeker/dashboard/profile/id",
     activeCheck: (pathname) => pathname.startsWith("/seeker/dashboard/profile/id"),
   },

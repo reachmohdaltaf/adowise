@@ -62,6 +62,7 @@ import Layout from "./components/layout/Layout";
 import ExpertServiceDetails from "./seeker/pages/ExpertServiceDetailPage";
 import SeekerMentorPage from "./seeker/pages/SeekerMentorPage";
 import SeekerChatBot from "./seeker/pages/SeekerChatBot";
+import SeekerSearchPage from "./seeker/pages/SeekerSearchPage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -187,6 +188,7 @@ const App = () => {
           <Route path="calendar" element={<SeekerCalendarPage />} />
           <Route path="notifications" element={<SeekerNotificationsPage />} />
           <Route path="aisearch" element={<SeekerAiSearch />} />
+          <Route path="search" element={<SeekerSearchPage />} />
           <Route path="settings" element={<SeekerSettingPage />} />
           <Route path="rewards" element={<SeekerRewardPage />} />
           <Route path="priority-dm" element={<SeekerPriorityDm />}>
