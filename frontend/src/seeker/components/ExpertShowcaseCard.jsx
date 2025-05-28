@@ -21,8 +21,6 @@ const ExpertShowcaseCard = ({
   type,
 }) => {
   // Round rating to nearest half for better star display
-  const filledStars = Math.floor(rating);
-  const totalStars = 5;
   
   return (
     <div>
@@ -52,7 +50,7 @@ const ExpertShowcaseCard = ({
               </h2></div>
               <div className="RatingandPrice ">
                 <div className="flex items-center mt-2 justify-start gap-2">
-                  <span className="font-normal text-sm">₹ 100</span>
+                  <span className="font-normal text-sm">₹ {price}</span>
                   <span className="flex gap-1 items-center">
                     <div className="rating flex items-center text-xs border rounded-lg px-2 font-normal gap-2"> <Star size={12} /> <p className="">{rating}</p></div>
                     

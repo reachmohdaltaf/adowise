@@ -56,7 +56,6 @@ const SeekerHomePage = () => {
   };
 
   // Background colors for each card
-  const cardColors = ["#f0f5fe", "#fff9db", "#ffeef2"]; // light blue, light yellow, light pink
 
   // Top mentors data
   const topMentors = [
@@ -92,32 +91,24 @@ const SeekerHomePage = () => {
               Unlock Guidance
             </h2>
             <p className="text-xs sm:text-sm text-destructive font-normal">
-              Book a session with unstoppable mentors across domains & work
+              From Confused to Confident — Together
             </p>
           </CardContent>
 
           <div className="grid grid-cols-1 mt-4 md:grid-cols-2 lg:grid-cols-3 gap-2">
             {cardData.map((card, index) => {
-              const bgColor = cardColors[index % cardColors.length];
+            ;
               return (
                 <Card
                   key={index}
-                  className="px-2 py-6 rounded-2xl"
-                  style={{ backgroundColor: bgColor }}
+                  className="px-2 py-2 bg-primary/20 rounded-xl"
                 >
-                  <div className="flex items-center">
-                    <div className="flex-1">
-                      <p className="text-2xl font-normal">{card.title1}</p>
-                      <p className="text-2xl font-normal">{card.title2}</p>
-                      <p className="text-sm font-normal">{card.subtitle1}</p>
-                      <p className="text-sm font-normal">{card.subtitle2}</p>
-                    </div>
-                    <img
-                      src={card.image}
-                      alt="Mentor"
-                      className="h-28 rounded-full object-cover"
-                    />
-                  </div>
+
+                  {/* text and profile image / */}
+                 <div className="w-44">
+                    <p className="font-normal text- ">Personalized Mentorship for Every Ambition</p>
+                 </div>
+                 <div></div>
                 </Card>
               );
             })}
