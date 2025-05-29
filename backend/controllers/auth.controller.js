@@ -1,6 +1,7 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/jwt/generateToken.js";
+import { Calendar } from "../models/calendar.model.js";
 // import { Calendar } from "../models/Calendar.model.js";
 
 /**
@@ -20,35 +21,40 @@ export const signup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
+    // Check for required fields
     if (!name || !email || !password) {
       return res.status(400).json({ error: "All fields are required" });
     }
 
-    // Check if user exists
+    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: "User already exists" });
     }
 
-    // Hash password
+    // Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Get first 3 characters of the name (or less if name is shorter)
+    // Generate a unique username
     const prefix = name.substring(0, 3).toLowerCase();
-
     let username;
     do {
-      const randomNum = Math.floor(Math.random() * 1000); // 0 to 999
+      const randomNum = Math.floor(Math.random() * 1000);
       username = `${prefix}${randomNum}`;
     } while (await User.findOne({ username }));
 
-    // Create user
+    // Create the user
     const user = await User.create({
       name,
       email,
       password: hashedPassword,
       username,
+    });
+
+    // ✅ Create calendar for the user
+    await Calendar.create({
+      userId: user._id, // only this is required, rest will use default values
     });
 
     // Generate token
@@ -62,7 +68,7 @@ export const signup = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
-    // Send user info without password
+    // Remove password before sending response
     const { password: _, ...userWithoutPassword } = user.toObject();
 
     res.status(201).json(userWithoutPassword);

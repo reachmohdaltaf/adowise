@@ -9,6 +9,7 @@ import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import calendarRoutes from './routes/calendar.route.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -32,6 +33,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/user', userRoutes)
 app.use('/api/v1/service', serviceRoutes)
+app.use('/api/v1/calendar', calendarRoutes)
 
 
 if (process.env.NODE_ENV === "production") {

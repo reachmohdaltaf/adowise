@@ -49,14 +49,14 @@ const SeekerNavbar = () => {
   }, [isOpen]);
 
   return (
-    <nav className="h-14 flex md:border-none border py-6 px-2 md:px-16 bg-background items-center justify-between">
+    <nav className="h-14 flex md:border-none border py-6  px-2 md:px-16 bg-background items-center justify-between">
       <Link
         to={"/seeker/dashboard/home"}
         className="logo flex items-center gap-1"
       >
         <img
           src="/logo.png"
-          className="h-8 scale-98 hover:scale-100 transition cursor-pointer"
+          className="h-7 scale-98 hover:scale-100 transition cursor-pointer"
           alt="logo"
         />
       </Link>

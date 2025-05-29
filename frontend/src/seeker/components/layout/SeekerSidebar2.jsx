@@ -160,7 +160,7 @@ const handleRoleChange = useCallback(async () => {
               >
                 <Button
                   size="lg"
-                  className={`flex items-center gap-3 transition ease-in duration-200 font-semibold rounded-r-none rounded-l-2xl justify-start w-full
+                  className={`flex items-center gap-3   font-semibold rounded-r-none rounded-l-2xl justify-start w-full
                     ${
                       location.pathname === item.path
                         ? "bg-muted text-muted-foreground pointer-events-none transition-none"

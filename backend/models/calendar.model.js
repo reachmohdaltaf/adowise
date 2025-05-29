@@ -27,7 +27,27 @@ const calendarSchema = new mongoose.Schema({
     enum: ["1 week", "2 weeks", "3 weeks", "1 month", "2 months"],
     default: "1 month"
   },
-  schedules: [scheduleSchema]
+ meetingLocation: {
+  zoomPro: {
+    type: Boolean,
+    default: false
+  },
+  googleMeet: {
+    type: Boolean,
+    default: true // set to true if Google Meet is enabled by default
+  }
+}
+,
+ schedules: {
+  type: [scheduleSchema],
+  default: [
+    {
+      scheduleTitle: "Default Schedule",
+      // availableDays and blockDates use their defaults from scheduleSchema
+    }
+  ]
+}
+
 }, { timestamps: true });
 
 export const Calendar = mongoose.model("Calendar", calendarSchema);
