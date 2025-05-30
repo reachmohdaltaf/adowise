@@ -247,7 +247,7 @@ const App = () => {
             />
           </Route>
           <Route path="settings" element={<ExpertSettingPage />} />
-                  <Route path=":userId" element={<ExpertLeadPage />} />
+                  <Route path="page/:userId" element={<ExpertLeadPage />} />
 
           <Route path="availability" element={<ExpertAvailabilityPage />}>
             <Route index element={<Navigate to="calendar" replace />} />

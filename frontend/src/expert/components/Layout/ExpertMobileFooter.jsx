@@ -47,8 +47,8 @@ const footerItems = [
   {
     label: "Profile",
     icon: <User size={22} />,
-    path: "/expert/dashboard/profile",
-    activeCheck: (pathname) => pathname.startsWith("/expert/dashboard/profile"),
+    path: "/expert/dashboard/profile/id",
+    activeCheck: (pathname) => pathname.startsWith("/expert/dashboard/profile/id"),
   },
 ];
 
