@@ -257,7 +257,7 @@ const ExpertSchedulePage = () => {
                               onChange={(e) =>
                                 handleTimeChange(dayCapitalized, index, "from", e.target.value)
                               }
-                              className="border rounded-md px-2 py-2 sm:px-2 sm:py-1 text-base sm:text-sm h-11 sm:h-auto flex-1 sm:flex-none sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                              className="border rounded-md px-0 py-1 sm:px-2 sm:py-1 text-base sm:text-sm h-11 sm:h-auto flex-1 sm:flex-none sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             />
                             <span className="text-gray-500 font-medium">to</span>
                             <input
@@ -266,7 +266,7 @@ const ExpertSchedulePage = () => {
                               onChange={(e) =>
                                 handleTimeChange(dayCapitalized, index, "to", e.target.value)
                               }
-                              className="border rounded-md px-3 py-2 sm:px-2 sm:py-1 text-base sm:text-sm h-11 sm:h-auto flex-1 sm:flex-none sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                              className="border rounded-md px-1 py-2 sm:px-2 sm:py-1 text-base sm:text-sm h-11 sm:h-auto flex-1 sm:flex-none sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             />
                             {schedule[dayCapitalized].times.length > 1 && (
                               <Button

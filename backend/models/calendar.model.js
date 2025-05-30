@@ -35,19 +35,24 @@ const calendarSchema = new mongoose.Schema(
       },
       googleMeet: {
         type: Boolean,
-        default: true, // set to true if Google Meet is enabled by default
+        default: true,
       },
     },
     googleCalendarConnected: {
       type: Boolean,
-      default: false, // or true, depending on whether it should be connected by default
+      default: false,
+    },
+    blockDates: {
+      // NEW FIELD for globally blocked dates (outside of schedule-specific ones)
+      type: [Date],
+      default: [],
     },
     schedules: {
       type: [scheduleSchema],
       default: [
         {
           scheduleTitle: "Default Schedule",
-          // availableDays and blockDates use their defaults from scheduleSchema
+          // availableDays and blockDates are handled by scheduleSchema
         },
       ],
     },
