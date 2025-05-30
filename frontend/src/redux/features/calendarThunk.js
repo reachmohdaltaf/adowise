@@ -13,3 +13,15 @@ export const fetchCalendar = createAsyncThunk(
     }
   }
 );
+
+export const updateCalendar = createAsyncThunk(
+  "calendar/update",
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post("/calendar/update", formData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);

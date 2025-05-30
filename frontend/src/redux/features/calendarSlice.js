@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchCalendar } from "./calendarThunk";
+import { fetchCalendar, updateCalendar } from "./calendarThunk";
 
 export const calendarSlice = createSlice({
   name: "calendar",
@@ -15,9 +15,10 @@ export const calendarSlice = createSlice({
       state.error = null;
     },
   },
+
   extraReducers: (builder) => {
     builder
-      //   fetching calendar data
+      // fetching calendar data
       .addCase(fetchCalendar.fulfilled, (state, action) => {
         state.calendar = action.payload;
         state.loading = false;
@@ -27,6 +28,21 @@ export const calendarSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchCalendar.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // update calendar data
+      .addCase(updateCalendar.fulfilled, (state, action) => {
+        // Set only the calendar part from the response payload
+        state.calendar = action.payload.calendar;
+        state.loading = false;
+      })
+      .addCase(updateCalendar.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateCalendar.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

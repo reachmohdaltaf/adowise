@@ -7,7 +7,7 @@ const calendarSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
-      index: true, // Speeds up queries by userId
+      index: true,
     },
     timezone: {
       type: String,
@@ -43,16 +43,19 @@ const calendarSchema = new mongoose.Schema(
       default: false,
     },
     blockDates: {
-      // NEW FIELD for globally blocked dates (outside of schedule-specific ones)
       type: [Date],
       default: ["2023-08-15", "2023-08-16", "2023-08-17"],
+    },
+    // NEW FIELD: Active schedule title
+    activeSchedule: {
+      type: String,
+      default: "Default Schedule",
     },
     schedules: {
       type: [scheduleSchema],
       default: [
         {
           scheduleTitle: "Default Schedule",
-          // availableDays and blockDates are handled by scheduleSchema
         },
       ],
     },

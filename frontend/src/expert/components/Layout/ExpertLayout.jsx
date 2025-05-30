@@ -1,9 +1,41 @@
 // SeekerLayout.jsx
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import ExpertNavbar from './ExpertNavbar';
 import ExpertSidebar from './ExpertSidebar';
+import ExpertMobileFooter from './ExpertMobileFooter';
 const ExpertLayout = () => {
+  const containerRef = useRef();
+  const lastScrollTop = useRef(0); // for detecting scroll direction
+  const [showFooter, setShowFooter] = useState(true); // for showing/hiding footer
+
+    // Scroll detection logic
+    useEffect(() => {
+      const handleScroll = () => {
+        const scrollTop = containerRef.current?.scrollTop || 0;
+  
+        if (scrollTop > lastScrollTop.current) {
+          // Scrolling down
+          setShowFooter(false);
+        } else {
+          // Scrolling up
+          setShowFooter(true);
+        }
+  
+        lastScrollTop.current = scrollTop;
+      };
+  
+      const container = containerRef.current;
+      if (container) {
+        container.addEventListener("scroll", handleScroll);
+      }
+  
+      return () => {
+        if (container) {
+          container.removeEventListener("scroll", handleScroll);
+        }
+      };
+    }, []);
 
   return (
     <div className='expert  max-w-screen-2xl mx-auto md:px-10 relative'>
@@ -21,12 +53,18 @@ const ExpertLayout = () => {
           </div>
         </div>
         
-        <div id='seeker-scroll' className='flex-1 h-screen hidescroll md:px-10 px-0 py-4 md:py-1 lg:ml-68'>
+        <div id='seeker-scroll' className='flex-1 h-screen hidescroll md:px-10 px-0  md:py-1 lg:ml-68'>
   <div className="mb-20">
     <Outlet />
-    {/* <div className='fixed bottom-0 left-0 right-0'>    <SeekerMobileFooter/>
-    </div> */}
+    
   </div>
+   <div
+        className={`md:hidden fixed bottom-0 w-full transition-transform duration-500 ${
+          showFooter ? "translate-y-0" : "translate-y-full"
+        }`}
+      >
+        <ExpertMobileFooter />
+      </div>
 </div>
 
       </div>
