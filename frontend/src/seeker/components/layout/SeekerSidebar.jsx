@@ -20,7 +20,7 @@ import {
 import React, { useCallback } from "react";
 import { BsStars } from "react-icons/bs";
 import { RiFileList3Line, RiUserStarLine } from "react-icons/ri";
-import { TbMessageStar, TbUserStar } from "react-icons/tb";
+import { TbMessageStar, TbRotate, TbUserStar } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -150,7 +150,7 @@ const SeekerSidebar = () => {
           {userRoleChanging && !isProfileUpdating ? (
             <span className="animate-spin rounded-full h-4 w-4 border-2 border-t-transparent border-black"></span>
           ) : (
-            <RiUserStarLine className="!h-5 !w-5" />
+            <TbRotate className="!h-5 !w-5" />
           )}
           {userRoleChanging && !isProfileUpdating ? "Switching..." : "Expert Dashboard"}
         </Button>

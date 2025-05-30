@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 import React from 'react';
 import { BsStars } from "react-icons/bs";
-import { TbMessageStar } from "react-icons/tb";
+import { TbMessageStar, TbRotate } from "react-icons/tb";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { RiUserStarLine } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
@@ -172,7 +172,7 @@ const ExpertSidebar2 = ({isOpen, setIsOpen}) => {
                   {userRoleChanging ? (
                     <span className="animate-spin rounded-full h-4 w-4 border-2 border-t-transparent border-black"></span>
                   ) : (
-                    <RiUserStarLine className="!h-5 !w-5" />
+                    <TbRotate className="!h-5 !w-5" />
                   )}
                   {userRoleChanging ? "Switching..." : "Seeker Dashboard"}
                 </Button>
