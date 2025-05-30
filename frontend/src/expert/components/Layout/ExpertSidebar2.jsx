@@ -91,7 +91,7 @@ const sidebarItems = [
   {
     label: "Profile",
     icon: <User className="!h-5 !w-5" />,
-    path: "/expert/dashboard/profile",
+    path: "/expert/dashboard/profile/id",
   },
   {
     label: "Settings",

@@ -21,7 +21,7 @@ const ExpertServicePage = () => {
     <div className="py-6 ">
       <h1 className="text-2xl font-semibold mb-6  px-2">Services</h1>
 
-<div className="flex sticky top-12 z-20 border-b py-2 bg-background justify-between gap-4 mb-6">
+<div className="flex sticky top-0 z-20 border-b py-2 bg-background justify-between gap-4 mb-6">
         <div className="gap-3 flex">
           <Link to="1-to-1">
             <Button size={''} className={' rounded-2xl md:px-6 px-3 '} variant={is1to1 ? "default" : "outline"}>1 : 1</Button>
