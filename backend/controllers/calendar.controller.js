@@ -1,5 +1,5 @@
 import { Calendar } from "../models/calendar.model.js";
-
+import mongoose from "mongoose";
 export const getCalendar = async (req, res) => {
   try {
      req.user = req.user._id; // assuming user ID is added by auth middleware
@@ -117,3 +117,30 @@ export const updateActiveSchedule = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+
+// GET /calendar/user/:userId
+export const getCalendarByUserId = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const calendar = await Calendar.findOne({
+      userId: new mongoose.Types.ObjectId(id),
+    }).populate("userId");
+
+    if (!calendar) {
+      return res.status(404).json({ error: "Calendar not found for this user" });
+    }
+
+    res.status(200).json(calendar);
+  } catch (error) {
+    console.error("Get calendar for user error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
+
+
+
+

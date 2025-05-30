@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchCalendar, updateCalendar } from "./calendarThunk";
+import { fetchCalendar, getCalendarByUserId, updateCalendar } from "./calendarThunk";
 
 export const calendarSlice = createSlice({
   name: "calendar",
@@ -43,6 +43,19 @@ export const calendarSlice = createSlice({
         state.error = null;
       })
       .addCase(updateCalendar.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      // get calendar by service id 
+      .addCase(getCalendarByUserId.fulfilled, (state, action) => {
+        state.calendar = action.payload;
+        state.loading = false;
+      })
+      .addCase(getCalendarByUserId.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getCalendarByUserId.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

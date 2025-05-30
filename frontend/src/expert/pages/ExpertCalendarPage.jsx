@@ -121,7 +121,7 @@ const ExpertCalendarPage = () => {
         </div>
 
         {/* Reschedule Policy */}
-        <div className="flex flex-col sm:flex-row items-start justify-between space-y-4 sm:space-y-0 sm:max-w-screen-sm mt-6">
+        <div className="flex flex-col sm:flex-row items-start justify-between space-y-4 sm:space-y-0 sm:max-w-screen-sm ">
           <p className="text-sm flex font-normal items-center gap-2">
             <CalendarArrowUpIcon /> Reschedule policy :
           </p>
@@ -199,7 +199,7 @@ const ExpertCalendarPage = () => {
         </div>
 
         {/* Booking Period */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-between sm:max-w-screen-sm items-start mt-6">
+        <div className="flex flex-col sm:flex-row gap-4 justify-between sm:max-w-screen-sm items-start ">
           <h3 className="text-sm flex font-normal items-center gap-2">
             <FaCalendarAlt size={20} /> Booking Period :
           </h3>

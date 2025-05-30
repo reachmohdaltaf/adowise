@@ -25,3 +25,15 @@ export const updateCalendar = createAsyncThunk(
     }
   }
 );
+
+export const getCalendarByUserId = createAsyncThunk(
+  "calendar/getCalendarByUserId",
+  async (userId, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(`/calendar/${userId}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);

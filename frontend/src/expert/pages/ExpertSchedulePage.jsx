@@ -289,7 +289,7 @@ const ExpertSchedulePage = () => {
   return (
     <div className="min-h-screen bg-gray-50 bg-background sm:bg-background">
       {/* Navigation remains the same */}
-     <nav className="flex flex-col bg-background hidescroll sticky top-0  z-10 gap-2 mb-2 sm:mb-4 w-full overflow-x-auto px-3 sm:px-2  shadow-none">
+     <nav className="flex flex-col bg-background hidescroll sticky top-0 py-2  z-10 gap-2 mb-2 sm:mb-4 w-full overflow-x-auto px-3 sm:px-2  shadow-none">
  
   
   <div className="flex min-w-max items-center gap-2 pl-0">
