@@ -136,7 +136,7 @@ const ExpertSidebar2 = ({isOpen, setIsOpen}) => {
     <aside className=" h-screen w-72 md:w-82 overflow-y-auto bg-white  flex flex-col justify-between z-10">
     <div onClick={() => setIsOpen(!isOpen)} className='flex justify-end mr-3 mt-6 cursor-pointer '><X/></div>
       <div className="flex-1 px-2 mt-6">
-         <Link to={`/seeker/dashboard/profile/${user._id}`} onClick={() => setIsOpen(!isOpen)} className="flex items-center gap-2 px-4 bg-muted py-4 rounded-xl">
+         <Link to={`/expert/dashboard/profile/${user._id}`} onClick={() => setIsOpen(!isOpen)} className="flex items-center gap-2 px-4 bg-muted py-4 rounded-xl">
                   <img
                     src={
                       user.image
@@ -156,7 +156,7 @@ const ExpertSidebar2 = ({isOpen, setIsOpen}) => {
                     <p className="text-destructive text-sm font-normal">@{user.username}</p>
                   </div>
                 </Link>
-        <ul className="flex flex-col gap-2">
+        <ul className="flex flex-col mt-4 gap-2">
           {sidebarItems.map((item, index) =>
             item.type === 'divider' ? (
               <div key={index} className="h-[1px] w-full bg-gray-200" />
