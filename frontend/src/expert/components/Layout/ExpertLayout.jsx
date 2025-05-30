@@ -53,8 +53,12 @@ const ExpertLayout = () => {
           </div>
         </div>
         
-        <div id='seeker-scroll' className='flex-1 h-screen hidescroll md:px-10 px-0  md:py-1 lg:ml-68'>
-  <div className="mb-20">
+<div
+  id='seeker-scroll'
+  ref={containerRef} // ← Attach ref here
+  className='flex-1 h-screen hidescroll md:px-10 px-0 md:py-1 lg:ml-68 overflow-y-auto'
+>
+  <div className="mb-20 px-2">
     <Outlet />
     
   </div>

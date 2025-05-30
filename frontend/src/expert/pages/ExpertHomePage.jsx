@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 const ExpertHomePage = () => {
   
   return (
-    <div className='py-6 px-2'>
+    <div className='py-6'>
     
    <div className='flex md:flex-row flex-col gap-3 items-center'>
    <LeadRocketCard/>
@@ -17,13 +17,13 @@ const ExpertHomePage = () => {
 
 
    <Card className=" mt-6  px-2  md:px-6 py-8 rounded-2xl  border-none space-y-6">
-  <div>
+  <div className=''>
     <h1 className="text-4xl font-bold tracking-tight">
       Turn Your Skills into Impact
     </h1>
   </div>
 
-  <div className="border  rounded-xl p-6 px-4">
+  <div className="border mb-10  rounded-xl p-6 px-4">
     <h2 className="text-2xl font-semibold mb-2">Add Services</h2>
     <p className="">
       Let people know what services you offer!

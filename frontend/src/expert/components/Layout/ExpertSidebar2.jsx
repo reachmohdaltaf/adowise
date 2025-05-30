@@ -12,6 +12,7 @@ import {
   Mail,
   Phone,
   PhoneCall,
+  RefreshCcw,
   Search,
   Settings,
   Star,
@@ -182,20 +183,17 @@ const ExpertSidebar2 = ({isOpen, setIsOpen}) => {
           )}
         </ul>
       
-                 <Button
-                  onClick={handleRoleChange}
-                  size="lg"
-                  className="mt-3 rounded-full font-semibold py-5 w-full flex items-center justify-center gap-2"
-                  variant=""
-                  disabled={userRoleChanging} // disable button while loading
-                >
-                  {userRoleChanging ? (
-                    <span className="animate-spin rounded-full h-4 w-4 border-2 border-t-transparent border-black"></span>
-                  ) : (
-                    <TbRotate className="!h-5 !w-5" />
-                  )}
-                  {userRoleChanging ? "Switching..." : "Seeker Dashboard"}
-                </Button>
+               <Button
+                        onClick={handleRoleChange}
+                        size="lg"
+                        className="mt-3 rounded-full font-semibold py-5 w-full flex items-center justify-center gap-2"
+                        variant="default"
+                        disabled={userRoleChanging}
+                      >
+                        <RefreshCcw className={!userRoleChanging ? "" : "animate-spin"} />
+                        Seeker Dashboard
+                      </Button>
+              
       
 
           <Button

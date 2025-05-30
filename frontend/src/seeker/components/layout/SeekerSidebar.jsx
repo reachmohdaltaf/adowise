@@ -12,6 +12,7 @@ import {
   Newspaper,
   Phone,
   PhoneCall,
+  RefreshCcw,
   Search,
   Settings,
   User,
@@ -25,7 +26,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { HiUsers } from "react-icons/hi2";
-import { PiSirenLight } from "react-icons/pi";
+import { PiSirenLight, PiUserSwitch } from "react-icons/pi";
 
 const SeekerSidebar = () => {
   const user = useSelector((state) => state.auth.user);
@@ -141,19 +142,16 @@ const SeekerSidebar = () => {
 
         {/* Updated Role Change Button */}
         <Button
-          onClick={handleRoleChange}
-          size="sm"
-          className="mt-3 rounded-full font-semibold py-5 w-full flex items-center justify-center gap-2"
-          variant=""
-          disabled={userRoleChanging && !isProfileUpdating} // Only disable for role changes, not profile updates
-        >
-          {userRoleChanging && !isProfileUpdating ? (
-            <span className="animate-spin rounded-full h-4 w-4 border-2 border-t-transparent border-black"></span>
-          ) : (
-            <TbRotate className="!h-5 !w-5" />
-          )}
-          {userRoleChanging && !isProfileUpdating ? "Switching..." : "Expert Dashboard"}
-        </Button>
+                 onClick={handleRoleChange}
+                 size="lg"
+                 className="mt-3 rounded-full font-semibold py-5 w-full flex items-center justify-center gap-2"
+                 variant="default"
+                 disabled={userRoleChanging}
+               >
+                 <RefreshCcw className={!userRoleChanging ? "" : "animate-spin"} />
+                 Seeker Dashboard
+               </Button>
+       
 
         <Link onClick={handleLogout} to="/login">
           <Button
