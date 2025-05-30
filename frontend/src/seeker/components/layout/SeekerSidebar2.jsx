@@ -136,7 +136,7 @@ const handleRoleChange = useCallback(async () => {
                 : "https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=76&q=80"
             }
             alt="profile"
-            className="h-10 w-12 rounded-full object-cover"
+            className="h-12 w-12 rounded-full object-cover"
           />
           <div className="w-full">
             <div className="flex items-center justify-between w-full">

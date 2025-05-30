@@ -88,7 +88,7 @@ const ExpertNavbar = () => {
                 <Copy
                   onClick={handleCopy}
                   className="cursor-pointer ml-2 hover:scale-105 transition-all ease-in-out duration-300"
-                  size={18}
+                  size={20}
                 />
               )}
             </div>

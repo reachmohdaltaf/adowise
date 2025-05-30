@@ -20,7 +20,7 @@ import {
   X
 } from 'lucide-react';
 import React from 'react';
-import { BsStars } from "react-icons/bs";
+import { BsStarFill, BsStars } from "react-icons/bs";
 import { TbMessageStar, TbRotate } from "react-icons/tb";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { RiUserStarLine } from 'react-icons/ri';
@@ -136,6 +136,26 @@ const ExpertSidebar2 = ({isOpen, setIsOpen}) => {
     <aside className=" h-screen w-72 md:w-82 overflow-y-auto bg-white  flex flex-col justify-between z-10">
     <div onClick={() => setIsOpen(!isOpen)} className='flex justify-end mr-3 mt-6 cursor-pointer '><X/></div>
       <div className="flex-1 px-2 mt-6">
+         <Link to={`/seeker/dashboard/profile/${user._id}`} onClick={() => setIsOpen(!isOpen)} className="flex items-center gap-2 px-4 bg-muted py-4 rounded-xl">
+                  <img
+                    src={
+                      user.image
+                        ? user.image
+                        : "https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=76&q=80"
+                    }
+                    alt="profile"
+                    className="h-12 w-12 rounded-full object-cover"
+                  />
+                  <div className="w-full">
+                    <div className="flex items-center justify-between w-full">
+                      <h2 className="text-lg font-semibold">{user.name}</h2>
+                      <p className="flex bg-muted-foreground rounded-md text-white px-2 items-center text-sm gap-1">
+                        <BsStarFill size={10} /> {user.rating || 6}
+                      </p>
+                    </div>
+                    <p className="text-destructive text-sm font-normal">@{user.username}</p>
+                  </div>
+                </Link>
         <ul className="flex flex-col gap-2">
           {sidebarItems.map((item, index) =>
             item.type === 'divider' ? (
