@@ -185,7 +185,7 @@ const handleRoleChange = useCallback(async () => {
                  disabled={userRoleChanging}
                >
                  <RefreshCcw className={!userRoleChanging ? "" : "animate-spin"} />
-                 Seeker Dashboard
+                 Expert Dashboard
                </Button>
        
 

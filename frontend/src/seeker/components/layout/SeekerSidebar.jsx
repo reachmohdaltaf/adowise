@@ -149,7 +149,7 @@ const SeekerSidebar = () => {
                  disabled={userRoleChanging}
                >
                  <RefreshCcw className={!userRoleChanging ? "" : "animate-spin"} />
-                 Seeker Dashboard
+                 Expert Dashboard
                </Button>
        
 
