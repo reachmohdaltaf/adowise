@@ -254,7 +254,7 @@ const App = () => {
             <Route path="calendar" element={<ExpertCalendarPage />} />
             <Route path="schedule" element={<ExpertSchedulePage />} />
           </Route>{" "}
-          <Route path="profile" element={<ExpertProfile />} />
+          <Route path="profile/:id" element={<ExpertProfile />} />
           <Route path="messages" element={<ExpertMessagePage />} />
         </Route>
       </Routes>

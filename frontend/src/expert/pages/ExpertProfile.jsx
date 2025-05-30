@@ -1,350 +1,333 @@
-import { Card } from '@/components/ui/card';
-import { Crown, Copy, Pencil, Plus, Trash2 } from 'lucide-react';
-import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
-import React, { useState } from 'react';
-
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { Separator } from '@/components/ui/separator';
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { getUserProfile, updateProfile } from "@/redux/features/userThunk";
+import { Save, Upload } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import { HiInformationCircle } from "react-icons/hi2";
+import { useDispatch, useSelector } from "react-redux";
 
 const ExpertProfile = () => {
-  const [copied, setCopied] = useState(false);
-  const [openEditInfo, setOpenEditInfo] = useState(false);
-  const [openEditImage, setOpenEditImage] = useState(false);
-  const [openEditExperience, setOpenEditExperience] = useState(false);
-  const [openEditSocials, setOpenEditSocials] = useState(false);
-
-  const [name, setName] = useState('SH. Shukla');
-  const [username, setUsername] = useState('@mohd_altaf');
-  const [about, setAbout] = useState(
-    'I am a web developer with a passion for creating visually stunning and user-friendly websites.'
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+  console.log("User data:", user);
+  const [imagePreview, setImagePreview] = useState(
+    user?.image ? user.image : "/default-profile.png"
   );
-  const [imageFile, setImageFile] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState('https://randomuser.me/api/portraits/men/24.jpg');
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [formLoading, setFormLoading] = useState(false);
+  const fileInputRef = useRef(null);
+  const SuccessPopRef = useRef(null);
+  useEffect(() => {
+    // Fetch user profile on component mount
+    dispatch(getUserProfile());
+  }, [dispatch]);
 
-  const [experiences, setExperiences] = useState([
-    {
-      id: 1,
-      title: 'Frontend Developer',
-      company: 'TechNova Solutions · Full-time',
-      date: 'Jan 2024 – Present · Remote',
-      description: 'Building modern, responsive UIs using React, Tailwind CSS, and Next.js.',
-    },
-    {
-      id: 2,
-      title: 'Web Development Intern',
-      company: 'InnovateX Labs · Internship',
-      date: 'Jul 2023 – Dec 2023 · Dehradun, India',
-      description: 'Worked on building and optimizing frontend features for client websites.',
-    },
-  ]);
-
-  const [socials, setSocials] = useState({
-    github: '',
-    linkedin: '',
-    twitter: '',
-  });
-
-  const expertifyLink = 'https://expertify.in/mohd_altaf';
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(expertifyLink);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+  useEffect(() => {
+    if (user?.image) {
+      setImagePreview(user.image);
+    }
+  }, [user]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setImageFile(file);
-      setPreviewUrl(URL.createObjectURL(file));
+      setSelectedImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
-  const handleSaveImage = () => {
-    setOpenEditImage(false);
+  const handleUploadClick = () => {
+    fileInputRef.current.click();
   };
 
-  const handleExperienceChange = (id, field, value) => {
-    setExperiences(
-      experiences.map((exp) => (exp.id === id ? { ...exp, [field]: value } : exp))
-    );
-  };
-  
-  const addNewExperience = () => {
-    const newId = experiences.length > 0 ? Math.max(...experiences.map(exp => exp.id)) + 1 : 1;
-    setExperiences([
-      ...experiences,
-      {
-        id: newId,
-        title: '',
-        company: '',
-        date: '',
-        description: ''
-      }
-    ]);
-  };
-  
-  const removeExperience = (id) => {
-    // Keep at least one experience
-    if (experiences.length > 1) {
-      setExperiences(experiences.filter(exp => exp.id !== id));
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setFormLoading(true);
+    const formData = new FormData(e.target);
+
+    if (!selectedImage) {
+      // No new image selected — just dispatch with form data
+      dispatch(
+        updateProfile({
+          name: formData.get("name"),
+          email: formData.get("email"),
+          profession: formData.get("profession"),
+          about: formData.get("about"),
+          socialLinks: {
+            linkedin: { url: formData.get("linkedin") },
+            twitter: { url: formData.get("twitter") },
+            github: { url: formData.get("github") },
+          },
+          // no image here
+        })
+      )
+        .then((response) => {
+          setFormLoading(false); // Reset loading state
+          if (response.meta.requestStatus === "fulfilled") {
+            console.log("Profile updated successfully:", response.payload);
+            SuccessPopRef.current.click(); // Trigger the success dialog
+          } else {
+            console.error("Failed to update profile:", response.error);
+          }
+        })
+        .catch((error) => {
+          setFormLoading(false); // Reset loading state on error
+          console.error("Error updating profile:", error);
+        });
+      return;
     }
-  };
 
-  const socialIcons = {
-    github: <FaGithub className="w-6 h-6" />,
-    linkedin: <FaLinkedin className="w-6 h-6" />,
-    twitter: <FaTwitter className="w-6 h-6" />,
+    // If image is selected, convert it to base64 before dispatching
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64Image = reader.result;
+
+      dispatch(
+        updateProfile({
+          name: formData.get("name"),
+          email: formData.get("email"),
+          profession: formData.get("profession"),
+          about: formData.get("about"),
+          socialLinks: {
+            linkedin: { url: formData.get("linkedin") },
+            twitter: { url: formData.get("twitter") },
+            github: { url: formData.get("github") },
+          },
+          image: base64Image,
+        })
+      )
+        .then((response) => {
+          setFormLoading(false); // Reset loading state
+          if (response.meta.requestStatus === "fulfilled") {
+            console.log("Profile updated successfully:", response.payload);
+            SuccessPopRef.current.click(); // Trigger the success dialog
+            dispatch(getUserProfile());
+            setSelectedImage(null); // Reset selected image after successful save
+          } else {
+            console.error("Failed to update profile:", response.error);
+          }
+        })
+        .catch((error) => {
+          setFormLoading(false); // Reset loading state on error
+          console.error("Error updating profile:", error);
+        });
+    };
+    reader.readAsDataURL(selectedImage);
   };
 
   return (
-    <div className="md:p-4 px-2 ">
-      <p className="text-2xl font-bold mb-4 mt-4">Expert Profile</p>
+    <Card className="px-2 mt-1 md:mt-6 border-none gap-0 ">
+      <h1 className="text-2xl font-semibold mb-4 px-2">Personal Information</h1>
 
-      <Card className="md:px-4 px-2 border-none py-6">
-        <div className="flex flex-col gap-1 items-start">
-          {/* Profile Image */}
-          <div className="relative w-32 h-32">
-            <img
-              src={previewUrl}
-              className="h-32 w-32 rounded-full border-4 border-primary object-cover"
-              loading="lazy"
-              alt="Expert Avatar"
-            />
-            <div className="absolute bottom-0 right-0 bg-white rounded-full p-1">
-              <Crown className="text-primary h-6 w-6" />
-            </div>
-            <button
-              className="absolute -top-2 -right-2 bg-white p-1 rounded-full shadow hover:bg-muted"
-              onClick={() => setOpenEditImage(true)}
-              title="Edit Image"
-            >
-              <Pencil className="h-4 w-4 text-muted-foreground" />
-            </button>
-          </div>
-
-          {/* Name, Username, About */}
-          <div className="flex-1 px-2 mt-2 w-full">
-            <div className="flex justify-between items-center gap-2">
-              <h2 className="text-2xl font-semibold">{name}</h2>
-              <button
-                className="text-muted-foreground hover:text-primary p-1 rounded-full"
-                title="Edit Profile Info"
-                onClick={() => setOpenEditInfo(true)}
-              >
-                <Pencil className="w-5 h-5 cursor-pointer" />
-              </button>
-            </div>
-
-            <p className="text-sm text-destructive">{username}</p>
-
-            <div className="mt-1">
-              <div className="flex items-center gap-2 bg-background rounded-md">
-                <span className="text-sm text-muted-foreground">{expertifyLink}</span>
-                <button onClick={handleCopy} className="hover:text-primary">
-                  <Copy className="h-4 w-4" />
-                </button>
-                {copied && <span className="text-xs text-green-600 ml-2">Copied!</span>}
-              </div>
-            </div>
-
-            <div className="mt-6">
-              <h3 className="text-lg font-semibold mb-1">About Me</h3>
-              <p className="text-sm text-destructive">{about}</p>
-            </div>
-
-            {/* Experience */}
-            <div className="mt-4">
-              <div className="flex justify-between items-center">
-                <h3 className="text-lg font-semibold mb-2">Experience</h3>
-                <button
-                  onClick={() => setOpenEditExperience(true)}
-                  className="text-muted-foreground hover:text-primary"
-                >
-                  <Pencil className="w-4 h-4" />
-                </button>
-              </div>
-              
-              {experiences.map((experience, index) => (
-                <div key={experience.id} className={index > 0 ? "mt-4" : "mb-4"}>
-                  <p className="text-sm font-bold text-muted-foreground">{experience.title}</p>
-                  <p className="text-sm text-destructive">{experience.company}</p>
-                  <p className="text-sm text-destructive">{experience.date}</p>
-                  <p className="text-sm text-destructive mt-1">{experience.description}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Social Links */}
-            <div className="mt-6">
-              <div className="flex justify-between items-center">
-                <h3 className="text-lg font-semibold mb-2">Connect with me</h3>
-                <button
-                  onClick={() => setOpenEditSocials(true)}
-                  className="text-muted-foreground hover:text-primary"
-                >
-                  <Pencil className="w-4 h-4" />
-                </button>
-              </div>
-              <div className="flex gap-4">
-                {Object.entries(socials).map(([platform, url]) => (
-                  <a 
-                    key={platform} 
-                    href={url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-primary"
-                  >
-                    {socialIcons[platform]}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
+      {/* Tip Box */}
+      <div className="flex bg-muted py-3 rounded-md px-4 gap-4 mb-6 ">
+        <div>
+          <HiInformationCircle />
         </div>
-      </Card>
+        <div className="text-[10px]">
+          <h2 className="font-semibold">Tips</h2>
+          <ul className="list-disc">
+            <li className="font-normal">
+              Adding your photo and social media profiles helps mentors feel
+              confident that you're a real person (e.g. not a bot).
+            </li>
+          </ul>
+        </div>
+      </div>
 
-      {/* Edit Profile Info Dialog */}
-      <Dialog open={openEditInfo} onOpenChange={setOpenEditInfo}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Edit Profile Info</DialogTitle>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Full Name" />
-            <Input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="@username" />
-            <Textarea value={about} onChange={(e) => setAbout(e.target.value)} placeholder="About you" />
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setOpenEditInfo(false)}>Cancel</Button>
-            <Button onClick={() => setOpenEditInfo(false)}>Save</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      {/* Form */}
+      <form onSubmit={handleSubmit}>
+        {/* Hidden File Input */}
+        <input
+          type="file"
+          accept="image/*"
+          ref={fileInputRef}
+          onChange={handleImageChange}
+          className="hidden"
+        />
 
-      {/* Edit Image Dialog */}
-      <Dialog open={openEditImage} onOpenChange={setOpenEditImage}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Change Profile Picture</DialogTitle>
-          </DialogHeader>
-          <div className="py-4 space-y-4">
-            <input type="file" accept="image/*" className="hidden" id="upload-photo" onChange={handleImageChange} />
-            <label htmlFor="upload-photo" className="block bg-muted text-center p-2 rounded-md cursor-pointer hover:bg-muted/80">
-              Click to Upload Image
-            </label>
-            {previewUrl && (
-              <img src={previewUrl} alt="Preview" className="h-24 w-24 rounded-full border mx-auto" />
-            )}
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setOpenEditImage(false)}>Cancel</Button>
-            <Button onClick={handleSaveImage}>Save</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      {/* Edit Experience Dialog */}
-      <Dialog open={openEditExperience} onOpenChange={setOpenEditExperience}>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle>Edit Experience</DialogTitle>
-          </DialogHeader>
-          <div className="py-4 max-h-96 overflow-y-auto">
-            {experiences.map((experience, index) => (
-              <div key={experience.id} className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-medium">Experience {index + 1}</h4>
-                  {experiences.length > 1 && (
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      className="h-8 w-8 p-0" 
-                      onClick={() => removeExperience(experience.id)}
-                    >
-                      <Trash2 className="h-4 w-4 text-destructive" />
-                    </Button>
-                  )}
-                </div>
-                <Input 
-                  value={experience.title} 
-                  onChange={(e) => handleExperienceChange(experience.id, 'title', e.target.value)} 
-                  placeholder="Title" 
-                />
-                <Input 
-                  value={experience.company} 
-                  onChange={(e) => handleExperienceChange(experience.id, 'company', e.target.value)} 
-                  placeholder="Company" 
-                />
-                <Input 
-                  value={experience.date} 
-                  onChange={(e) => handleExperienceChange(experience.id, 'date', e.target.value)} 
-                  placeholder="Date" 
-                />
-                <Textarea 
-                  value={experience.description} 
-                  onChange={(e) => handleExperienceChange(experience.id, 'description', e.target.value)} 
-                  placeholder="Description" 
-                  className="min-h-24"
-                />
-                {index < experiences.length - 1 && <Separator className="my-4" />}
-              </div>
-            ))}
-            
-            <Button 
-              variant="outline" 
-              className="w-full mt-6 flex items-center justify-center" 
-              onClick={addNewExperience}
-            >
-              <Plus className="h-4 w-4 mr-2" /> Add Experience
+        {/* Profile Image */}
+        <div className="flex gap-4 justify-start items-center mb-6">
+          <img
+            src={imagePreview}
+            alt="Profile"
+            className="w-24 h-24 rounded-full object-cover"
+          />
+          {selectedImage ? (
+            <Button type="submit" disabled={formLoading} className="">
+              {formLoading ? (
+                <>
+                  <span className="animate-spin rounded-full h-4 w-4 border-2 border-t-transparent border-white mr-2"></span>
+                  Saving...
+                </>
+              ) : (
+                <>
+                  <Save className="mr-2" /> Save
+                </>
+              )}
             </Button>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setOpenEditExperience(false)}>Cancel</Button>
-            <Button onClick={() => setOpenEditExperience(false)}>Save</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          ) : (
+            <Button
+              type="button"
+              variant={"outline"}
+              onClick={handleUploadClick}
+              disabled={formLoading}
+              className=""
+            >
+              <Upload className="mr-2" /> Change Image
+            </Button>
+          )}
+        </div>
 
-      {/* Edit Social Links Dialog */}
-      <Dialog open={openEditSocials} onOpenChange={setOpenEditSocials}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Edit Social Links</DialogTitle>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <Input 
-              value={socials.github} 
-              onChange={(e) => setSocials({...socials, github: e.target.value})} 
-              placeholder="GitHub URL" 
+        {/* Other Inputs */}
+        <div>
+          <Label className="flex flex-col mb-4 justify-start items-start">
+            Full Name
+            <Input
+              name="name"
+              type="text"
+              placeholder="Enter your full name"
+              className="py-5"
+              defaultValue={user?.name || ""}
+              disabled={formLoading}
             />
-            <Input 
-              value={socials.linkedin} 
-              onChange={(e) => setSocials({...socials, linkedin: e.target.value})} 
-              placeholder="LinkedIn URL" 
+          </Label>
+        </div>
+
+        <div>
+          <Label className="flex flex-col justify-start items-start">
+            Email Address
+            <Input
+              name="email"
+              type="email"
+              placeholder="Enter your email address"
+              className="py-5"
+              defaultValue={user?.email || ""}
+              disabled={formLoading}
             />
-            <Input 
-              value={socials.twitter} 
-              onChange={(e) => setSocials({...socials, twitter: e.target.value})} 
-              placeholder="Twitter URL" 
+          </Label>
+          <p className="text-xs mt-1 text-destructive">Only Visible to you</p>
+        </div>
+
+        <div className="mt-6">
+          <Label className="flex flex-col mb-4 justify-start items-start">
+            Profession
+            <Input
+              name="profession"
+              type="text"
+              placeholder="Enter your profession"
+              className="py-5"
+              defaultValue={user?.profession || ""}
+              disabled={formLoading}
             />
+          </Label>
+        </div>
+
+        <div className="mt-6">
+          <Label className="flex flex-col mb-4 justify-start items-start">
+            About Me
+            <Textarea
+              name="about"
+              placeholder="Tell us about yourself"
+              className="py-5 h-58"
+              defaultValue={user?.about || ""}
+              disabled={formLoading}
+            />
+          </Label>
+        </div>
+
+        <div className="mt-6">
+          <Label className="flex flex-col mb-4 justify-start items-start">
+            Social Media Links
+            <Input
+              name="linkedin"
+              type="text"
+              placeholder="Enter your LinkedIn profile URL"
+              className="py-5 mb-4"
+              defaultValue={user?.socialLinks?.linkedin?.url || ""}
+              disabled={formLoading}
+            />
+            <Input
+              name="twitter"
+              type="text"
+              placeholder="Enter your Twitter profile URL"
+              className="py-5 mb-4"
+              defaultValue={user?.socialLinks?.twitter?.url || ""}
+              disabled={formLoading}
+            />
+            <Input
+              name="github"
+              type="text"
+              placeholder="Enter your GitHub profile URL"
+              className="py-5"
+              defaultValue={user?.socialLinks?.github?.url || ""}
+              disabled={formLoading}
+            />
+          </Label>
+        </div>
+
+        <div className="flex justify-end mt-6">
+          {/* Save Changes Button */}
+          <Button
+            type="submit"
+            disabled={formLoading}
+            className="bg-primary text-primary-foreground"
+          >
+            {formLoading ? (
+              <>
+                <span className="animate-spin rounded-full h-4 w-4 border-2 border-t-transparent border-white mr-2"></span>
+                Saving...
+              </>
+            ) : (
+              <>
+                <Save className="mr-2" /> Save Changes
+              </>
+            )}
+          </Button>
+        </div>
+      </form>
+
+      <Dialog>
+        <DialogTrigger asChild>
+          <button ref={SuccessPopRef} className="hidden">
+            updatedSuccess
+          </button>
+        </DialogTrigger>
+        <DialogContent className="flex flex-col items-center justify-center gap-4 text-center py-8">
+          <div className="bg-green-100 text-green-600 rounded-full p-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-8 w-8"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
           </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setOpenEditSocials(false)}>Cancel</Button>
-            <Button onClick={() => setOpenEditSocials(false)}>Save</Button>
-          </DialogFooter>
+          <h2 className="text-xl font-semibold text-green-700">
+            Profile Updated!
+          </h2>
+          <p className="text-gray-500 max-w-sm">
+            Your profile has been successfully updated. You can now continue
+            exploring the platform.
+          </p>
         </DialogContent>
       </Dialog>
-    </div>
+    </Card>
   );
 };
 
