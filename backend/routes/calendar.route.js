@@ -3,7 +3,7 @@ import authMiddleware from '../middleware/auth.middleware.js'
 import { getCalendar } from '../controllers/calendar.controller.js'
 const router = express.Router()
 
-router.get('/', authMiddleware, getCalendar)
+router.get('/mycalendar', authMiddleware, getCalendar)
 
 
 export default router
