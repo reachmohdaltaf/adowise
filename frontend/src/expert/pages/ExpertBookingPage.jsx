@@ -15,7 +15,7 @@ const ExpertBookingPage = () => {
   const isUpcoming = pathname.includes('upcoming')
 
   return (
-    <div className='py-6'>
+    <div className='py-6 px-2'>
       <h1 className='text-2xl font-semibold mb-4 px-2'>Booking</h1>
 
       <div className='flex items-center justify-between  mb-6'>

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 const ExpertHomePage = () => {
   
   return (
-    <div className='py-6'>
+    <div className='py-6 px-2'>
     
    <div className='flex md:flex-row flex-col gap-3 items-center'>
    <LeadRocketCard/>

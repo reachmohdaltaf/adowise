@@ -107,8 +107,8 @@ const ExpertProfile = () => {
   };
 
   return (
-    <div className="md:p-4">
-      <p className="text-2xl font-bold mb-4">Expert Profile</p>
+    <div className="md:p-4 px-2 ">
+      <p className="text-2xl font-bold mb-4 mt-4">Expert Profile</p>
 
       <Card className="md:px-4 px-2 border-none py-6">
         <div className="flex flex-col gap-1 items-start">
