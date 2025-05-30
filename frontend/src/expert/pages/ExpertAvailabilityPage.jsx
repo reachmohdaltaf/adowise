@@ -8,10 +8,10 @@ const ExpertAvailabilityPage = () => {
 
   return (
     <div className="py-6">
-      <h1 className="text-2xl font-semibold mb-4 px-2">Availability</h1>
+      <h1 className="text-2xl  font-semibold mb-4 px-2">Availability</h1>
 
       <div className="flex justify-between gap-4 mb-6">
-        <div className="gap-3 flex">
+        <div className="gap-3 px-2 flex">
           <Link to="calendar">
             <Button variant={isUpcoming ? "default" : "outline"}>
               Calendar

@@ -45,7 +45,7 @@ const calendarSchema = new mongoose.Schema(
     blockDates: {
       // NEW FIELD for globally blocked dates (outside of schedule-specific ones)
       type: [Date],
-      default: [],
+      default: ["2023-08-15", "2023-08-16", "2023-08-17"],
     },
     schedules: {
       type: [scheduleSchema],

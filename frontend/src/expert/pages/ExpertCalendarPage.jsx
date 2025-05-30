@@ -61,6 +61,8 @@ const { calendar } = useSelector((state) => state.calendar);
 useEffect(() => {
   dispatch(fetchCalendar());
 }, [dispatch]);
+
+console.log(calendar)
   
   // // Mock calendar data for demo
   // const calendar = {

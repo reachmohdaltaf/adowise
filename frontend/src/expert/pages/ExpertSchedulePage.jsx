@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import {
   Card,
   CardContent,
@@ -12,7 +11,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { fetchCalendar } from "@/redux/features/calendarThunk";
-import { Save, X, Plus, Calendar as CalendarIcon } from "lucide-react";
+import { Save, X, Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -28,14 +27,18 @@ const daysOfWeek = [
 
 // Helper function to convert backend schedule to local state format
 const convertBackendSchedule = (backendSchedule) => {
-  const result = {};
+  const result = {
+    blockedDates: backendSchedule.blockDates || [],
+    days: {}
+  };
+  
   daysOfWeek.forEach((day) => {
     const dayObj = backendSchedule.availableDays.find(
       (d) => d.day.toLowerCase() === day
     );
 
     if (dayObj) {
-      result[day.charAt(0).toUpperCase() + day.slice(1)] = {
+      result.days[day.charAt(0).toUpperCase() + day.slice(1)] = {
         isChecked: dayObj.timeSlots.some((slot) => slot.isAvailable),
         times: dayObj.timeSlots.map((slot) => ({
           from: slot.from,
@@ -43,7 +46,7 @@ const convertBackendSchedule = (backendSchedule) => {
         })),
       };
     } else {
-      result[day.charAt(0).toUpperCase() + day.slice(1)] = {
+      result.days[day.charAt(0).toUpperCase() + day.slice(1)] = {
         isChecked: false,
         times: [{ from: "", to: "" }],
       };
@@ -59,7 +62,6 @@ const ExpertSchedulePage = () => {
   const [schedules, setSchedules] = useState({});
   const [activeSchedule, setActiveSchedule] = useState("");
   const [newScheduleName, setNewScheduleName] = useState("");
-  const [blockedDates, setBlockedDates] = useState([]);
 
   useEffect(() => {
     dispatch(fetchCalendar());
@@ -74,36 +76,41 @@ const ExpertSchedulePage = () => {
       });
       setSchedules(initialSchedules);
       setActiveSchedule(Object.keys(initialSchedules)[0] || "Default Schedule");
-      setBlockedDates(calendar.schedules[0]?.blockDates || []);
     }
   }, [calendar]);
 
-  const schedule = schedules[activeSchedule] || {};
+  const currentSchedule = schedules[activeSchedule] || { days: {}, blockedDates: [] };
 
   const handleCheckboxChange = (day, checked) => {
     setSchedules((prev) => ({
       ...prev,
       [activeSchedule]: {
         ...prev[activeSchedule],
-        [day]: {
-          isChecked: checked,
-          times: checked ? prev[activeSchedule][day].times : [{ from: "", to: "" }],
+        days: {
+          ...prev[activeSchedule].days,
+          [day]: {
+            isChecked: checked,
+            times: checked ? prev[activeSchedule].days[day].times : [{ from: "", to: "" }],
+          },
         },
       },
     }));
   };
 
   const handleTimeChange = (day, index, key, value) => {
-    const updatedTimes = [...schedule[day].times];
+    const updatedTimes = [...currentSchedule.days[day].times];
     updatedTimes[index][key] = value;
 
     setSchedules((prev) => ({
       ...prev,
       [activeSchedule]: {
         ...prev[activeSchedule],
-        [day]: {
-          ...prev[activeSchedule][day],
-          times: updatedTimes,
+        days: {
+          ...prev[activeSchedule].days,
+          [day]: {
+            ...prev[activeSchedule].days[day],
+            times: updatedTimes,
+          },
         },
       },
     }));
@@ -114,24 +121,30 @@ const ExpertSchedulePage = () => {
       ...prev,
       [activeSchedule]: {
         ...prev[activeSchedule],
-        [day]: {
-          ...prev[activeSchedule][day],
-          times: [...prev[activeSchedule][day].times, { from: "", to: "" }],
+        days: {
+          ...prev[activeSchedule].days,
+          [day]: {
+            ...prev[activeSchedule].days[day],
+            times: [...prev[activeSchedule].days[day].times, { from: "", to: "" }],
+          },
         },
       },
     }));
   };
 
   const removeTimeSlot = (day, index) => {
-    const updatedTimes = schedule[day].times.filter((_, i) => i !== index);
+    const updatedTimes = currentSchedule.days[day].times.filter((_, i) => i !== index);
 
     setSchedules((prev) => ({
       ...prev,
       [activeSchedule]: {
         ...prev[activeSchedule],
-        [day]: {
-          ...prev[activeSchedule][day],
-          times: updatedTimes,
+        days: {
+          ...prev[activeSchedule].days,
+          [day]: {
+            ...prev[activeSchedule].days[day],
+            times: updatedTimes,
+          },
         },
       },
     }));
@@ -141,29 +154,25 @@ const ExpertSchedulePage = () => {
     if (!newScheduleName.trim()) return;
     setSchedules((prev) => ({
       ...prev,
-      [newScheduleName]: daysOfWeek.reduce((acc, day) => {
-        acc[day.charAt(0).toUpperCase() + day.slice(1)] = {
-          isChecked: false,
-          times: [{ from: "", to: "" }],
-        };
-        return acc;
-      }, {}),
+      [newScheduleName]: {
+        blockedDates: [],
+        days: daysOfWeek.reduce((acc, day) => {
+          acc[day.charAt(0).toUpperCase() + day.slice(1)] = {
+            isChecked: false,
+            times: [{ from: "", to: "" }],
+          };
+          return acc;
+        }, {}),
+      },
     }));
     setActiveSchedule(newScheduleName);
     setNewScheduleName("");
   };
 
-  const handleDateSelect = (date) => {
-    const dateStr = date.toDateString();
-    if (!blockedDates.includes(dateStr)) {
-      setBlockedDates((prev) => [...prev, dateStr]);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gray-50 sm:bg-background">
       {/* Mobile-optimized navigation */}
-      <nav className="flex items-center bg-background sticky top-0 z-10 gap-2 mb-2 sm:mb-4 w-full overflow-x-auto px-3 sm:px-2 py-2 border-b sm:border-b-0 shadow-sm sm:shadow-none">
+      <nav className="flex items-center bg-background sticky top-12 z-10 gap-2 mb-2 sm:mb-4 w-full overflow-x-auto px-3 sm:px-2 py-2 border-b sm:border-b-0 shadow-sm sm:shadow-none">
         <div className="flex items-center gap-2 min-w-max">
           {Object.keys(schedules).map((name) => (
             <Button
@@ -207,8 +216,8 @@ const ExpertSchedulePage = () => {
         </div>
       </nav>
 
-      <div className="px-0 sm:px-2 space-y-4 sm:space-y-0 sm:flex sm:gap-4 sm:items-start">
-        {/* Main Schedule Card */}
+      {/* Main Schedule Card - now full width */}
+      <div className="px-2">
         <Card className="w-full shadow-sm">
           <CardHeader className="px-3 sm:px-4 pb-3 sm:pb-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-2">
@@ -232,7 +241,7 @@ const ExpertSchedulePage = () => {
                     <Checkbox
                       className="bg-gray-200 h-5 w-5"
                       id={day}
-                      checked={schedule[dayCapitalized]?.isChecked || false}
+                      checked={currentSchedule.days[dayCapitalized]?.isChecked || false}
                       onCheckedChange={(checked) =>
                         handleCheckboxChange(dayCapitalized, checked)
                       }
@@ -247,9 +256,9 @@ const ExpertSchedulePage = () => {
 
                   {/* Time slots */}
                   <div className="flex-1 space-y-3 sm:space-y-2">
-                    {schedule[dayCapitalized]?.isChecked ? (
+                    {currentSchedule.days[dayCapitalized]?.isChecked ? (
                       <>
-                        {schedule[dayCapitalized].times.map((time, index) => (
+                        {currentSchedule.days[dayCapitalized].times.map((time, index) => (
                           <div key={index} className="flex items-center gap-2 sm:gap-2">
                             <input
                               type="time"
@@ -268,7 +277,7 @@ const ExpertSchedulePage = () => {
                               }
                               className="border rounded-md px-1 py-2 sm:px-2 sm:py-1 text-base sm:text-sm h-11 sm:h-auto flex-1 sm:flex-none sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             />
-                            {schedule[dayCapitalized].times.length > 1 && (
+                            {currentSchedule.days[dayCapitalized].times.length > 1 && (
                               <Button
                                 type="button"
                                 onClick={() => removeTimeSlot(dayCapitalized, index)}
@@ -301,48 +310,6 @@ const ExpertSchedulePage = () => {
                 </div>
               );
             })}
-          </CardContent>
-        </Card>
-
-        {/* Calendar Card - Always visible */}
-        <Card className="w-full sm:max-w-md shadow-sm">
-          <CardHeader className="px-3 sm:px-4">
-            <CardTitle className="text-lg sm:text-base">Blocked Dates</CardTitle>
-          </CardHeader>
-          <CardContent className="px-3 sm:px-4">
-            <div className="flex justify-center">
-              <Calendar
-                mode="multiple"
-                selected={blockedDates.map((d) => new Date(d))}
-                onSelect={handleDateSelect}
-                className="rounded-md border-0"
-                classNames={{
-                  months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
-                  month: "space-y-4",
-                  caption: "flex justify-center pt-1 relative items-center text-sm font-medium",
-                  caption_label: "text-sm font-medium",
-                  nav: "space-x-1 flex items-center",
-                  nav_button: "h-9 w-9 bg-transparent p-0 opacity-50 hover:opacity-100",
-                  nav_button_previous: "absolute left-1",
-                  nav_button_next: "absolute right-1",
-                  table: "w-full border-collapse space-y-1",
-                  head_row: "flex",
-                  head_cell: "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
-                  row: "flex w-full mt-2",
-                  cell: "text-center text-sm p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
-                  day: "h-9 w-9 p-0 font-normal aria-selected:opacity-100 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-                  day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
-                  day_today: "bg-accent text-accent-foreground",
-                  day_outside: "text-muted-foreground opacity-50",
-                  day_disabled: "text-muted-foreground opacity-50",
-                  day_range_middle: "aria-selected:bg-accent aria-selected:text-accent-foreground",
-                  day_hidden: "invisible",
-                }}
-              />
-            </div>
-            <p className="mt-4 text-sm text-muted-foreground text-center sm:text-left px-2 sm:px-0">
-              Tap dates to block or unblock them for appointments
-            </p>
           </CardContent>
         </Card>
       </div>
