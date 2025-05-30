@@ -54,15 +54,27 @@ const ExpertCalendarPage = () => {
   const [selectedBookingPeriod, setSelectedBookingPeriod] = useState("");
   const [zoomPro, setZoomPro] = useState(false);
   const [googleMeet, setGoogleMeet] = useState(false);
+
   const dispatch = useDispatch();
-  const { calendar } = useSelector((state) => state.calendar);
+const { calendar } = useSelector((state) => state.calendar);
 
-  useEffect(() => {
-    dispatch(fetchCalendar());
-  }, [dispatch]);
-
-  console.log(calendar)
+useEffect(() => {
+  dispatch(fetchCalendar());
+}, [dispatch]);
   
+  // // Mock calendar data for demo
+  // const calendar = {
+  //   timezone: "Asia/Kolkata",
+  //   reschedulePolicy: "direct",
+  //   minNoticeForReschedule: "8 hrs",
+  //   bookingPeriod: "2 weeks in advance",
+  //   meetingLocation: {
+  //     zoomPro: true,
+  //     googleMeet: false
+  //   },
+  //   googleCalendarConnected: true
+  // };
+
   useEffect(() => {
     if (calendar) {
       setSelectedTimezone(calendar.timezone || "");
@@ -206,10 +218,10 @@ const ExpertCalendarPage = () => {
               Use your preferred video conferencing tool for 1:1 meetings
             </p>
           </div>
-          <div className="flex justify-start gap-20 items-center">
+          <div className="flex flex-row sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-20">
             <div className="flex items-center gap-4">
               <img src="/zoom.png" className="w-6 h-6" alt="" />
-              <p className="w-52">Zoom Pro</p>
+              <p className="w-auto sm:w-52">Zoom Pro</p>
             </div>
             <Switch
               className="data-[state=unchecked]:bg-gray-300"
@@ -218,10 +230,10 @@ const ExpertCalendarPage = () => {
               onCheckedChange={setZoomPro}
             />
           </div>
-          <div className="flex justify-start gap-20 items-center">
+          <div className="flex flex-row sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-20">
             <div className="flex items-center gap-4">
               <img src="/meet.svg" className="w-6 h-6" alt="" />
-              <p className="w-52">Google Meet</p>
+              <p className="w-auto sm:w-52">Google Meet</p>
             </div>
             <Switch
               className="data-[state=unchecked]:bg-gray-300"
@@ -240,14 +252,14 @@ const ExpertCalendarPage = () => {
               Use your preferred video conferencing tool for 1:1 meetings
             </p>
           </div>
-          <div className="flex justify-start gap-20 items-center">
+          <div className="flex flex-row sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-20">
             <div className="flex items-center gap-4">
               <img
                 src="https://ssl.gstatic.com/calendar/images/dynamiclogo_2020q4/calendar_29_2x.png"
                 className="w-6 h-6"
                 alt=""
               />
-              <p className="w-52">Google Calendar</p>
+              <p className="w-auto sm:w-52">Google Calendar</p>
             </div>
             {calendar?.googleCalendarConnected ? (
               <BadgeCheck className="text-green-600" />
