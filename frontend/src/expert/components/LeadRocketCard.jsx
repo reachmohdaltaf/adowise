@@ -8,7 +8,7 @@ import { PiStarFourFill } from "react-icons/pi";
 
 const LeadRocketCard = () => {
   const [starPositions] = useState([
-    { top: '20%', left: '20%', size: 32 },  // Big star at a fixed position
+    { top: '20%', left: '20%', size: 44 },  // Big star at a fixed position
     { top: '10%', left: '90%', size: 16 },  // Small star at a fixed position
     { top: '90%', left: '90%', size: 32 },  // Big star at a fixed position
     { top: '60%', left: '10%', size: 10 },  // Big star at a fixed position
@@ -30,12 +30,11 @@ const LeadRocketCard = () => {
   
 
   return (
-    <Card className="expert bg-primary h-86 w-full  md:w-1/2 rounded-md text-primary-foreground p-6 flex flex-col items-center gap-4 relative">
+    <Card className="expert bg-primary h-92 w-full  md:w-1/2 rounded-md text-primary-foreground p-4 flex flex-col  items-center gap-4 relative">
      <div className=''>
-  <img src="/rockets.svg" className='absolute top-0 left-0 h-full z-0 pointer-events-none' alt="" />
 </div>
 
-      <div className="w-24 h-24  rounded-full bg-secondary flex items-center justify-center text-secondary-foreground text-3xl font-bold shadow-inner">
+      <div className="w-24 h-24 aspect-square  rounded-full bg-secondary flex items-center justify-center text-secondary-foreground text-3xl font-bold shadow-inner">
         <img src="/rocket.gif" className="h-20" />
       </div>
       <h1 className="text-2xl font-semibold text-center">

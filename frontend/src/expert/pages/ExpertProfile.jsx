@@ -4,6 +4,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { clearUser } from "@/redux/features/userSlice";
 import { getUserProfile, updateProfile } from "@/redux/features/userThunk";
 import { Save, Upload } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
@@ -23,8 +24,12 @@ const ExpertProfile = () => {
   const SuccessPopRef = useRef(null);
   useEffect(() => {
     // Fetch user profile on component mount
+    dispatch(clearUser())
     dispatch(getUserProfile());
+    console.log("User data:", user);
   }, [dispatch]);
+
+ 
 
   useEffect(() => {
     if (user?.image) {

@@ -20,7 +20,7 @@ const CompleteExpertProfileCard = () => {
   const isCalendarAdded = true;
 
   return (
-    <Card className="md:w-1/2 w-full gap-1    rounded-2xl flex flex-col h-86">
+    <Card className="md:w-1/2 w-full gap-1    rounded-2xl flex flex-col h-92">
       <CardHeader>
         <CardTitle className="text-xl font-semibold text-center">
           Complete Your Profile

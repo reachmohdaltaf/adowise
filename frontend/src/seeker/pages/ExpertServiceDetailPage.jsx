@@ -182,13 +182,13 @@ const ExpertServiceDetailPage = () => {
 
   // Fetch calendar by user ID when service is loaded
   useEffect(() => {
-    if (service && service.expertId) {
-      console.log("Fetching calendar for user ID:", service.expertId);
-      dispatch(getCalendarByUserId(service.expertId));
+    if (service && service?.expertId) {
+      console.log("Fetching calendar for user ID:", service?.expertId);
+      dispatch(getCalendarByUserId(service?.expertId));
     }
   }, [dispatch, service]);
 
-        console.log("Fetching calendar for user ID:", service.expertId);
+        console.log("Fetching calendar for user ID:", service?.userId);
 
 
   // Reset selected time when date changes

@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const SeekerProfile = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
+  const { user, loading } = useSelector((state) => state.user);
   console.log("User data:", user);
   const [imagePreview, setImagePreview] = useState(
     user?.image ? user.image : "/default-profile.png"
@@ -48,6 +48,8 @@ const SeekerProfile = () => {
     fileInputRef.current.click();
   };
 
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormLoading(true);
@@ -82,6 +84,10 @@ const SeekerProfile = () => {
           setFormLoading(false); // Reset loading state on error
           console.error("Error updating profile:", error);
         });
+
+        if(loading || !user){
+          return <div>Loading...</div>;  
+        }
       return;
     }
 
