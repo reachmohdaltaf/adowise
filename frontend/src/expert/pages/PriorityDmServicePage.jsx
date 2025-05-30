@@ -30,7 +30,7 @@ const PriorityDmServicePage = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-4">
+    <div className="grid grid-cols-1  sm:grid-cols-1 md:grid-cols-1 gap-4">
       {filteredServices.map((service) => (
         <Link
           key={service._id}

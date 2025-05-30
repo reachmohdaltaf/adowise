@@ -18,7 +18,7 @@ const ExpertServicePage = () => {
   const isWebinar = pathname.includes("webinar");
 
   return (
-    <div className="py-6 px-1 ">
+    <div className="py-6 px-2 ">
       <h1 className="text-2xl font-semibold mb-6  px-2">Services</h1>
 
 <div className="flex sticky top-12 z-20 border-b py-2 bg-background justify-between gap-4 mb-6">
