@@ -14,19 +14,17 @@ const LeadRocketCard = () => {
     { top: '60%', left: '10%', size: 10 },  // Big star at a fixed position
   ]);
 
-  useEffect(() => {
-    const hasVisited = localStorage.getItem("hasVisited");
-  
-    if (!hasVisited) {
-      const confettiButton = document.querySelector('.confetti-button');
-      if (confettiButton) {
-        setTimeout(() => {
-          confettiButton.click();
-          localStorage.setItem("hasVisited", "true");
-        }, 100); // slight delay
-      }
+useEffect(() => {
+  const timeout = setTimeout(() => {
+    const confetti = document.querySelector('.confetti-button');
+    if (confetti) {
+      confetti.click(); // trigger confetti after slight delay
     }
-  }, []);
+  }, 300); // wait a bit to ensure it's rendered
+
+  return () => clearTimeout(timeout);
+}, []);
+
   
 
   return (
@@ -46,7 +44,7 @@ const LeadRocketCard = () => {
      <Link className='w-full' to={'/userId'}> <Button variant="outline" className="w-full  mt-2 text-foreground font-medium rounded-lg">
         Your Page <ArrowUpRight className="ml-2 h-4 w-4" />
       </Button></Link>
-      <ConfettiButton className="confetti-button absolute top-0 z-0 opacity-0">
+      <ConfettiButton className="confetti-button absolute top-20 z-0 opacity-0">
         🎉
       </ConfettiButton>
 
