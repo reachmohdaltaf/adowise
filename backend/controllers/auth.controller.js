@@ -1,32 +1,176 @@
 import { User } from "../models/user.model.js";
+import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/jwt/generateToken.js";
 import { Calendar } from "../models/calendar.model.js";
-// import { Calendar } from "../models/Calendar.model.js";
+import Otp from "../models/otp.model.js"; // Your OTP model
+import crypto from "crypto";
+import nodemailer from "nodemailer"; // You'll need to install this
+
+dotenv.config();
+
+// Configure your email transporter
+
+const transporter = nodemailer.createTransport({
+  // Configure based on your email service
+  service: 'gmail', // or your email service
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+  tls: {
+    rejectUnauthorized: false,
+  },
+  
+});
 
 /**
- * @function signup
- * @description Registers a new user with hashed password
- * @route POST /api/signup
+ * @function sendOtp
+ * @description Sends OTP to user's email for verification
+ * @route POST /api/send-otp
  * @access Public
  *
  * @param {Object} req - Express request object
- * @param {Object} req.body - Contains name, email, and password
+ * @param {Object} req.body - Contains email
  * @param {Object} res - Express response object
- * @param {Object} res - Cookies will be generated
- * @returns {Object} 201 Created with user data or error message
+ * @returns {Object} 200 OK with success message or error message
  */
-
-export const signup = async (req, res) => {
+export const sendOtp = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { email } = req.body;
 
-    // Check for required fields
-    if (!name || !email || !password) {
-      return res.status(400).json({ error: "All fields are required" });
+    // Debug: Check if credentials are loaded
+    console.log("EMAIL_USER:", process.env.EMAIL_USER ? "✓ Loaded" : "✗ Missing");
+    console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "✓ Loaded" : "✗ Missing");
+
+    // Validate email
+    if (!email) {
+      return res.status(400).json({ error: "Email is required" });
     }
 
     // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: "User already exists with this email" });
+    }
+
+    // Generate 6-digit OTP
+    const otp = crypto.randomInt(100000, 999999).toString();
+    
+    // Set expiration time (5 minutes from now)
+    const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
+
+    // Delete any existing OTP for this email
+    await Otp.deleteMany({ email });
+
+    // Save OTP to database
+    await Otp.create({
+      email,
+      otp,
+      expiresAt,
+    });
+
+    // Send OTP via email
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'Your OTP for Account Verification',
+      html: `
+        <h2>Account Verification</h2>
+        <p>Your OTP for account verification is:</p>
+        <h1 style="color: #007bff; font-size: 32px; letter-spacing: 5px;">${otp}</h1>
+        <p>This OTP will expire in 5 minutes.</p>
+        <p>If you didn't request this, please ignore this email.</p>
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.status(200).json({ 
+      message: "OTP sent successfully to your email",
+      email // Send back email for frontend reference
+    });
+
+  } catch (error) {
+    console.error("Send OTP error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+/**
+ * @function verifyOtp
+ * @description Verifies the OTP sent to user's email
+ * @route POST /api/verify-otp
+ * @access Public
+ *
+ * @param {Object} req - Express request object
+ * @param {Object} req.body - Contains email and otp
+ * @param {Object} res - Express response object
+ * @returns {Object} 200 OK with success message or error message
+ */
+export const verifyOtp = async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+
+    // Validate required fields
+    if (!email || !otp) {
+      return res.status(400).json({ error: "Email and OTP are required" });
+    }
+
+    // Find OTP record
+    const otpRecord = await Otp.findOne({ email });
+    if (!otpRecord) {
+      return res.status(400).json({ error: "OTP not found or expired" });
+    }
+
+    // Check if OTP is expired
+    if (new Date() > otpRecord.expiresAt) {
+      // Delete expired OTP
+      await Otp.deleteOne({ email });
+      return res.status(400).json({ error: "OTP has expired. Please request a new one." });
+    }
+
+    // Verify OTP
+    if (otpRecord.otp !== otp) {
+      return res.status(400).json({ error: "Invalid OTP" });
+    }
+
+    // OTP is valid - delete it from database
+    await Otp.deleteOne({ email });
+
+    res.status(200).json({ 
+      message: "OTP verified successfully",
+      email,
+      verified: true
+    });
+
+  } catch (error) {
+    console.error("Verify OTP error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+/**
+ * @function completeSignup
+ * @description Completes the signup process after OTP verification
+ * @route POST /api/complete-signup
+ * @access Public
+ *
+ * @param {Object} req - Express request object
+ * @param {Object} req.body - Contains email, name, and password
+ * @param {Object} res - Express response object
+ * @returns {Object} 201 Created with user data or error message
+ */
+export const completeSignup = async (req, res) => {
+  try {
+    const { email, name, password } = req.body;
+
+    // Check for required fields
+    if (!email || !name || !password) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    // Double-check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: "User already exists" });
@@ -52,9 +196,9 @@ export const signup = async (req, res) => {
       username,
     });
 
-    // ✅ Create calendar for the user
+    // Create calendar for the user
     await Calendar.create({
-      userId: user._id, // only this is required, rest will use default values
+      userId: user._id,
     });
 
     // Generate token
@@ -71,51 +215,107 @@ export const signup = async (req, res) => {
     // Remove password before sending response
     const { password: _, ...userWithoutPassword } = user.toObject();
 
-    res.status(201).json(userWithoutPassword);
+    res.status(201).json({
+      message: "Account created successfully",
+      user: userWithoutPassword
+    });
+
   } catch (error) {
-    console.error("Signup error:", error);
+    console.error("Complete signup error:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
 
 /**
- * @function login
- * @description Logs in a user with hashed password
- * @route POST /api/login
+ * @function resendOtp
+ * @description Resends OTP to user's email
+ * @route POST /api/resend-otp
  * @access Public
  *
  * @param {Object} req - Express request object
- * @param {Object} req.body - Contains email and password
+ * @param {Object} req.body - Contains email
  * @param {Object} res - Express response object
- * @param {Object} res - Cookies will be generated
- * @returns {Object} 200 OK with user data or error message
+ * @returns {Object} 200 OK with success message or error message
  */
+export const resendOtp = async (req, res) => {
+  try {
+    const { email } = req.body;
 
+    if (!email) {
+      return res.status(400).json({ error: "Email is required" });
+    }
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: "User already exists with this email" });
+    }
+
+    // Generate new OTP
+    const otp = crypto.randomInt(100000, 999999).toString();
+    const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
+
+    // Delete existing OTP and create new one
+    await Otp.deleteMany({ email });
+    await Otp.create({
+      email,
+      otp,
+      expiresAt,
+    });
+
+    // Send OTP via email
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'Your New OTP for Account Verification',
+      html: `
+        <h2>Account Verification</h2>
+        <p>Your new OTP for account verification is:</p>
+        <h1 style="color: #007bff; font-size: 32px; letter-spacing: 5px;">${otp}</h1>
+        <p>This OTP will expire in 5 minutes.</p>
+        <p>If you didn't request this, please ignore this email.</p>
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.status(200).json({ 
+      message: "New OTP sent successfully to your email",
+      email
+    });
+
+  } catch (error) {
+    console.error("Resend OTP error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// Keep your existing functions
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
       return res.status(400).json({ error: "All fields are required" });
     }
-    // @step Check if user already exists
+    
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ error: "Invalid credentials" });
     }
-    // @step Hash the password
+    
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ error: "Invalid credentials" });
     }
-    //@step generate token and save cookies
+    
     const token = generateToken(user._id);
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    // @success Return created user
+    
     res.status(200).json(user);
   } catch (error) {
     console.error("Error in login:", error);
@@ -123,27 +323,15 @@ export const login = async (req, res) => {
   }
 };
 
-/**
- * @function logout
- * @description Logs out a user
- * @route POST /api/logout
- * @access Public
- *
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- * @returns {Object} 200 OK with success message or error message
- */
-
 export const logout = async (req, res) => {
   try {
-    // @step Clear cookies
     res.cookie("token", "", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       maxAge: 0,
     });
-    // @success Return created user
+    
     res.status(200).json({ message: "Logout successful" });
   } catch (error) {
     console.error("Error in logout:", error);

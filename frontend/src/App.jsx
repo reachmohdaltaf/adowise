@@ -144,23 +144,11 @@ const App = () => {
           />
          
 
-          <Route
-            path="register"
-            element={
-              !user ? (
-                <RegisterPage />
-              ) : (
-                <Navigate
-                  to={
-                    user.role === "seeker"
-                      ? "/seeker/dashboard/home"
-                      : "/expert/dashboard/home"
-                  }
-                  replace
-                />
-              )
-            }
-          />
+         // In your App.jsx routes
+<Route
+  path="register"
+  element={!user ? <RegisterPage /> : null}
+/>
         </Route>
 
         {/* Seeker Routes */}

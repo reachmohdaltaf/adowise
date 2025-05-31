@@ -2,17 +2,43 @@ import axiosInstance from "@/api/axiosInstance";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
-export const signupUser = createAsyncThunk(
-    'auth/signup',
-    async (FormData, thunkAPI) => {
-        try {
-            const res = await axiosInstance.post('auth/signup', FormData);
-            return res.data
-        } catch (error) {
-            return thunkAPI.rejectWithValue(error.response.data)
-        }
+export const sendOtp = createAsyncThunk(
+  'auth/sendOtp',
+  async (email, thunkAPI) => {
+    try {
+      const res = await axiosInstance.post('auth/send-otp', { email });
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
     }
-)
+  }
+);
+
+export const verifyOtp = createAsyncThunk(
+  'auth/verifyOtp',
+  async ({ email, otp }, thunkAPI) => {
+    try {
+      const res = await axiosInstance.post('auth/verify-otp', { email, otp });
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const completeSignup = createAsyncThunk(
+  'auth/completeSignup',
+  async (formData, thunkAPI) => {
+    try {
+      const res = await axiosInstance.post('auth/complete-signup', formData);
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// Keep your existing login, logout, authCheck thunks
 
 export const loginUser = createAsyncThunk(
     'auth/login',
