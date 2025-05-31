@@ -3,6 +3,7 @@
   <head>
     <!-- Charset and Viewport -->
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Title -->
@@ -17,7 +18,7 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://www.adowise.com/" />
 
-    <!-- Open Graph Meta Tags (for Facebook, LinkedIn, etc.) -->
+    <!-- Open Graph Meta Tags -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:title" content="Adowise | Personalized Mentorship Platform" />
@@ -37,8 +38,18 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/favicon.PNG" />
 
-    <!-- Razorpay Script -->
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://checkout.razorpay.com" crossorigin />
+
+    <!-- Razorpay Script - defer loading for better page load -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
+
+    <!-- Manifest for PWA support (optional but recommended) -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Theme color for mobile browsers -->
+    <meta name="theme-color" content="#317EFB" />
+
   </head>
   <body>
     <div id="root"></div>

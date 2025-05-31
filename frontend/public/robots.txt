@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://adowise.com/sitemap.xml
