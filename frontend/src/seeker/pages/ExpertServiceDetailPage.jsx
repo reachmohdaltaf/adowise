@@ -217,7 +217,7 @@ const ExpertServiceDetailPage = () => {
                     </Button>
                   )}
                 </DialogTrigger>
-                <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-md w-full p-2 rounded-xl">
+                <DialogContent className=" sm:max-w-md w-full p-2 rounded-xl">
                   <SeekerCalendarPage
                     selectedDate={selectedDate}
                     setSelectedDate={setSelectedDate}
