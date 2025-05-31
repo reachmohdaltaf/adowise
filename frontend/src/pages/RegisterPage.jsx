@@ -100,7 +100,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6 items-center py-20 h-screen px-4">
+    <div className="flex flex-col gap-6 items-center py-20 h-screen max-w-md mx-auto px-4">
       <h1 className="text-2xl pt-14 text-center">Sign up. It's free!</h1>
       
       {step === 1 && (
@@ -222,13 +222,13 @@ const RegisterPage = () => {
 
           <Button
             variant="outline"
-            className="h-10 w-full flex items-center justify-center gap-2"
+            className="h-10 w-full  flex items-center justify-center gap-2"
           >
             <BsGoogle /> <p>Google</p>
           </Button>
           <Button
             variant="outline"
-            className="h-10 w-full flex items-center justify-center gap-2"
+            className="h-10 1/2 w-full items-center justify-center gap-2"
           >
             <BsLinkedin /> <p>LinkedIn</p>
           </Button>
