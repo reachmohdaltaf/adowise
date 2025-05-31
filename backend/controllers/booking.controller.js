@@ -1,27 +1,46 @@
-export const book = (req, res) => {
-    res.send("book");
-};
+import { Booking } from "../models/booking.model.js";
 
-export const getMyBookings = (req, res) => {
-    res.send("getMyBookings");
-};
+export const createBooking = async (req, res) => {
+  try {
+    const {
+      calendarId,
+      seekerId,
+      expertId,
+      scheduleTitle,
+      startTime,
+      endTime,
+      meetingLink,
+      locationType,
+      customLocation,
+      notes,
+      paymentStatus,    // e.g., "pending" or "success"
+      paymentIntentId,  // e.g., Razorpay order ID or payment ID
+    } = req.body;
 
-export const getBookingById = (req, res) => {
-    res.send("getBookingById");
-};
+    // Create new booking document
+    const newBooking = new Booking({
+      calendarId,
+      seekerId,
+      expertId,
+      scheduleTitle,
+      startTime,
+      endTime,
+      meetingLink,
+      locationType,
+      customLocation,
+      notes,
+      paymentStatus,
+      paymentIntentId,
+    });
 
-export const rescheduleBooking = (req, res) => {
-    res.send("rescheduleBooking");
-};
+    await newBooking.save();
 
-export const confirmBooking = (req, res) => {
-    res.send("confirmBooking");
-};
-
-export const cancelBooking = (req, res) => {
-    res.send("cancelBooking");
-};
-
-export const deleteBooking = (req, res) => {
-    res.send("deleteBooking");
+    res.status(201).json({
+      message: "Booking created successfully",
+      booking: newBooking,
+    });
+  } catch (error) {
+    console.error("Booking creation error:", error);
+    res.status(500).json({ error: "Failed to create booking" });
+  }
 };

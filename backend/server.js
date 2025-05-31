@@ -10,6 +10,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import calendarRoutes from './routes/calendar.route.js';
+import paymentRoutes from './routes/payment.route.js';
+import bookingRoutes from './routes/booking.route.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -34,6 +36,8 @@ app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/user', userRoutes)
 app.use('/api/v1/service', serviceRoutes)
 app.use('/api/v1/calendar', calendarRoutes)
+app.use("/api/v1/payments", paymentRoutes);
+app.use("/api/v1/bookings", bookingRoutes);
 
 
 if (process.env.NODE_ENV === "production") {

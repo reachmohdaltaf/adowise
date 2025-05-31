@@ -1,7 +1,10 @@
+// ExpertServiceDetailPage.jsx
+
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchServiceById } from "@/redux/features/serviceThunk";
+import { createBooking, createRazorpayOrder } from "@/redux/features/paymentThunk";
 import { Button } from "@/components/ui/button";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -9,192 +12,91 @@ import { ArrowLeft, Timer } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import SeekerCalendarPage from "./SeekerCalendarPage";
 import { getCalendarByUserId } from "@/redux/features/calendarThunk";
+import { generateTimeSlots, isDateAvailable } from "@/utils/timeSlot";
 
 const ExpertServiceDetailPage = () => {
   const dispatch = useDispatch();
   const { username, id } = useParams();
-  console.log(username, id)
   const navigate = useNavigate();
 
-  // Fetch service details from Redux
   const { service, loading, error } = useSelector((state) => state.service);
-  
-  // Fetch calendar data from Redux
   const { calendar, loading: calendarLoading } = useSelector((state) => state.calendar);
-  console.log(calendar)
+  const { user } = useSelector((state) => state.auth); // Assuming you have an auth slice
 
-  // Local state for selected date/time
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState("");
 
-  // Helper function to generate time slots based on calendar data
-  const generateTimeSlots = (calendar, selectedDate) => {
-    if (!calendar || !calendar.schedules || !selectedDate) return [];
-
-    // Find active schedule or use the first one with time slots
-    let activeSchedule = calendar.schedules.find(
-      schedule => schedule.scheduleTitle === calendar.activeSchedule
-    );
-
-    // If active schedule has no time slots, find the first schedule with time slots
-    if (!activeSchedule || !hasAnyTimeSlots(activeSchedule)) {
-      activeSchedule = calendar.schedules.find(schedule => hasAnyTimeSlots(schedule));
-    }
-
-    if (!activeSchedule) return [];
-
-    // Get day name from selected date
-    const dayName = selectedDate.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
-    
-    // Find the day configuration
-    const dayConfig = activeSchedule.availableDays.find(day => day.day === dayName);
-    
-    if (!dayConfig || !dayConfig.timeSlots || dayConfig.timeSlots.length === 0) {
-      return [];
-    }
-
-    // Check if the selected date is blocked
-    const selectedDateString = selectedDate.toISOString().split('T')[0];
-    const isBlockedGlobally = calendar.blockDates.some(blockedDate => 
-      new Date(blockedDate).toISOString().split('T')[0] === selectedDateString
-    );
-    const isBlockedInSchedule = activeSchedule.blockDates.some(blockedDate => 
-      new Date(blockedDate).toISOString().split('T')[0] === selectedDateString
-    );
-
-    if (isBlockedGlobally || isBlockedInSchedule) {
-      return [];
-    }
-
-    // Generate time slots for available time ranges
-    const timeSlots = [];
-    
-    dayConfig.timeSlots.forEach(timeSlot => {
-      if (timeSlot.isAvailable) {
-        // Parse time slots (assuming they're in HH:MM format)
-        const [fromHour, fromMinute] = timeSlot.from.split(':').map(Number);
-        const [toHour, toMinute] = timeSlot.to.split(':').map(Number);
-        
-        // Handle same time (might be a single slot)
-        if (fromHour === toHour && fromMinute === toMinute) {
-          const timeString = formatTime(fromHour, fromMinute);
-          timeSlots.push({
-            date: selectedDateString,
-            slot: `${timeString} - ${formatTime(fromHour + 1, fromMinute)}`, // Assuming 1-hour slots
-            startTime: timeSlot.from,
-            endTime: formatTime24(fromHour + 1, fromMinute)
-          });
-        } else {
-          // Generate slots for the time range (assuming 1-hour intervals)
-          let currentHour = fromHour;
-          let currentMinute = fromMinute;
-          
-          while (currentHour < toHour || (currentHour === toHour && currentMinute < toMinute)) {
-            const startTime = formatTime(currentHour, currentMinute);
-            const nextHour = currentMinute + 60 >= 60 ? currentHour + 1 : currentHour;
-            const nextMinute = (currentMinute + 60) % 60;
-            const endTime = formatTime(nextHour, nextMinute);
-            
-            timeSlots.push({
-              date: selectedDateString,
-              slot: `${startTime} - ${endTime}`,
-              startTime: formatTime24(currentHour, currentMinute),
-              endTime: formatTime24(nextHour, nextMinute)
-            });
-            
-            currentHour = nextHour;
-            currentMinute = nextMinute;
-            
-            // Prevent infinite loop
-            if (currentHour > 23) break;
-          }
-        }
-      }
-    });
-
-    return timeSlots;
-  };
-
-  // Helper function to format time to 12-hour format
-  const formatTime = (hour, minute) => {
-    const ampm = hour >= 12 ? 'PM' : 'AM';
-    const displayHour = hour % 12 || 12;
-    const displayMinute = minute.toString().padStart(2, '0');
-    return `${displayHour}:${displayMinute} ${ampm}`;
-  };
-
-  // Helper function to format time to 24-hour format
-  const formatTime24 = (hour, minute) => {
-    return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-  };
-
-  // Helper function to check if a date is available
-  const isDateAvailable = (date) => {
-    if (!calendar || !calendar.schedules || calendar.schedules.length === 0) return false;
-
-    // Try to find active schedule, fallback to any schedule with time slots
-    let activeSchedule = calendar.schedules.find(
-      schedule => schedule.scheduleTitle === calendar.activeSchedule
-    );
-
-    // If active schedule has no time slots, find the first schedule with time slots
-    if (!activeSchedule || !hasAnyTimeSlots(activeSchedule)) {
-      activeSchedule = calendar.schedules.find(schedule => hasAnyTimeSlots(schedule));
-    }
-
-    if (!activeSchedule) return false;
-
-    const dayName = date.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
-    const dayConfig = activeSchedule.availableDays.find(day => day.day === dayName);
-    
-    // Check if day has available time slots
-    const hasAvailableSlots = dayConfig && dayConfig.timeSlots && 
-      dayConfig.timeSlots.some(slot => slot.isAvailable);
-
-    // Check if date is not blocked
-    const dateString = date.toISOString().split('T')[0];
-    const isBlocked = calendar.blockDates.some(blockedDate => 
-      new Date(blockedDate).toISOString().split('T')[0] === dateString
-    ) || (activeSchedule.blockDates && activeSchedule.blockDates.some(blockedDate => 
-      new Date(blockedDate).toISOString().split('T')[0] === dateString
-    ));
-
-    return hasAvailableSlots && !isBlocked;
-  };
-
-  // Helper function to check if a schedule has any time slots
-  const hasAnyTimeSlots = (schedule) => {
-    return schedule.availableDays.some(day => 
-      day.timeSlots && day.timeSlots.length > 0 && 
-      day.timeSlots.some(slot => slot.isAvailable)
-    );
-  };
-
-  // Generate dynamic time slots based on selected date and calendar data
   const dynamicTimeSlots = generateTimeSlots(calendar, selectedDate);
 
-  // Fetch service details when id changes
   useEffect(() => {
     if (id) {
       dispatch(fetchServiceById(id));
     }
   }, [dispatch, id]);
 
-  // Fetch calendar by user ID when service is loaded
   useEffect(() => {
     if (service && service?.expertId) {
-      console.log("Fetching calendar for user ID:", service?.expertId);
       dispatch(getCalendarByUserId(service?.expertId));
     }
   }, [dispatch, service]);
 
-        console.log("Fetching calendar for user ID:", service?.userId);
-
-
-  // Reset selected time when date changes
   useEffect(() => {
     setSelectedTime("");
   }, [selectedDate]);
+
+ const handlePayment = async () => {
+  if (!user) {
+    alert("Please log in to book a service.");
+    return;
+  }
+
+  const amountToPay = service.amount; // Removed * 100
+
+  try {
+    const order = await dispatch(
+      createRazorpayOrder({ amount: amountToPay, userId: user._id })
+    ).unwrap();
+
+    const options = {
+      key: "rzp_test_QYcm7GcH0fZA0J",
+      amount: order.amount,
+      currency: "INR",
+      name: service.title,
+      description: "Service booking",
+      order_id: order.id,
+      handler: async function (response) {
+        const bookingPayload = {
+          serviceId: service._id,
+          expertId: service.expertId,
+          userId: user._id,
+          date: selectedDate,
+          time: selectedTime,
+          razorpayPaymentId: response.razorpay_payment_id,
+          razorpayOrderId: response.razorpay_order_id,
+          razorpaySignature: response.razorpay_signature,
+        };
+
+        await dispatch(createBooking(bookingPayload));
+        alert("Booking successful!");
+        navigate("/bookings");
+      },
+      prefill: {
+        name: user.name,
+        email: user.email,
+      },
+      theme: {
+        color: "#6366F1",
+      },
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  } catch (error) {
+    console.error("Payment Error:", error);
+    alert("Payment failed. Please try again.");
+  }
+};
+
 
   if (loading || calendarLoading) return <LoadingSpinner />;
   if (error) return <div>Error: {error.message || "Failed to load service"}</div>;
@@ -202,7 +104,6 @@ const ExpertServiceDetailPage = () => {
 
   return (
     <div className="px-2 text-foreground md:px-4 py-6 bg-primary min-h-screen flex gap-4 items-start justify-center">
-      {/* Back Button */}
       <Button
         variant="outline"
         onClick={() => navigate(-1)}
@@ -212,7 +113,6 @@ const ExpertServiceDetailPage = () => {
       </Button>
 
       <div className="mt-6 md:mt-10 flex flex-col md:flex-row items-start gap-6 justify-center w-full">
-        {/* Service Card */}
         <Card className="py-0 px-0 md:w-1/2 w-full rounded-4xl text-start">
           <CardHeader className="px-6 py-6 rounded-t-4xl bg-muted">
             <div className="flex justify-between gap-5 items-center">
@@ -245,7 +145,6 @@ const ExpertServiceDetailPage = () => {
               ))}
             </div>
 
-            {/* Tags */}
             <div className="flex gap-2 flex-wrap mt-4">
               {Array.isArray(service.tags) &&
                 service.tags.map((tag, index) => (
@@ -255,12 +154,14 @@ const ExpertServiceDetailPage = () => {
                 ))}
             </div>
 
-            {/* Book Now Button for Desktop */}
-            <Button disabled={!(selectedDate && selectedTime)} className="w-full py-6 md:flex hidden mt-10">
-              Book now
+            <Button
+              disabled={!(selectedDate && selectedTime)}
+              className="w-full py-6 md:flex hidden mt-10"
+              onClick={handlePayment}
+            >
+              Book Now
             </Button>
 
-            {/* Mobile Dialog for Calendar */}
             <div className="mt-10 sm:flex flex-col gap-2">
               <Dialog>
                 <DialogTrigger asChild>
@@ -274,9 +175,13 @@ const ExpertServiceDetailPage = () => {
                     setSelectedTime={setSelectedTime}
                     timeSlots={dynamicTimeSlots}
                     calendar={calendar}
-                    isDateAvailable={isDateAvailable}
+                    isDateAvailable={(date) => isDateAvailable(date, calendar)}
                   />
-                  <Button disabled={!(selectedDate && selectedTime)} className="py-6 mt-4 w-full">
+                  <Button
+                    disabled={!(selectedDate && selectedTime)}
+                    className="py-6 mt-4 w-full"
+                    onClick={handlePayment}
+                  >
                     Book Now
                   </Button>
                 </DialogContent>
@@ -285,7 +190,6 @@ const ExpertServiceDetailPage = () => {
           </CardContent>
         </Card>
 
-        {/* Desktop Calendar */}
         <Card className="px-2 hidden lg:block rounded-4xl">
           <SeekerCalendarPage
             selectedDate={selectedDate}
@@ -294,7 +198,7 @@ const ExpertServiceDetailPage = () => {
             setSelectedTime={setSelectedTime}
             timeSlots={dynamicTimeSlots}
             calendar={calendar}
-            isDateAvailable={isDateAvailable}
+            isDateAvailable={(date) => isDateAvailable(date, calendar)}
           />
         </Card>
       </div>
@@ -302,4 +206,4 @@ const ExpertServiceDetailPage = () => {
   );
 };
 
-export default ExpertServiceDetailPage
+export default ExpertServiceDetailPage;

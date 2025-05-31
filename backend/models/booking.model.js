@@ -1,3 +1,4 @@
+// models/booking.model.js
 import mongoose from "mongoose";
 
 const bookingSchema = new mongoose.Schema(
@@ -62,6 +63,16 @@ const bookingSchema = new mongoose.Schema(
     isCancelledByExpert: {
       type: Boolean,
       default: false,
+    },
+    // Payment related fields
+    paymentStatus: {
+      type: String,
+      enum: ["pending", "success", "failed"],
+      default: "pending",
+    },
+    paymentIntentId: {
+      type: String,
+      default: "",
     },
   },
   {
