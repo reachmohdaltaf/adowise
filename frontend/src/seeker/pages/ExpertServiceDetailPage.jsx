@@ -58,7 +58,7 @@ const ExpertServiceDetailPage = () => {
     ).unwrap();
 
     const options = {
-      key: "rzp_test_QYcm7GcH0fZA0J",
+     key: import.meta.env.VITE_RAZORPAY_KEY,
       amount: order.amount,
       currency: "INR",
       name: service.title,
