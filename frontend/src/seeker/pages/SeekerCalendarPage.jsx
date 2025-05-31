@@ -82,7 +82,7 @@ const SeekerCalendarPage = ({
           </p>
           <p className="font-medium">Available Time Slots:</p>
           {timeSlots.length > 0 ? (
-            <div className="gap-2 flex h-32 overflow-auto flex-col">
+            <div className="gap-2 flex  flex-col">
               {timeSlots.map((slot, index) => (
                 <button
                   key={index}
