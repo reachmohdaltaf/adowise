@@ -1,36 +1,32 @@
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import imageCompression from "browser-image-compression";
+import { HiInformationCircle } from "react-icons/hi2";
+import { Save, Upload } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { clearUser } from "@/redux/features/userSlice";
+
 import { getUserProfile, updateProfile } from "@/redux/features/userThunk";
-import { Save, Upload } from "lucide-react";
-import React, { useEffect, useRef, useState } from "react";
-import { HiInformationCircle } from "react-icons/hi2";
-import { useDispatch, useSelector } from "react-redux";
-import imageCompression from "browser-image-compression";
 
 const ExpertProfile = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
-  console.log("User data:", user);
-  const [imagePreview, setImagePreview] = useState(
-    user?.image ? user.image : "/default-profile.png"
-  );
+  const { user, loading } = useSelector((state) => state.user);
+
+  const [imagePreview, setImagePreview] = useState("/default-profile.png");
   const [selectedImage, setSelectedImage] = useState(null);
   const [formLoading, setFormLoading] = useState(false);
-  const fileInputRef = useRef(null);
-  const SuccessPopRef = useRef(null);
-  useEffect(() => {
-    // Fetch user profile on component mount
-    dispatch(clearUser())
-    dispatch(getUserProfile());
-    console.log("User data:", user);
-  }, [dispatch]);
 
- 
+  const fileInputRef = useRef(null);
+  const successPopRef = useRef(null);
+
+  useEffect(() => {
+    dispatch(getUserProfile());
+  }, [dispatch]);
 
   useEffect(() => {
     if (user?.image) {
@@ -54,59 +50,65 @@ const ExpertProfile = () => {
     fileInputRef.current.click();
   };
 
- const handleSubmit = async (e) => {
-   e.preventDefault();
-   setFormLoading(true);
-   const formData = new FormData(e.target);
- 
-   const profileData = {
-     name: formData.get("name"),
-     email: formData.get("email"),
-     profession: formData.get("profession"),
-     about: formData.get("about"),
-     socialLinks: {
-       linkedin: { url: formData.get("linkedin") },
-       twitter: { url: formData.get("twitter") },
-       github: { url: formData.get("github") },
-     },
-   };
- 
-   try {
-     if (selectedImage) {
-       // Compress the image
-       const compressedFile = await imageCompression(selectedImage, {
-         maxSizeMB: 0.2, // Target max size in MB
-         maxWidthOrHeight: 800, // Resize if needed
-         useWebWorker: true,
-       });
- 
-       // Convert to base64
-       const base64 = await imageCompression.getDataUrlFromFile(compressedFile);
-       profileData.image = base64;
-     }
- 
-     const response = await dispatch(updateProfile(profileData));
-     setFormLoading(false);
- 
-     if (response.meta.requestStatus === "fulfilled") {
-       SuccessPopRef.current.click();
-       dispatch(getUserProfile());
-       setSelectedImage(null);
-     } else {
-       console.error("Update failed", response.error);
-     }
-   } catch (error) {
-     setFormLoading(false);
-     console.error("Image compression or update error:", error);
-   }
- };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setFormLoading(true);
+    const formData = new FormData(e.target);
+
+    const profileData = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      profession: formData.get("profession"),
+      about: formData.get("about"),
+      socialLinks: {
+        linkedin: { url: formData.get("linkedin") },
+        twitter: { url: formData.get("twitter") },
+        github: { url: formData.get("github") },
+      },
+    };
+
+    try {
+      if (selectedImage) {
+        const compressedFile = await imageCompression(selectedImage, {
+          maxSizeMB: 0.2,
+          maxWidthOrHeight: 800,
+          useWebWorker: true,
+        });
+
+        const base64 = await imageCompression.getDataUrlFromFile(compressedFile);
+        profileData.image = base64;
+      }
+
+      const response = await dispatch(updateProfile(profileData));
+      setFormLoading(false);
+
+      if (response.meta.requestStatus === "fulfilled") {
+        successPopRef.current.click();
+        dispatch(getUserProfile());
+        setSelectedImage(null);
+      } else {
+        console.error("Update failed", response.error);
+      }
+    } catch (error) {
+      setFormLoading(false);
+      console.error("Image compression or update error:", error);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="w-full h-[300px] flex justify-center items-center">
+        <span className="animate-spin rounded-full h-10 w-10 border-4 border-t-transparent border-primary"></span>
+      </div>
+    );
+  }
 
   return (
-    <Card className="px-2 mt-1 md:mt-6 border-none gap-0 ">
+    <Card className="px-2 mt-1 md:mt-6 border-none gap-0">
       <h1 className="text-2xl font-semibold mb-4 px-2">Personal Information</h1>
 
       {/* Tip Box */}
-      <div className="flex bg-muted py-3 rounded-md px-4 gap-4 mb-6 ">
+      <div className="flex bg-muted py-3 rounded-md px-4 gap-4 mb-6">
         <div>
           <HiInformationCircle />
         </div>
@@ -115,7 +117,7 @@ const ExpertProfile = () => {
           <ul className="list-disc">
             <li className="font-normal">
               Adding your photo and social media profiles helps mentors feel
-              confident that you're a real person (e.g. not a bot).
+              confident that you're a real person (e.g., not a bot).
             </li>
           </ul>
         </div>
@@ -140,7 +142,7 @@ const ExpertProfile = () => {
             className="w-24 h-24 rounded-full object-cover"
           />
           {selectedImage ? (
-            <Button type="submit" disabled={formLoading} className="">
+            <Button type="submit" disabled={formLoading}>
               {formLoading ? (
                 <>
                   <span className="animate-spin rounded-full h-4 w-4 border-2 border-t-transparent border-white mr-2"></span>
@@ -155,10 +157,9 @@ const ExpertProfile = () => {
           ) : (
             <Button
               type="button"
-              variant={"outline"}
+              variant="outline"
               onClick={handleUploadClick}
               disabled={formLoading}
-              className=""
             >
               <Upload className="mr-2" /> Change Image
             </Button>
@@ -192,7 +193,7 @@ const ExpertProfile = () => {
               disabled={formLoading}
             />
           </Label>
-          <p className="text-xs mt-1 text-destructive">Only Visible to you</p>
+          <p className="text-xs mt-1 text-destructive">Only visible to you</p>
         </div>
 
         <div className="mt-6">
@@ -253,7 +254,6 @@ const ExpertProfile = () => {
         </div>
 
         <div className="flex justify-end mt-6">
-          {/* Save Changes Button */}
           <Button
             type="submit"
             disabled={formLoading}
@@ -275,7 +275,7 @@ const ExpertProfile = () => {
 
       <Dialog>
         <DialogTrigger asChild>
-          <button ref={SuccessPopRef} className="hidden">
+          <button ref={successPopRef} className="hidden">
             updatedSuccess
           </button>
         </DialogTrigger>

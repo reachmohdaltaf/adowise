@@ -18,7 +18,7 @@ const ExpertBookingPage = () => {
     <div className='py-6'>
       <h1 className='text-2xl font-semibold mb-4 px-2'>Booking</h1>
 
-      <div className='flex items-center sticky top-0 py-3 bg-background justify-between  mb-6'>
+      <div className='flex items-center sticky top-12 py-3 bg-background justify-between  mb-6'>
         <div className='gap-3 flex'>
           <Link to="upcoming">
             <Button className={'md:px-6 px-4'} variant={isUpcoming ? 'default' : 'outline'}>Upcoming (10)</Button>

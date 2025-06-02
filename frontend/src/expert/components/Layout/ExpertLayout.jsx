@@ -43,7 +43,7 @@ const ExpertLayout = () => {
       <div className="fixed top-0 left-0 right-0 z-30 ">
         <div className="max-w-screen-2xl bg-background mx-auto">
           <ExpertNavbar />
-        </div>
+        </div>  
       </div>
       
       <div className='pt-12'>
@@ -56,7 +56,7 @@ const ExpertLayout = () => {
 <div
   id='seeker-scroll'
   ref={containerRef} // ← Attach ref here
-  className='flex-1 h-screen hidescroll md:px-10 px-0  lg:ml-68 overflow-y-auto'
+  className='flex-1 h-screen hidescroll md:px-10 px-0  lg:ml-68 '
 >
   <div className="mb-20 px-2">
     <Outlet />
