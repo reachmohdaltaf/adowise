@@ -108,7 +108,7 @@ const sidebarItems = [
 
 const ExpertSidebar2 = ({isOpen, setIsOpen}) => {
  const user = useSelector((state) => state.auth.user);
-  const userRoleChanging = useSelector((state) => state.user.loading);
+  const userRoleChanging = useSelector((state) => state.user.roleChanging);
 
   console.log({ user: user.id, role: user.role });
   const location = useLocation();

@@ -30,7 +30,7 @@ import { PiSirenLight, PiUserSwitch } from "react-icons/pi";
 
 const SeekerSidebar = () => {
   const user = useSelector((state) => state.auth.user);
-  const userRoleChanging = useSelector((state) => state.auth.loading);
+  const userRoleChanging = useSelector((state) => state.user.roleChanging);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();

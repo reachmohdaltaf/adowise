@@ -97,7 +97,7 @@ const SeekerSidebar2 = ({ isOpen, setIsOpen }) => {
     },
     { type: "divider" },
   ];
-  const userRoleChanging = useSelector((state) => state.user.loading);
+  const userRoleChanging = useSelector((state) => state.user.roleChanging);
   const navigate = useNavigate();
   console.log({ "userID in sidebar": user._id, role: user.role });
   const dispatch = useDispatch();
