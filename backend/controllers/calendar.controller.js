@@ -124,6 +124,10 @@ export const getCalendarByUserId = async (req, res) => {
   try {
     const { id } = req.params;
 
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid user ID format" });
+    }
+
     const calendar = await Calendar.findOne({
       userId: new mongoose.Types.ObjectId(id),
     }).populate("userId");
@@ -138,6 +142,7 @@ export const getCalendarByUserId = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
 
 
 
