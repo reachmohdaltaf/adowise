@@ -39,11 +39,17 @@ const ExpertServiceDetailPage = () => {
     }
   }, [dispatch, id]);
 
-  useEffect(() => {
-    if (service && service?.expertId) {
-      dispatch(getCalendarByUserId(service?.expertId));
-    }
-  }, [dispatch, service]);
+useEffect(() => {
+  if (service && service?.expertId) {
+    console.log("Dispatching calendar fetch for:", service.expertId);
+    dispatch(getCalendarByUserId(service?.expertId));
+  }
+}, [dispatch, service]);
+
+useEffect(() => {
+  console.log("Calendar data:", calendar);
+}, [calendar]);
+
 
   useEffect(() => {
     setSelectedTime("");
