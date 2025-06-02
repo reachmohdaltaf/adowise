@@ -119,7 +119,7 @@ const ExpertServiceDetailPage = () => {
   if (!service) return <div>Service not found</div>;
 
   return (
-    <div className="px-2 text-foreground md:px-4 py-6 bg-primary min-h-screen flex gap-4 items-start justify-center">
+    <div className="px-2 text-foreground md:px-4 py-6 bg-primary min-h-full flex gap-4 items-start justify-center">
       <Button
         variant="outline"
         onClick={() => navigate(-1)}

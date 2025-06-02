@@ -10,6 +10,7 @@ import { Save, Upload } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { HiInformationCircle } from "react-icons/hi2";
 import { useDispatch, useSelector } from "react-redux";
+import imageCompression from "browser-image-compression";
 
 const ExpertProfile = () => {
   const dispatch = useDispatch();
@@ -53,80 +54,52 @@ const ExpertProfile = () => {
     fileInputRef.current.click();
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setFormLoading(true);
-    const formData = new FormData(e.target);
-
-    if (!selectedImage) {
-      // No new image selected — just dispatch with form data
-      dispatch(
-        updateProfile({
-          name: formData.get("name"),
-          email: formData.get("email"),
-          profession: formData.get("profession"),
-          about: formData.get("about"),
-          socialLinks: {
-            linkedin: { url: formData.get("linkedin") },
-            twitter: { url: formData.get("twitter") },
-            github: { url: formData.get("github") },
-          },
-          // no image here
-        })
-      )
-        .then((response) => {
-          setFormLoading(false); // Reset loading state
-          if (response.meta.requestStatus === "fulfilled") {
-            console.log("Profile updated successfully:", response.payload);
-            SuccessPopRef.current.click(); // Trigger the success dialog
-          } else {
-            console.error("Failed to update profile:", response.error);
-          }
-        })
-        .catch((error) => {
-          setFormLoading(false); // Reset loading state on error
-          console.error("Error updating profile:", error);
-        });
-      return;
-    }
-
-    // If image is selected, convert it to base64 before dispatching
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64Image = reader.result;
-
-      dispatch(
-        updateProfile({
-          name: formData.get("name"),
-          email: formData.get("email"),
-          profession: formData.get("profession"),
-          about: formData.get("about"),
-          socialLinks: {
-            linkedin: { url: formData.get("linkedin") },
-            twitter: { url: formData.get("twitter") },
-            github: { url: formData.get("github") },
-          },
-          image: base64Image,
-        })
-      )
-        .then((response) => {
-          setFormLoading(false); // Reset loading state
-          if (response.meta.requestStatus === "fulfilled") {
-            console.log("Profile updated successfully:", response.payload);
-            SuccessPopRef.current.click(); // Trigger the success dialog
-            dispatch(getUserProfile());
-            setSelectedImage(null); // Reset selected image after successful save
-          } else {
-            console.error("Failed to update profile:", response.error);
-          }
-        })
-        .catch((error) => {
-          setFormLoading(false); // Reset loading state on error
-          console.error("Error updating profile:", error);
-        });
-    };
-    reader.readAsDataURL(selectedImage);
-  };
+ const handleSubmit = async (e) => {
+   e.preventDefault();
+   setFormLoading(true);
+   const formData = new FormData(e.target);
+ 
+   const profileData = {
+     name: formData.get("name"),
+     email: formData.get("email"),
+     profession: formData.get("profession"),
+     about: formData.get("about"),
+     socialLinks: {
+       linkedin: { url: formData.get("linkedin") },
+       twitter: { url: formData.get("twitter") },
+       github: { url: formData.get("github") },
+     },
+   };
+ 
+   try {
+     if (selectedImage) {
+       // Compress the image
+       const compressedFile = await imageCompression(selectedImage, {
+         maxSizeMB: 0.2, // Target max size in MB
+         maxWidthOrHeight: 800, // Resize if needed
+         useWebWorker: true,
+       });
+ 
+       // Convert to base64
+       const base64 = await imageCompression.getDataUrlFromFile(compressedFile);
+       profileData.image = base64;
+     }
+ 
+     const response = await dispatch(updateProfile(profileData));
+     setFormLoading(false);
+ 
+     if (response.meta.requestStatus === "fulfilled") {
+       SuccessPopRef.current.click();
+       dispatch(getUserProfile());
+       setSelectedImage(null);
+     } else {
+       console.error("Update failed", response.error);
+     }
+   } catch (error) {
+     setFormLoading(false);
+     console.error("Image compression or update error:", error);
+   }
+ };
 
   return (
     <Card className="px-2 mt-1 md:mt-6 border-none gap-0 ">
