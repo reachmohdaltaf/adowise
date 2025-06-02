@@ -10,32 +10,26 @@ const ExpertLayout = () => {
   const [showFooter, setShowFooter] = useState(true); // for showing/hiding footer
 
     // Scroll detection logic
-    useEffect(() => {
-      const handleScroll = () => {
-        const scrollTop = containerRef.current?.scrollTop || 0;
-  
-        if (scrollTop > lastScrollTop.current) {
-          // Scrolling down
-          setShowFooter(false);
-        } else {
-          // Scrolling up
-          setShowFooter(true);
-        }
-  
-        lastScrollTop.current = scrollTop;
-      };
-  
-      const container = containerRef.current;
-      if (container) {
-        container.addEventListener("scroll", handleScroll);
-      }
-  
-      return () => {
-        if (container) {
-          container.removeEventListener("scroll", handleScroll);
-        }
-      };
-    }, []);
+  useEffect(() => {
+  const handleScroll = () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop > lastScrollTop.current) {
+      setShowFooter(false);
+    } else {
+      setShowFooter(true);
+    }
+
+    lastScrollTop.current = scrollTop;
+  };
+
+  window.addEventListener("scroll", handleScroll);
+
+  return () => {
+    window.removeEventListener("scroll", handleScroll);
+  };
+}, []);
+
 
   return (
     <div className='expert  max-w-screen-2xl mx-auto md:px-10 relative'>
