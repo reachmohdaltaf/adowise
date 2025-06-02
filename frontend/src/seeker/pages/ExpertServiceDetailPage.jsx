@@ -46,9 +46,7 @@ useEffect(() => {
   }
 }, [dispatch, service]);
 
-useEffect(() => {
-  console.log("Calendar data:", calendar);
-}, [calendar]);
+
 
 
   useEffect(() => {
