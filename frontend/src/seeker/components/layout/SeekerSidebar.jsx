@@ -30,8 +30,7 @@ import { PiSirenLight, PiUserSwitch } from "react-icons/pi";
 
 const SeekerSidebar = () => {
   const user = useSelector((state) => state.auth.user);
-  const userRoleChanging = useSelector((state) => state.user.loading);
-  const isProfileUpdating = useSelector((state) => state.user.updating); // New: Track profile update state
+  const userRoleChanging = useSelector((state) => state.auth.loading);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();

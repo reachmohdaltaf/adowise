@@ -11,18 +11,17 @@ import { HiInformationCircle } from "react-icons/hi2";
 import { useDispatch, useSelector } from "react-redux";
 import imageCompression from "browser-image-compression";
 
-
 const SeekerProfile = () => {
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.user);
-  console.log("User data:", user);
+
   const [imagePreview, setImagePreview] = useState(
     user?.image ? user.image : "/default-profile.png"
   );
   const [selectedImage, setSelectedImage] = useState(null);
-  const [formLoading, setFormLoading] = useState(false);
   const fileInputRef = useRef(null);
   const SuccessPopRef = useRef(null);
+
   useEffect(() => {
     // Fetch user profile on component mount
     dispatch(getUserProfile());
@@ -50,55 +49,50 @@ const SeekerProfile = () => {
     fileInputRef.current.click();
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
+    const formData = new FormData(e.target);
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setFormLoading(true);
-  const formData = new FormData(e.target);
+    const profileData = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      profession: formData.get("profession"),
+      about: formData.get("about"),
+      socialLinks: {
+        linkedin: { url: formData.get("linkedin") },
+        twitter: { url: formData.get("twitter") },
+        github: { url: formData.get("github") },
+      },
+    };
 
-  const profileData = {
-    name: formData.get("name"),
-    email: formData.get("email"),
-    profession: formData.get("profession"),
-    about: formData.get("about"),
-    socialLinks: {
-      linkedin: { url: formData.get("linkedin") },
-      twitter: { url: formData.get("twitter") },
-      github: { url: formData.get("github") },
-    },
+    try {
+      if (selectedImage) {
+        // Compress the image
+        const compressedFile = await imageCompression(selectedImage, {
+          maxSizeMB: 0.2,
+          maxWidthOrHeight: 800,
+          useWebWorker: true,
+        });
+
+        // Convert to base64
+        const base64 = await imageCompression.getDataUrlFromFile(compressedFile);
+        profileData.image = base64;
+      }
+
+      const response = await dispatch(updateProfile(profileData));
+
+      if (response.meta.requestStatus === "fulfilled") {
+        SuccessPopRef.current.click();
+        dispatch(getUserProfile());
+        setSelectedImage(null);
+      } else {
+        console.error("Update failed", response.error);
+      }
+    } catch (error) {
+      console.error("Image compression or update error:", error);
+    }
   };
-
-  try {
-    if (selectedImage) {
-      // Compress the image
-      const compressedFile = await imageCompression(selectedImage, {
-        maxSizeMB: 0.2, // Target max size in MB
-        maxWidthOrHeight: 800, // Resize if needed
-        useWebWorker: true,
-      });
-
-      // Convert to base64
-      const base64 = await imageCompression.getDataUrlFromFile(compressedFile);
-      profileData.image = base64;
-    }
-
-    const response = await dispatch(updateProfile(profileData));
-    setFormLoading(false);
-
-    if (response.meta.requestStatus === "fulfilled") {
-      SuccessPopRef.current.click();
-      dispatch(getUserProfile());
-      setSelectedImage(null);
-    } else {
-      console.error("Update failed", response.error);
-    }
-  } catch (error) {
-    setFormLoading(false);
-    console.error("Image compression or update error:", error);
-  }
-};
-
 
   return (
     <Card className="px-2 mt-1 md:mt-6 border-none gap-0 ">
@@ -113,8 +107,7 @@ const handleSubmit = async (e) => {
           <h2 className="font-semibold">Tips</h2>
           <ul className="list-disc">
             <li className="font-normal">
-              Adding your photo and social media profiles helps mentors feel
-              confident that you're a real person (e.g. not a bot).
+              Adding your photo and social media profiles helps mentors feel confident that you're a real person (e.g. not a bot).
             </li>
           </ul>
         </div>
@@ -139,8 +132,8 @@ const handleSubmit = async (e) => {
             className="w-24 h-24 rounded-full object-cover"
           />
           {selectedImage ? (
-            <Button type="submit" disabled={formLoading} className="">
-              {formLoading ? (
+            <Button type="submit" disabled={loading}>
+              {loading ? (
                 <>
                   <span className="animate-spin rounded-full h-4 w-4 border-2 border-t-transparent border-white mr-2"></span>
                   Saving...
@@ -156,8 +149,7 @@ const handleSubmit = async (e) => {
               type="button"
               variant={"outline"}
               onClick={handleUploadClick}
-              disabled={formLoading}
-              className=""
+              disabled={loading}
             >
               <Upload className="mr-2" /> Change Image
             </Button>
@@ -174,7 +166,7 @@ const handleSubmit = async (e) => {
               placeholder="Enter your full name"
               className="py-5"
               defaultValue={user?.name || ""}
-              disabled={formLoading}
+              disabled={loading}
             />
           </Label>
         </div>
@@ -188,7 +180,7 @@ const handleSubmit = async (e) => {
               placeholder="Enter your email address"
               className="py-5"
               defaultValue={user?.email || ""}
-              disabled={formLoading}
+              disabled={loading}
             />
           </Label>
           <p className="text-xs mt-1 text-destructive">Only Visible to you</p>
@@ -203,7 +195,7 @@ const handleSubmit = async (e) => {
               placeholder="Enter your profession"
               className="py-5"
               defaultValue={user?.profession || ""}
-              disabled={formLoading}
+              disabled={loading}
             />
           </Label>
         </div>
@@ -216,7 +208,7 @@ const handleSubmit = async (e) => {
               placeholder="Tell us about yourself"
               className="py-5 h-58"
               defaultValue={user?.about || ""}
-              disabled={formLoading}
+              disabled={loading}
             />
           </Label>
         </div>
@@ -230,7 +222,7 @@ const handleSubmit = async (e) => {
               placeholder="Enter your LinkedIn profile URL"
               className="py-5 mb-4"
               defaultValue={user?.socialLinks?.linkedin?.url || ""}
-              disabled={formLoading}
+              disabled={loading}
             />
             <Input
               name="twitter"
@@ -238,7 +230,7 @@ const handleSubmit = async (e) => {
               placeholder="Enter your Twitter profile URL"
               className="py-5 mb-4"
               defaultValue={user?.socialLinks?.twitter?.url || ""}
-              disabled={formLoading}
+              disabled={loading}
             />
             <Input
               name="github"
@@ -246,7 +238,7 @@ const handleSubmit = async (e) => {
               placeholder="Enter your GitHub profile URL"
               className="py-5"
               defaultValue={user?.socialLinks?.github?.url || ""}
-              disabled={formLoading}
+              disabled={loading}
             />
           </Label>
         </div>
@@ -255,10 +247,10 @@ const handleSubmit = async (e) => {
           {/* Save Changes Button */}
           <Button
             type="submit"
-            disabled={formLoading}
+            disabled={loading}
             className="bg-primary text-primary-foreground"
           >
-            {formLoading ? (
+            {loading ? (
               <>
                 <span className="animate-spin rounded-full h-4 w-4 border-2 border-t-transparent border-white mr-2"></span>
                 Saving...
