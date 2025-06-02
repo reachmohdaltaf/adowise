@@ -26,6 +26,8 @@ const ExpertServiceDetailPage = () => {
   const { calendar, loading: calendarLoading } = useSelector(
     (state) => state.calendar
   );
+
+  console.log("Calendar data:", calendar);
   const { user } = useSelector((state) => state.auth); // Assuming you have an auth slice
 
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -42,11 +44,13 @@ const ExpertServiceDetailPage = () => {
 useEffect(() => {
   if (service && service?.expertId) {
     console.log("Dispatching calendar fetch for:", service.expertId);
-    dispatch(getCalendarByUserId(service?.expertId));
+dispatch(getCalendarByUserId(service?.expertId?._id));
   }
 }, [dispatch, service]);
 
-
+useEffect(() => {
+  console.log("Calendar data:", calendar);
+}, [calendar]);
 
 
   useEffect(() => {
