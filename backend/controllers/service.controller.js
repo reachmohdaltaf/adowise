@@ -91,24 +91,41 @@ export const UpdateServiceById = async (req, res) => {
 export const GetServiceById = async (req, res) =>{
   try {
     const { serviceId } = req.params;
-    const service = await Service.findById(serviceId);
-    res.status(200).json(service);
+    const service = await Service.findById(serviceId).populate("expertId", "name username email image profession about skills");
+    res.status(200).json(service)
   } catch (error) {
     console.error("Error in GetServiceById:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 }
 
-export const DeleteServiceById = async (req, res) =>{
+export const DeleteServiceById = async (req, res) => {
   try {
     const { serviceId } = req.params;
-    const service = await Service.findByIdAndDelete(serviceId);
-    res.status(200).json(service);
+    const userId = req.user._id; // logged-in user ID
+
+    // Find the service first
+    const service = await Service.findById(serviceId);
+
+    if (!service) {
+      return res.status(404).json({ error: "Service not found" });
+    }
+
+    // Check if the logged-in user is the owner of the service
+    if (service.expertId.toString() !== userId.toString()) {
+      return res.status(403).json({ error: "You are not authorized to delete this service" });
+    }
+
+    // Delete the service
+    await Service.findByIdAndDelete(serviceId);
+
+    res.status(200).json({ message: "Service deleted successfully" });
   } catch (error) {
     console.error("Error in DeleteServiceById:", error);
     res.status(500).json({ error: "Internal server error" });
   }
-}
+};
+
 
 export const fetchAllServices = async (req, res) => {
   try {

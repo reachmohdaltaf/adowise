@@ -27,7 +27,6 @@ const ExpertServiceDetailPage = () => {
     (state) => state.calendar
   );
   const { user } = useSelector((state) => state.auth); // Assuming you have an auth slice
-
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState("");
 
@@ -113,6 +112,8 @@ const ExpertServiceDetailPage = () => {
     }
   };
 
+  console.log(service)
+
   if (loading || calendarLoading) return <LoadingSpinner />;
   if (error)
     return <div>Error: {error.message || "Failed to load service"}</div>;
@@ -140,8 +141,7 @@ const ExpertServiceDetailPage = () => {
                   <div className="min-w-[64px] min-h-[64px] w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden bg-muted flex items-center justify-center">
                     <img
                       src={
-                        service.profileImage ||
-                        "https://dummyimage.com/600x400/000/fff"
+                       service.expertId?.image
                       }
                       alt="Profile"
                       className="w-full h-full object-cover"
