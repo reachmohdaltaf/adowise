@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createBooking } from './bookingThunk';
-
+import { createBooking, fetchBookingsAsSeeker } from './bookingThunk';
 const initialState = {
   booking: null,
   loading: false,
   error: null,
   success: false,
+  bookings: [],
 };
 
 const bookingSlice = createSlice({
@@ -35,7 +35,24 @@ const bookingSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
         state.success = false;
-      });
+      })
+
+      //@ get bookings as a seeker
+      .addCase(fetchBookingsAsSeeker.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.success = false;
+      })
+      .addCase(fetchBookingsAsSeeker.fulfilled, (state, action) => {
+        state.loading = false;
+        state.bookings = action.payload.bookings;
+        state.success = true;
+      })
+      .addCase(fetchBookingsAsSeeker.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.success = false;
+      })
   },
 });
 

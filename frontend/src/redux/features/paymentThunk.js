@@ -19,15 +19,4 @@ export const createRazorpayOrder = createAsyncThunk(
 
 // redux/features/bookingThunk.js
 
-export const createBooking = createAsyncThunk(
-  'booking/createBooking',
-  async (bookingData, { rejectWithValue }) => {
-    try {
-      const response = await axiosInstance.post('/bookings/create', bookingData);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data || 'Failed to create booking');
-    }
-  }
-);
 

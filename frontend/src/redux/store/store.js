@@ -4,6 +4,7 @@ import userReducer from "../features/userSlice.js";
 import serviceReducer from "../features/serviceSlice.js";
 import calendarReducer from "../features/calendarSlice.js";
 import paymentReducer from "../features/paymentSlice.js";
+import bookingReducer from "../features/bookingSlice.js";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     service: serviceReducer,
     calendar: calendarReducer,
     payment: paymentReducer,
+    booking: bookingReducer,
   },
 });
 

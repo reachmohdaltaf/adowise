@@ -1,47 +1,49 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import SeekerUpcomingBookingCard from '../components/SeekerUpcomingBookingCard';
-
-const bookingData = [
-  {
-    title: 'Interview Call',
-    description: 'Anjali',
-    status: 'upcoming',
-    date: 'Sun, 02 Mar',
-    time: '02:45 - 03:00 PM',
-    type: 'Video Call',
-  },
-  {
-    title: 'Mentorship Session',
-    description: 'Ravi Kumar',
-    status: 'upcoming',
-    date: 'Mon, 03 Mar',
-    time: '10:00 - 10:30 AM',
-    type: 'Voice Call',
-  },
-  {
-    title: 'Follow-up Discussion',
-    description: 'Priya Sharma',
-    status: 'upcoming',
-    date: 'Tue, 04 Mar',
-    time: '01:15 - 01:45 PM',
-    type: 'Video Call',
-  },
-];
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchBookingsAsSeeker } from '@/redux/features/bookingThunk';
 
 const SeekerUpcomingBooking = () => {
+  const dispatch = useDispatch();
+  const { bookings } = useSelector((state) => state.booking);
+
+  useEffect(() => {
+    dispatch(fetchBookingsAsSeeker());
+  }, [dispatch]);
+
+  function formatDateTime(start, end) {
+    const optionsDate = { weekday: 'short', day: '2-digit', month: 'short' };
+    const optionsTime = { hour: '2-digit', minute: '2-digit', hour12: true };
+
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+
+    const date = startDate.toLocaleDateString('en-US', optionsDate);
+    const time = `${startDate.toLocaleTimeString('en-US', optionsTime)} - ${endDate.toLocaleTimeString('en-US', optionsTime)}`;
+
+    return { date, time };
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
-      {bookingData.map((booking, index) => (
-        <SeekerUpcomingBookingCard
-          key={index}
-          title={booking.title}
-          description={booking.description}
-          status={booking.status}
-          date={booking.date}
-          time={booking.time}
-          type={booking.type}
-        />
-      ))}
+      {bookings && bookings.length > 0 ? (
+        bookings.map((booking) => {
+          const { date, time } = formatDateTime(booking.startTime, booking.endTime);
+          return (
+            <SeekerUpcomingBookingCard
+              key={booking._id}
+              title={booking.scheduleTitle}
+              description={booking.expertId?.name || 'Unknown Expert'}
+              status={booking.status}
+              date={date}
+              time={time}
+              type={booking.locationType || 'N/A'}
+            />
+          );
+        })
+      ) : (
+        <p>No upcoming bookings found.</p>
+      )}
     </div>
   );
 };

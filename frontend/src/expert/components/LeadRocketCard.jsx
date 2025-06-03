@@ -15,15 +15,21 @@ const LeadRocketCard = () => {
   ]);
 
 useEffect(() => {
-  const timeout = setTimeout(() => {
-    const confetti = document.querySelector('.confetti-button');
-    if (confetti) {
-      confetti.click(); // trigger confetti after slight delay
-    }
-  }, 300); // wait a bit to ensure it's rendered
+  const hasRunConfetti = localStorage.getItem('hasRunConfetti');
 
-  return () => clearTimeout(timeout);
+  if (!hasRunConfetti) {
+    const confettiButton = document.querySelector('.confetti-button');
+    if (confettiButton) {
+      confettiButton.click(); // First run
+      setTimeout(() => {
+        confettiButton.click(); // Second run after a small delay
+      }, 200); // You can adjust the delay (ms) if needed
+      localStorage.setItem('hasRunConfetti', 'true'); // Mark as done
+    }
+  }
 }, []);
+
+
 
   
 

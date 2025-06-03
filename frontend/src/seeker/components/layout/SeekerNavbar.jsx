@@ -56,7 +56,7 @@ const SeekerNavbar = () => {
       >
         <img
           src="/logo.png"
-          className="h-7 scale-98 hover:scale-100 transition cursor-pointer"
+          className="h-8 scale-98 hover:scale-100 transition cursor-pointer"
           alt="logo"
         />
       </Link>
