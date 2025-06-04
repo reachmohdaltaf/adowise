@@ -12,10 +12,10 @@ const SeekerBookingPage = () => {
 
       <div className='flex gap-4 mb-6'>
         <Link to="upcoming">
-          <Button size={'sm'} className={'rounded-4xl'} variant={isUpcoming ? 'default' : 'outline'}>Upcoming</Button>
+          <Button variant={isUpcoming ? 'default' : 'outline'}>Upcoming (3)</Button>
         </Link>
         <Link to="completed">
-          <Button size={'sm'} className={'rounded-4xl'} variant={!isUpcoming ? 'default' : 'outline'}>Completed</Button>
+          <Button  variant={!isUpcoming ? 'default' : 'outline'}>Completed (4)</Button>
         </Link>
       </div>
     

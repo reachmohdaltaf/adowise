@@ -12,10 +12,10 @@ const SeekerPriorityDm = () => {
 
       <div className='flex gap-4 mb-6'>
         <Link to="sent-messages">
-          <Button size={'sm'} className={'rounded-4xl'} variant={isSent ? 'default' : 'outline'}>Sent</Button>
+          <Button variant={isSent ? 'default' : 'outline'}>Sent (3)</Button>
         </Link>
         <Link to="answered-by-experts">
-          <Button size={'sm'} className={'rounded-4xl'} variant={!isSent ? 'default' : 'outline'}>Answered</Button>
+          <Button  variant={!isSent ? 'default' : 'outline'}>Answered (4)</Button>
         </Link>
       </div>
 

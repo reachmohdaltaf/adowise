@@ -111,7 +111,7 @@ const SeekerSidebar = () => {
   }, [dispatch, navigate, user._id]);
 
   return (
-    <aside className="h-screen w-68 overflow-y-auto pt-5 bg-background flex flex-col justify-between z-10">
+    <aside className="h-screen w-68 overflow-y-auto pt-5 bg-background dark:bg-[#1F1F1F] flex flex-col justify-between z-10">
       <div className="flex-1 px-2 mt-8">
         <ul className="flex flex-col gap-2">
           {sidebarItems.map((item, index) =>

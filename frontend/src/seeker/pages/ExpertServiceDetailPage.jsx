@@ -24,7 +24,7 @@ import { createBooking } from "@/redux/features/bookingThunk";
     const navigate = useNavigate();
 
     const { service, loading, error } = useSelector((state) => state.service);
-    const { calendar, loading: calendarLoading } = useSelector(
+    const { calendar } = useSelector(
       (state) => state.calendar
     );
 
@@ -197,11 +197,10 @@ const handlePayment = async () => {
   }
 };
 
-
-    if (loading || calendarLoading) return <LoadingSpinner />;
+    if(loading) return <div><LoadingSpinner /></div>;
     if (error)
       return <div>Error: {error.message || "Failed to load service"}</div>;
-    if (!service) return <div>Service not found</div>;
+    if (!service ) return <div>Service not found</div>;
 
     return (
       <div className="px-2 text-foreground md:px-4 py-6 bg-primary min-h-full flex gap-4 items-start justify-center">

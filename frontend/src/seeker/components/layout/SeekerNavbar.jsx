@@ -3,7 +3,7 @@ import { FaRegBell } from "react-icons/fa";
 import { AiOutlineHome } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { BsStars } from "react-icons/bs";
-import { HomeIcon, SearchIcon } from "lucide-react";
+import { HomeIcon, SearchIcon, SendHorizonal } from "lucide-react";
 import SeekerSidebar2 from "./SeekerSidebar2";
 import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
@@ -69,26 +69,26 @@ const SeekerNavbar = () => {
               className="w-40 border-none ring-0 outline-none placeholder:text-foreground
               focus:w-60 transition-all duration-500 ease-in-out"
             />
-            <SearchIcon
-              size={22}
+            <SendHorizonal
+              size={20}
               className="cursor-pointer hover:scale-100 scale-96 transition"
             />
           </div>
          
           <BsStars
-            size={22}
+            size={25}
             className="cursor-pointer hover:scale-100 scale-96 transition"
           />
           <Link to="/seeker/dashboard/notifications">
-            <FaRegBell size={22} className="cursor-pointer" />
+            <FaRegBell size={25} className="cursor-pointer" />
           </Link>
           <Link to="/seeker/dashboard/home">
-            <HomeIcon size={22} className="cursor-pointer hidden md:block" />
+            <HomeIcon size={25} className="cursor-pointer hidden md:block" />
           </Link>
         </div>
         <GiHamburgerMenu
           onClick={handleSidebar}
-          size={24}
+          size={25}
           className="cursor-pointer menu-btn"
         />
       </div>

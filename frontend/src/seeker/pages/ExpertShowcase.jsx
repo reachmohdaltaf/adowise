@@ -14,11 +14,12 @@ const ExpertShowcase = () => {
   );
 
   console.log("ExpertShowcase services:", services);
-   useEffect(() => {
-    // Reset and fetch fresh services when this component mounts
-    dispatch(fetchAllServices({ page: 1, limit: 10 }));
-    dispatch(resetServices())
-  }, [dispatch]);
+ useEffect(() => {
+  // Reset first, then fetch fresh services
+  dispatch(resetServices());
+  dispatch(fetchAllServices({ page: 1, limit: 10 }));
+}, [dispatch]);
+
   
 
 if (loading && services.length === 0) {
