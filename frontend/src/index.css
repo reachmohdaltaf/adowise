@@ -189,7 +189,7 @@
   --secondary: #E4E4E4;
   --secondary-foreground: #121212;
   --muted: #f6f0fe;
-  --muted-foreground: #8c7cdc;
+  --muted-foreground:#8c7cdc;
   --accent: #F3E5F5;
   --accent-foreground: #121212;
   --destructive: #818181;
@@ -330,3 +330,4 @@
     @apply bg-background text-foreground;
   }
 }
+
