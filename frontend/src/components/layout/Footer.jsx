@@ -6,7 +6,7 @@ const Footer = () => {
     <div className='h-80 mt-10 px-10 py-10 bg-gradient-to-tl rounded-t-4xl from-muted-foreground to-[#9a8be7] '>
     <div className=''>
         <div className="logo flex items-center gap-6">
-            <img src="/logo3.svg" className='h-18' alt="" />
+            <img src="/logo2.png" className='h-18' alt="" />
             <p className='text-6xl text-background'>adowise</p>
         </div>
         <div>

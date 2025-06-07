@@ -5,14 +5,21 @@ import Footer from './Footer'
 
 const Layout = () => {
   return (
-    <div className='bg-background scroll h-screen max-w-screen-2xl mx-auto home'>
-      <div className='fixed top-0 max-w-screen-2xl mx-auto z-50 w-full'>
-      <Navbar/>
+    <div className='min-h-screen max-w-screen-3xl mx-auto'>
+      {/* Fixed Navbar */}
+      <div className='fixed top-0 left-0 right-0 z-50 max-w-screen-3xl mx-auto'>
+        <Navbar/>
       </div>
-       <Outlet/>
-     
+      
+      {/* Main Content Area */}
+      <div className='pt-4'> {/* pt-14 to offset fixed navbar height */}
+        <Outlet/>
+      </div>
+      
+      {/* Footer at bottom */}
+      <Footer />
     </div>
-  )
+  );
 }
 
 export default Layout
