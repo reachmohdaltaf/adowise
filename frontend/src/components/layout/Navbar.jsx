@@ -10,7 +10,7 @@ const Navbar = () => {
     <>
       <nav className="h-14 px-4 md:px-6 flex justify-between items-center w-full bg-transparent rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-20">
         <Link to="/" className="logo">
-          <img src="/logo-g-3.png" className="h-10" alt="Logo" />
+          <img src="/logo-g-4.png" className="h-8" alt="Logo" />
         </Link>
 
         {/* Hamburger button for mobile */}
