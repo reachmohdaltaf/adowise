@@ -85,4 +85,14 @@ export const googleSignup = createAsyncThunk(
     }
   }
 );
-
+export const googleLogin = createAsyncThunk(
+  "auth/googleLogin",
+  async (credential, thunkAPI) => {
+    try {
+      const res = await axiosInstance.post('auth/google-login', { credential });
+      return res.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);

@@ -4,7 +4,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 import React, { useState, useEffect } from "react";
 import { BsLinkedin } from "react-icons/bs";
 import { useDispatch } from "react-redux";
-import { sendOtp, verifyOtp, completeSignup, authCheck, googleSignup } from "@/redux/features/authThunk";
+import {
+  sendOtp,
+  verifyOtp,
+  completeSignup,
+  authCheck,
+  googleSignup,
+} from "@/redux/features/authThunk";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -24,14 +30,14 @@ const RegisterPage = () => {
   // Load Google Identity Services script
   useEffect(() => {
     const loadGoogleScript = () => {
-      if (document.getElementById('google-identity-script')) {
+      if (document.getElementById("google-identity-script")) {
         return Promise.resolve();
       }
 
       return new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.id = 'google-identity-script';
-        script.src = 'https://accounts.google.com/gsi/client';
+        const script = document.createElement("script");
+        script.id = "google-identity-script";
+        script.src = "https://accounts.google.com/gsi/client";
         script.async = true;
         script.defer = true;
         script.onload = resolve;
@@ -53,7 +59,7 @@ const RegisterPage = () => {
         }
       })
       .catch((error) => {
-        console.error('Failed to load Google Identity Services:', error);
+        console.error("Failed to load Google Identity Services:", error);
       });
   }, []);
 
@@ -102,18 +108,17 @@ const RegisterPage = () => {
   const handleCompleteSignup = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
+
     try {
       const result = await dispatch(completeSignup(formData)).unwrap();
       await dispatch(authCheck()).unwrap();
-      
+
       toast.success("Account created successfully!");
       navigate(
-        result.user.role === 'seeker' 
-          ? '/seeker/dashboard/home' 
-          : '/expert/dashboard/home'
+        result.user.role === "seeker"
+          ? "/seeker/dashboard/home"
+          : "/expert/dashboard/home"
       );
-      
     } catch (error) {
       toast.error(error.message || "Registration failed");
     } finally {
@@ -144,14 +149,13 @@ const RegisterPage = () => {
     try {
       const result = await dispatch(googleSignup(response.credential)).unwrap();
       await dispatch(authCheck()).unwrap();
-      
+
       toast.success("Google signup successful!");
       navigate(
-        result.user.role === 'seeker' 
-          ? '/seeker/dashboard/home' 
-          : '/expert/dashboard/home'
+        result.user.role === "seeker"
+          ? "/seeker/dashboard/home"
+          : "/expert/dashboard/home"
       );
-      
     } catch (error) {
       toast.error(error.message || "Google signup failed");
     } finally {
@@ -162,7 +166,9 @@ const RegisterPage = () => {
   // Function to trigger Google Sign-In
   const handleGoogleLogin = () => {
     if (!window.google || !window.google.accounts) {
-      toast.error("Google Sign-In is not available. Please refresh and try again.");
+      toast.error(
+        "Google Sign-In is not available. Please refresh and try again."
+      );
       return;
     }
 
@@ -170,13 +176,16 @@ const RegisterPage = () => {
       // Show the Google One Tap prompt
       window.google.accounts.id.prompt((notification) => {
         if (notification.isNotDisplayed()) {
-          console.log('Google One Tap not displayed:', notification.getNotDisplayedReason());
+          console.log(
+            "Google One Tap not displayed:",
+            notification.getNotDisplayedReason()
+          );
           // Fallback: you can implement a custom popup here if needed
           toast.info("Please allow popups and try again, or use email signup.");
         }
       });
     } catch (error) {
-      console.error('Google Sign-In error:', error);
+      console.error("Google Sign-In error:", error);
       toast.error("Google Sign-In failed. Please try again.");
     }
   };
@@ -184,9 +193,12 @@ const RegisterPage = () => {
   return (
     <div className="flex flex-col gap-6 items-center pt-16 h-screen max-w-md mx-auto px-4">
       <h1 className="text-2xl pt-14 text-center">Sign up. It's free!</h1>
-      
+
       {step === 1 && (
-        <form onSubmit={handleSendOtp} className="flex flex-col gap-4 w-full max-w-92">
+        <form
+          onSubmit={handleSendOtp}
+          className="flex flex-col gap-4 w-full max-w-92"
+        >
           <Input
             name="email"
             onChange={handleChange}
@@ -207,11 +219,14 @@ const RegisterPage = () => {
       )}
 
       {step === 2 && (
-        <form onSubmit={handleVerifyOtp} className="flex flex-col gap-4 w-full max-w-92">
+        <form
+          onSubmit={handleVerifyOtp}
+          className="flex flex-col gap-4 w-full max-w-92"
+        >
           <p className="text-center text-sm">
             We've sent a 6-digit OTP to {formData.email}
           </p>
-          
+
           <Input
             name="otp"
             onChange={(e) => setOtp(e.target.value)}
@@ -231,7 +246,7 @@ const RegisterPage = () => {
             >
               Back
             </Button>
-            
+
             <Button
               variant="colored"
               type="submit"
@@ -244,7 +259,7 @@ const RegisterPage = () => {
 
           <p className="text-center text-sm">
             Didn't receive OTP?{" "}
-            <button 
+            <button
               type="button"
               onClick={handleResendOtp}
               className="text-foreground cursor-pointer underline"
@@ -257,7 +272,10 @@ const RegisterPage = () => {
       )}
 
       {step === 3 && (
-        <form onSubmit={handleCompleteSignup} className="flex flex-col gap-4 w-full max-w-92">
+        <form
+          onSubmit={handleCompleteSignup}
+          className="flex flex-col gap-4 w-full max-w-92"
+        >
           <Input
             name="name"
             onChange={handleChange}
@@ -266,7 +284,7 @@ const RegisterPage = () => {
             placeholder="Name"
             className="h-12 placeholder:text-destructive w-full"
           />
-          
+
           <Input
             name="password"
             onChange={handleChange}
@@ -311,15 +329,15 @@ const RegisterPage = () => {
             {googleLoading ? (
               <div className="w-5 h-5 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
             ) : (
-              <img 
-                src="https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp" 
-                alt="Google" 
-                className="w-5" 
+              <img
+                src="https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp"
+                alt="Google"
+                className="w-5"
               />
             )}
             <p>{googleLoading ? "Signing up..." : "Sign up with Google"}</p>
           </Button>
-          
+
           <Button
             variant="outline"
             className="h-10 w-full flex items-center justify-center gap-2"
@@ -331,9 +349,9 @@ const RegisterPage = () => {
 
       <p className="text-destructive text-sm py-10 text-center">
         Already have an account?{" "}
-        <span 
+        <span
           className="text-foreground cursor-pointer hover:underline"
-          onClick={() => navigate('/login')}
+          onClick={() => navigate("/login")}
         >
           Log In
         </span>

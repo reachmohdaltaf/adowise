@@ -402,6 +402,50 @@ export const GoogleSignup = async (req, res) => {
   }
 };
 
+export const GoogleLogin = async (req, res) => {
+  try {
+    const { credential } = req.body;
+
+    const ticket = await client.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+    const { email } = payload;
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found. Please sign up first." });
+    }
+
+    // Create token
+    const token = generateToken(user._id);
+
+    // Set cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    const { password, ...userWithoutPassword } = user.toObject();
+
+    res.status(200).json({
+      message: "Google login successful",
+      user: userWithoutPassword,
+    });
+
+  } catch (error) {
+    console.error("GoogleLogin error:", error);
+    res.status(500).json({ error: "Google login failed" });
+  }
+};
+
+
 export const checkAuth = (req, res) => {
   res.status(200).json(req.user);
 };
+

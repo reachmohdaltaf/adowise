@@ -7,7 +7,8 @@ import {
   verifyOtp, 
   completeSignup,
   resendOtp, 
-  GoogleSignup
+  GoogleSignup,
+  GoogleLogin
 } from '../controllers/auth.controller.js';
 import authMiddleware from '../middleware/auth.middleware.js';
 
@@ -26,5 +27,6 @@ router.get('/me', authMiddleware, checkAuth);
 
 //Google Auth
 router.post('/google-signup', GoogleSignup)
+router.post('/google-login', GoogleLogin)
 
 export default router;
