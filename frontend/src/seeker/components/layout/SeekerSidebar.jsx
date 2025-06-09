@@ -152,7 +152,7 @@ const SeekerSidebar = () => {
                </Button>
        
 
-        <Link onClick={handleLogout} to="/login">
+        <Link onClick={handleLogout} >
           <Button
             size="lg"
             className="flex gap-4 mb-9 mt-20 rounded-r-none rounded-l-2xl justify-start w-full"
