@@ -192,7 +192,7 @@ const RegisterPage = () => {
             />
 
             <Button
-              variant="default"
+              variant="colored"
               className="h-12 w-full flex items-center justify-center"
               disabled={loading}
               isLoading={loading}
@@ -302,7 +302,7 @@ const RegisterPage = () => {
           />
 
           <Button
-            variant="default"
+            variant="colored"
             className="h-12 w-full flex items-center justify-center"
             disabled={loading}
             isLoading={loading}

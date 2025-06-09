@@ -152,10 +152,11 @@ const LoginPage = () => {
 
         {/* Google Sign-In Button will render here */}
         <div ref={googleButtonRef} className="w-full  mb-2">
-          {googleLoading && (
-            <div className="w-5 h-5 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
-          )}
-        </div>
+  {googleLoading && (
+    <div className="w-5 h-5 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+  )}
+</div>
+
 
         {/* LinkedIn button (your custom button) */}
         <Button variant="outline" className="h-10 w-full flex items-center justify-center gap-2">
