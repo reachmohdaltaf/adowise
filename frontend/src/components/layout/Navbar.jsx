@@ -71,7 +71,7 @@ const Navbar = () => {
           <button
             onClick={() => setSidebarOpen(false)}
             aria-label="Close menu"
-            className="p-2 rounded-md focus:outline-none focus:ring-2 "
+            className="p-2 rounded-md  "
           >
             <X className="w-6 h-6 " />
           </button>
@@ -80,34 +80,34 @@ const Navbar = () => {
         <nav className="flex flex-col p-4 gap-4">
           <Button
             variant="ghost"
-            className="text-left"
+            className="text-left py-6"
             onClick={() => setSidebarOpen(false)}
           >
             Explore
           </Button>
           <Button
             variant="ghost"
-            className="text-left"
+            className="text-left py-6 "
             onClick={() => setSidebarOpen(false)}
           >
-            Expert
+            Become Expert
           </Button>
           <Button
             variant="ghost"
-            className="text-left"
+            className="text-left py-6 "
             onClick={() => setSidebarOpen(false)}
           >
             Send DM
           </Button>
 
           <Link to="/login" onClick={() => setSidebarOpen(false)}>
-            <Button variant="outline" className="w-full">
+            <Button variant="outline" className="w-full py-6">
               Login
             </Button>
           </Link>
 
           <Link to="/register" onClick={() => setSidebarOpen(false)}>
-            <Button className="w-full">Sign Up</Button>
+            <Button variant={"colored"} className="w-full py-6">Sign Up</Button>
           </Link>
         </nav>
       </aside>
