@@ -55,7 +55,7 @@ const SeekerNavbar = () => {
         className="logo flex items-center gap-1"
       >
         <img
-          src="/logo.png"
+          src="/logo2.png"
           className="h-8 scale-98 hover:scale-100 transition cursor-pointer"
           alt="logo"
         />

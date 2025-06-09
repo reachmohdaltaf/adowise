@@ -26,7 +26,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6 items-center py-20 h-screen px-4">
+    <div className="flex  flex-col gap-6 items-center pt-10 h-screen px-4">
       <h1 className="text-2xl pt-10">Log in</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full max-w-92">
         <Input

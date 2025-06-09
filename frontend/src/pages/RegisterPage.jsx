@@ -100,7 +100,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6 items-center py-20 h-screen max-w-md mx-auto px-4">
+    <div className="flex flex-col gap-6 items-center pt-10 h-screen max-w-md mx-auto px-4">
       <h1 className="text-2xl pt-14 text-center">Sign up. It's free!</h1>
       
       {step === 1 && (

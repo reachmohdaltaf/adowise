@@ -30,7 +30,7 @@ const Layout = () => {
       </div>
       
       {/* Main Content Area */}
-      <div className='pt-14 min-h-screen'> {/* Added min-h-screen */}
+      <div className=' min-h-screen'> {/* Added min-h-screen */}
         <Outlet/>
       </div>
       
