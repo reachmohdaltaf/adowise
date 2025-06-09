@@ -1,0 +1,118 @@
+.pozycja {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.srodek {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.cialo {
+  width: 100px;
+  height: 100px;
+  background: #8c7cdc;
+  position: relative;
+  border-radius: 50%;
+  animation: bounce 1s infinite;
+}
+
+.reka {
+  width: 20px;
+  height: 60px;
+  background: #8c7cdc;
+  position: absolute;
+  top: 20px;
+  border-radius: 10px;
+}
+
+.reka:nth-child(1) {
+  left: -25px;
+  transform: rotate(-30deg);
+}
+
+.reka:nth-child(2) {
+  right: -25px;
+  transform: rotate(30deg);
+}
+
+.noga {
+  width: 20px;
+  height: 60px;
+  background: #8c7cdc;
+  position: absolute;
+  bottom: -40px;
+  border-radius: 10px;
+}
+
+.noga:nth-child(3) {
+  left: 15px;
+}
+
+.noga:nth-child(4) {
+  right: 15px;
+}
+
+.glowa {
+  width: 60px;
+  height: 60px;
+  background: #8c7cdc;
+  border-radius: 50%;
+  position: absolute;
+  top: -40px;
+  left: 20px;
+}
+
+.oko {
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 20px;
+  left: 25px;
+}
+
+.cien {
+  width: 100px;
+  height: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  bottom: -20px;
+  border-radius: 50%;
+  animation: shadowPulse 1s infinite;
+}
+
+/* Animations */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes shadowPulse {
+  0%, 100% {
+    transform: scaleX(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scaleX(0.8);
+    opacity: 0.7;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

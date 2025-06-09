@@ -15,6 +15,7 @@ const PublicRoutes = ({ user }) => {
       <Route path="chatbot" element={<SeekerChatBot />} />
       <Route path=":username/service/:id" element={<ExpertServiceDetails />} />
 
+
       {/* Layout-wrapped public routes */}
       <Route path="/" element={<Layout />}>
         <Route

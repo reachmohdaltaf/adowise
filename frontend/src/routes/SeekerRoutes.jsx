@@ -21,6 +21,7 @@ import SeekerSentMessages from "../seeker/pages/SeekerSentMessages";
 import ExpertAnsweredMessages from "../seeker/pages/ExpertAnsweredMessages";
 import SeekerMentorPage from "../seeker/pages/SeekerMentorPage";
 import SeekerSearchPage from "../seeker/pages/SeekerSearchPage";
+import PaymentPage from "@/seeker/pages/PaymentPage";
 
 const SeekerRoutes = ({ user }) => {
   return (
@@ -37,6 +38,7 @@ const SeekerRoutes = ({ user }) => {
       >
         <Route path="home" element={<SeekerHomePage />} />
         <Route path="messages" element={<SeekerMessagePage />} />
+<Route path="payment" element={<PaymentPage />} />
         
         {/* Booking Routes */}
         <Route path="bookings" element={<SeekerBookingPage />}>
@@ -54,6 +56,7 @@ const SeekerRoutes = ({ user }) => {
         <Route path="search" element={<SeekerSearchPage />} />
         <Route path="settings" element={<SeekerSettingPage />} />
         <Route path="rewards" element={<SeekerRewardPage />} />
+
         
         {/* Priority DM Routes */}
         <Route path="priority-dm" element={<SeekerPriorityDm />}>
