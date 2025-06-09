@@ -177,17 +177,11 @@ const PaymentPage = () => {
   });
 
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen py-5 ">
       <div className="">
         {/* Header */}
         <div className="mb-6">
-          <Button
-            variant="outline"
-            onClick={() => navigate(-1)}
-            className="mb-4"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" /> Back
-          </Button>
+         
           <h1 className="text-2xl font-bold text-foreground">Complete Your Booking</h1>
         </div>
 
@@ -210,7 +204,7 @@ const PaymentPage = () => {
               </div>
               <div>
                 <h3 className="font-semibold">{bookingData.title}</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-destructive">
                   with {bookingData.expertName}
                 </p>
               </div>
@@ -218,17 +212,17 @@ const PaymentPage = () => {
 
             <div className="grid grid-cols-2 gap-4 pt-4 border-t">
               <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-muted-foreground" />
+                <Calendar className="h-4 w-4 text-destructive" />
                 <div>
                   <p className="text-sm font-medium">Date</p>
-                  <p className="text-sm text-muted-foreground">{formattedDate}</p>
+                  <p className="text-sm text-destructive">{formattedDate}</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-muted-foreground" />
+                <Clock className="h-4 w-4 text-destructive" />
                 <div>
                   <p className="text-sm font-medium">Time</p>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-destructive">
                     {bookingData.selectedTime} ({bookingData.duration} mins)
                   </p>
                 </div>
@@ -250,7 +244,7 @@ const PaymentPage = () => {
               <span>Total Amount</span>
               <span>₹{bookingData.amount}</span>
             </div>
-            <p className="text-sm text-muted-foreground mt-2">
+            <p className="text-sm text-destructive mt-2">
               Secure payment powered by Razorpay
             </p>
           </CardContent>
@@ -260,11 +254,10 @@ const PaymentPage = () => {
         <Button
           onClick={handlePayment}
           disabled={isProcessing}
-          className="w-full py-6 text-lg"
+          className="w-full bg-green-700 hover:bg-green-600 py-6 text-lg"
         >
           {isProcessing ? (
             <>
-              <LoadingSpinner className="mr-2 h-4 w-4" />
               Processing...
             </>
           ) : (
@@ -273,7 +266,7 @@ const PaymentPage = () => {
         </Button>
 
         {/* Terms */}
-        <p className="text-xs text-muted-foreground text-center mt-4">
+        <p className="text-xs text-destructive text-center mt-4">
           By proceeding with payment, you agree to our terms of service and privacy policy.
         </p>
       </div>

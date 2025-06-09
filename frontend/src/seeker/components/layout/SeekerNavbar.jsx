@@ -62,12 +62,12 @@ const SeekerNavbar = () => {
       </Link>
 
       <div className="labels flex items-center gap-2 md:gap-6">
-        <div className="flex gap-4 items-center">
-          <div className="search hidden md:flex items-center border rounded-3xl px-4">
+        <div className="flex gap-4  items-center">
+          <div className="search hidden border-black  md:flex items-center border rounded-3xl px-4">
             <Input
-              placeholder="Search"
-              className="w-40 border-none ring-0 outline-none placeholder:text-foreground
-              focus:w-60 transition-all duration-500 ease-in-out"
+              placeholder="Find by skill, name, or interest..."
+              className="w-60 shadow-none border-none ring-0 outline-none 
+              focus:w-68 transition-all duration-500 ease-in-out"
             />
             <SendHorizonal
               size={20}
