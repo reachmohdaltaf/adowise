@@ -69,7 +69,7 @@ const LoginPage = () => {
       script.onload = () => {
         if (window.google && window.google.accounts) {
           window.google.accounts.id.initialize({
-            client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+            client_id: "321442003050-hj99g82b6e839ktec8vvuv4hu1qhjstr.apps.googleusercontent.com",
             callback: handleGoogleLoginCallback,
             auto_select: false,
             cancel_on_tap_outside: true,
