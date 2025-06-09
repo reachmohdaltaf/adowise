@@ -129,17 +129,18 @@ export const DeleteServiceById = async (req, res) => {
 
 export const fetchAllServices = async (req, res) => {
   try {
-    // Get page and limit from query params with default values
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 6;
-
     const skip = (page - 1) * limit;
 
-    // Get total count (optional, useful for frontend to know when to stop)
-    const total = await Service.countDocuments({});
+    const currentUserId = req.user?._id;
 
-    // Fetch paginated services with expert info populated
-    const services = await Service.find({})
+    // Exclude services where expertId equals the current user's ID
+    const query = currentUserId ? { expertId: { $ne: currentUserId } } : {};
+
+    const total = await Service.countDocuments(query);
+
+    const services = await Service.find(query)
       .skip(skip)
       .limit(limit)
       .populate("expertId", "name username email image profession about skills");
@@ -155,4 +156,5 @@ export const fetchAllServices = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
 
