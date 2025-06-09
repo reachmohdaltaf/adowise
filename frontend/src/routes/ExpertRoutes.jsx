@@ -31,6 +31,7 @@ import UpdateServicePage from "../expert/pages/UpdateServicePage";
 import ExpertSchedulePage from "../expert/pages/ExpertSchedulePage";
 import ExpertCalendarPage from "../expert/pages/ExpertCalendarPage";
 import ExpertAvailabilityPage from "../expert/pages/ExpertAvailabilityPage";
+import PostToLinkedinPage from "@/expert/pages/PostToLinkedinPage";
 
 const ExpertRoutes = ({ user }) => {
   return (
@@ -46,7 +47,8 @@ const ExpertRoutes = ({ user }) => {
         }
       >
         <Route path="home" element={<ExpertHomePage />} />
-        
+        <Route path="post-to-linkedin" element={<PostToLinkedinPage />} />
+
         {/* Service Management Routes */}
         <Route path="services" element={<ExpertServicePage />}>
           <Route index element={<Navigate to="1-to-1" replace />} />
@@ -55,7 +57,7 @@ const ExpertRoutes = ({ user }) => {
           <Route path="webinar" element={<WebinarServicePage />} />
           <Route path="update/:serviceId" element={<UpdateServicePage />} />
         </Route>
-        
+
         {/* Service Creation Routes */}
         <Route path="create/service" element={<CreateServicePage />}>
           <Route index element={<Navigate to="1-to-1" replace />} />
@@ -63,37 +65,37 @@ const ExpertRoutes = ({ user }) => {
           <Route path="dm" element={<CreateDmPage />} />
           <Route path="webinar" element={<CreateWebinarPage />} />
         </Route>
-        
+
         <Route path="create-service" element={<CreateServciePage />} />
         <Route path="analytics" element={<ExpertAnalyticsPage />} />
         <Route path="testimonials" element={<ExpertTestimonialsPage />} />
-        
+
         {/* Booking Routes */}
         <Route path="bookings" element={<ExpertBookingPage />}>
           <Route index element={<Navigate to="upcoming" replace />} />
           <Route path="upcoming" element={<ExpertUpcomingBooking />} />
           <Route path="completed" element={<ExpertCompletedBooking />} />
         </Route>
-        
+
         <Route path="payments" element={<ExpertPaymentsPage />} />
-        
+
         {/* Priority DM Routes */}
         <Route path="priority-dm" element={<ExpertPriorityDm />}>
           <Route index element={<Navigate to="pending" replace />} />
           <Route path="pending" element={<SeekerPendingMessages />} />
           <Route path="answered-by-expert" element={<ExpertAnsweredSeeker />} />
         </Route>
-        
+
         <Route path="settings" element={<ExpertSettingPage />} />
         <Route path="page/:userId" element={<ExpertLeadPage />} />
-        
+
         {/* Availability Routes */}
         <Route path="availability" element={<ExpertAvailabilityPage />}>
           <Route index element={<Navigate to="calendar" replace />} />
           <Route path="calendar" element={<ExpertCalendarPage />} />
           <Route path="schedule" element={<ExpertSchedulePage />} />
         </Route>
-        
+
         <Route path="profile/:id" element={<ExpertProfile />} />
         <Route path="messages" element={<ExpertMessagePage />} />
       </Route>

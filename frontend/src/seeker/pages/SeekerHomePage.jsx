@@ -35,9 +35,9 @@ const SeekerHomePage = () => {
   // Top mentors data
   const topMentors = [
     {
-      name: "Mohd Altaf",
-      title: "Software Engineer @adowise",
-      image: "https://avatars.githubusercontent.com/u/178491093?v=4",
+      name: "Rohit Verma",
+      title: "Data Scientist @Amazon",
+      image: "https://picsum.photos/200/300",
     },
     {
       name: "Rohit Verma",
@@ -64,7 +64,7 @@ const SeekerHomePage = () => {
          
 
           {/* // card content  */}
-          <Card className=" mt-6 py-6   bg- rounded-lg   gap-5 items-start w-full">
+          <Card className=" mt-6 py-10    rounded-lg   gap-5 items-start w-full">
           <CardContent className={'px-2 flex flex-row  items-center md:w-full  justify-between'}>
              <div className="flex flex-col   gap-5">
              <p className="text-4xl md:text-5xl md:w-92 font-normal"><span className="text-primary font-semibold">Define</span> your path and let us guide <br /> you</p>
@@ -110,7 +110,7 @@ const SeekerHomePage = () => {
             >
               {topMentors.map((mentor, index) => (
                 <div key={index} className="flex-shrink-0 snap-start">
-                  <Card className="rounded-xl bg-[url('/logo66.png')] bg-cover bg-center shadow-md gap-2 py-3 px-3 w-60 text-center">
+                  <Card className="rounded-xl bg-[url('/logo66.png')]   bg-cover bg-center shadow-md gap-2 py-3 px-3 w-60 text-center">
                     {/* Availability and Trophy */}
                     <div className="flex justify-between items-start">
                       {/* <Button
@@ -120,7 +120,7 @@ const SeekerHomePage = () => {
                         <BsLightning className="mr-1 h-3 w-3" /> Available
                       </Button> */}
                       <div></div>
-                      <span className="text-white text-xl">
+                      <span className=" text-white text-xl">
                         <HiTrophy size={28} />
                       </span>
                     </div>
@@ -133,7 +133,7 @@ const SeekerHomePage = () => {
                     />
 
                     {/* Name and Rating */}
-                    <p className="text-base font-semibold text-background">
+                    <p className="text-white font-semibold">
                       {mentor.name} 
                     </p>
 

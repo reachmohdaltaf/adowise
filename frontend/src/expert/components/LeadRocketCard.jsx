@@ -68,9 +68,10 @@ useEffect(() => {
         />
       ))}
 
-      <Link className="text-sm underline underline-offset-4 mt-2">
-        Add your page to LinkedIn
-      </Link>
+     <Link to="/expert/dashboard/post-to-linkedin" className="text-sm underline underline-offset-4 mt-2">
+  Add your page to LinkedIn
+</Link>
+
     </Card>
   );
 };

@@ -223,23 +223,31 @@ import React from 'react'
             Learn from the Best in the Field
           </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full max-w-7xl">
-            {[1, 2, 3, 4].map((mentor) => (
-              <Card
-                key={mentor}
-                className="p-6 rounded-2xl border border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 shadow-md"
-              >
-                {/* Example mentor content */}
-                <h4 className="text-xl font-semibold mb-2">Mentor Name {mentor}</h4>
-                <p className="text-gray-600 dark:text-gray-300 mb-4 italic">
-                  Expert in Full Stack Development
-                </p>
-                <p className="text-gray-800 dark:text-gray-100">
-                  Helping you master coding with practical advice and guidance.
-                </p>
-              </Card>
-            ))}
-          </div>
+         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full max-w-7xl">
+  {[1, 2, 3, 4].map((mentor) => (
+    <Card
+      key={mentor}
+      className="p-6 rounded-2xl border border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 shadow-md flex flex-col items-center text-center"
+    >
+      {/* 👤 Profile Image */}
+      <img
+        src={`/mentors/mentor-${mentor}.jpg`} // <-- update path as per your project
+        alt={`Mentor ${mentor}`}
+        className="w-20 h-20 rounded-full object-cover mb-4"
+      />
+
+      {/* Mentor Info */}
+      <h4 className="text-xl font-semibold mb-1">Mentor Name {mentor}</h4>
+      <p className="text-gray-600 dark:text-gray-300 italic text-sm mb-2">
+        Expert in Full Stack Development
+      </p>
+      <p className="text-gray-800 dark:text-gray-100 text-sm">
+        Helping you master coding with practical advice and guidance.
+      </p>
+    </Card>
+  ))}
+</div>
+
         </section>
       </div>
     )

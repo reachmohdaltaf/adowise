@@ -66,7 +66,7 @@ const Navbar = () => {
       >
         <div className="flex items-center justify-between p-4 border-b">
           <Link to="/" onClick={() => setSidebarOpen(false)}>
-            <img src="/logo.png" className="h-8" alt="Logo" />
+            <img src="/logo-g-4.png" className="h-8" alt="Logo" />
           </Link>
           <button
             onClick={() => setSidebarOpen(false)}
