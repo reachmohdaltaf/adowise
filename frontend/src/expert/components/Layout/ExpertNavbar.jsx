@@ -58,7 +58,7 @@ const ExpertNavbar = () => {
     }, [isOpen]);
 
   return (
-    <nav className="h-12 flex md:border-none px-3 md:px-16 bg-background items-center justify-between">
+    <nav className="h-14 flex md:border-none border-b border-gray-200  px-3 md:px-16 bg-background items-center justify-between">
       <Link to={'/expert/dashboard/home'} className="logo">
         <img
           src={"/logoExpert.png"}
