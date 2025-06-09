@@ -1,4 +1,4 @@
-// PaymentPage.jsx
+// PaymentPage.jsx - Fixed version
 
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -112,13 +112,13 @@ const PaymentPage = () => {
             calendarId: bookingData.calendarId,
             seekerId: user._id,
             expertId: bookingData.expertId,
-            scheduleTitle: "Default Schedule",
+            scheduleTitle: bookingData.title, // FIXED: Use the actual service title instead of "Default Schedule"
             startTime: startTime.toISOString(),
             endTime: endTime.toISOString(),
             meetingLink: "https://meet.google.com/abc-defg-hij",
             locationType: "googleMeet",
             customLocation: "",
-            notes: "Booking created via frontend",
+            notes: `Booking for ${bookingData.title} with ${bookingData.expertName}`, // Enhanced notes
             paymentStatus: "pending",
             razorpayOrderId: response.razorpay_order_id,
             razorpayPaymentId: response.razorpay_payment_id,
