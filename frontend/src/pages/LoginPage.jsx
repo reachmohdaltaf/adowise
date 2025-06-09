@@ -1,13 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import {
-  loginUser,
-  googleLogin,
-  authCheck,
-} from "@/redux/features/authThunk";
-import { useState, useEffect } from "react";
+import { loginUser, googleLogin, authCheck } from "@/redux/features/authThunk";
+import { useState, useEffect, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { BsGoogle, BsLinkedin } from "react-icons/bs";
+import { BsLinkedin } from "react-icons/bs";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -16,17 +12,16 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const { error, loading } = useSelector((state) => state.auth);
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [googleLoading, setGoogleLoading] = useState(false);
+
+  const googleButtonRef = useRef(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser(formData));
   };
@@ -34,6 +29,7 @@ const LoginPage = () => {
   const handleGoogleLoginCallback = async (response) => {
     if (!response.credential) {
       toast.error("Google sign-in failed");
+      setGoogleLoading(false);
       return;
     }
 
@@ -56,49 +52,52 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
+    // Load Google SDK script if not already loaded
     const loadGoogleScript = () => {
-      if (document.getElementById("google-identity-script")) return;
+      if (document.getElementById("google-identity-script")) {
+        return Promise.resolve();
+      }
 
-      const script = document.createElement("script");
-      script.id = "google-identity-script";
-      script.src = "https://accounts.google.com/gsi/client";
-      script.async = true;
-      script.defer = true;
-      document.head.appendChild(script);
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.id = "google-identity-script";
+        script.src = "https://accounts.google.com/gsi/client";
+        script.async = true;
+        script.defer = true;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    };
 
-      script.onload = () => {
+    loadGoogleScript()
+      .then(() => {
         if (window.google && window.google.accounts) {
           window.google.accounts.id.initialize({
-            client_id: "321442003050-hj99g82b6e839ktec8vvuv4hu1qhjstr.apps.googleusercontent.com",
+            client_id:
+              "321442003050-hj99g82b6e839ktec8vvuv4hu1qhjstr.apps.googleusercontent.com",
             callback: handleGoogleLoginCallback,
             auto_select: false,
             cancel_on_tap_outside: true,
           });
+
+          if (googleButtonRef.current) {
+            // Clear container before rendering
+            googleButtonRef.current.innerHTML = "";
+
+            window.google.accounts.id.renderButton(googleButtonRef.current, {
+              theme: "outline",
+              size: "large",
+              type: "standard",
+              text: "signin_with",
+            });
+          }
         }
-      };
-    };
-
-    loadGoogleScript();
-  }, []);
-
-  const handleGoogleLogin = () => {
-    if (!window.google || !window.google.accounts) {
-      toast.error("Google Sign-In not ready. Please refresh.");
-      return;
-    }
-
-    try {
-      window.google.accounts.id.prompt((notification) => {
-        if (notification.isNotDisplayed()) {
-          console.log("Google prompt not shown:", notification.getNotDisplayedReason());
-          toast.info("Please allow popups and try again.");
-        }
+      })
+      .catch((error) => {
+        console.error("Failed to load Google Identity Services:", error);
       });
-    } catch (err) {
-      console.error("Google login error:", err);
-      toast.error("Google login failed.");
-    }
-  };
+  }, []); // runs once on mount
 
   return (
     <div className="flex flex-col gap-6 items-center pt-16 h-screen px-4">
@@ -149,29 +148,16 @@ const LoginPage = () => {
           </p>
         </div>
 
-        <p className="text-destructive font-normal text-center text-sm">
-          or log in with
-        </p>
+        <p className="text-destructive font-normal text-center text-sm">or log in with</p>
 
-        {/* Google Login Button */}
-        <Button
-          variant="outline"
-          className="h-10 w-full flex items-center justify-center gap-2"
-          onClick={handleGoogleLogin}
-          disabled={googleLoading}
-        >
-          {googleLoading ? (
+        {/* Google Sign-In Button will render here */}
+        <div ref={googleButtonRef} className="w-full  mb-2">
+          {googleLoading && (
             <div className="w-5 h-5 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
-          ) : (
-            <img
-              src="https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp"
-              alt="Google"
-              className="w-5"
-            />
           )}
-          <p>{googleLoading ? "Signing in..." : "Continue with Google"}</p>
-        </Button>
+        </div>
 
+        {/* LinkedIn button (your custom button) */}
         <Button variant="outline" className="h-10 w-full flex items-center justify-center gap-2">
           <BsLinkedin /> <p>LinkedIn</p>
         </Button>

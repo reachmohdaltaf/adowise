@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { BsLinkedin } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import {
@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 const RegisterPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -27,13 +28,13 @@ const RegisterPage = () => {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
 
-  // Load Google Identity Services script
+  const googleButtonRef = useRef(null);
+
   useEffect(() => {
     const loadGoogleScript = () => {
       if (document.getElementById("google-identity-script")) {
         return Promise.resolve();
       }
-
       return new Promise((resolve, reject) => {
         const script = document.createElement("script");
         script.id = "google-identity-script";
@@ -48,14 +49,23 @@ const RegisterPage = () => {
 
     loadGoogleScript()
       .then(() => {
-        // Initialize Google Sign-In after script loads
         if (window.google && window.google.accounts) {
           window.google.accounts.id.initialize({
-            client_id: "321442003050-hj99g82b6e839ktec8vvuv4hu1qhjstr.apps.googleusercontent.com",
+            client_id:
+              "321442003050-hj99g82b6e839ktec8vvuv4hu1qhjstr.apps.googleusercontent.com",
             callback: handleGoogleSignup,
             auto_select: false,
             cancel_on_tap_outside: true,
           });
+
+          if (googleButtonRef.current) {
+            window.google.accounts.id.renderButton(googleButtonRef.current, {
+              theme: "outline",
+              size: "large",
+              type: "standard",
+              text: "signup_with",
+            });
+          }
         }
       })
       .catch((error) => {
@@ -138,7 +148,6 @@ const RegisterPage = () => {
     }
   };
 
-  // Google Sign-In callback handler
   const handleGoogleSignup = async (response) => {
     if (!response.credential) {
       toast.error("Google sign-in failed. Please try again.");
@@ -163,59 +172,56 @@ const RegisterPage = () => {
     }
   };
 
-  // Function to trigger Google Sign-In
-  const handleGoogleLogin = () => {
-    if (!window.google || !window.google.accounts) {
-      toast.error(
-        "Google Sign-In is not available. Please refresh and try again."
-      );
-      return;
-    }
-
-    try {
-      // Show the Google One Tap prompt
-      window.google.accounts.id.prompt((notification) => {
-        if (notification.isNotDisplayed()) {
-          console.log(
-            "Google One Tap not displayed:",
-            notification.getNotDisplayedReason()
-          );
-          // Fallback: you can implement a custom popup here if needed
-          toast.info("Please allow popups and try again, or use email signup.");
-        }
-      });
-    } catch (error) {
-      console.error("Google Sign-In error:", error);
-      toast.error("Google Sign-In failed. Please try again.");
-    }
-  };
-
   return (
     <div className="flex flex-col gap-6 items-center pt-16 h-screen max-w-md mx-auto px-4">
       <h1 className="text-2xl pt-14 text-center">Sign up. It's free!</h1>
 
       {step === 1 && (
-        <form
-          onSubmit={handleSendOtp}
-          className="flex flex-col gap-4 w-full max-w-92"
-        >
-          <Input
-            name="email"
-            onChange={handleChange}
-            value={formData.email}
-            type="email"
-            placeholder="Email"
-            className="h-12 placeholder:text-destructive w-full"
-          />
+        <>
+          <form
+            onSubmit={handleSendOtp}
+            className="flex flex-col gap-4 w-full max-w-92"
+          >
+            <Input
+              name="email"
+              onChange={handleChange}
+              value={formData.email}
+              type="email"
+              placeholder="Email"
+              className="h-12 placeholder:text-destructive w-full"
+            />
+
+            <Button
+              variant="default"
+              className="h-12 w-full flex items-center justify-center"
+              disabled={loading}
+              isLoading={loading}
+            >
+              Send OTP
+            </Button>
+          </form>
+
+          <p className="text-destructive font-normal text-center text-sm mt-6">
+            or Sign up with
+          </p>
+
+          <div
+            ref={googleButtonRef}
+            className="w-full  mt-2 mb-4"
+          >
+            {googleLoading && (
+              <div className="w-5 h-5 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+            )}
+          </div>
 
           <Button
-            variant="colored"
-            className="h-12 w-full flex items-center justify-center"
-            disabled={loading}
+            variant="outline"
+            className="h-10 w-full flex items-center justify-center gap-2"
+            disabled={googleLoading}
           >
-            {loading ? "Sending OTP..." : "Send OTP"}
+            <BsLinkedin /> <p>LinkedIn</p>
           </Button>
-        </form>
+        </>
       )}
 
       {step === 2 && (
@@ -248,12 +254,13 @@ const RegisterPage = () => {
             </Button>
 
             <Button
-              variant="colored"
+              variant="default"
               type="submit"
               className="h-12"
               disabled={loading}
+              isLoading={loading}
             >
-              {loading ? "Verifying..." : "Verify OTP"}
+              Verify OTP
             </Button>
           </div>
 
@@ -295,11 +302,12 @@ const RegisterPage = () => {
           />
 
           <Button
-            variant="colored"
+            variant="default"
             className="h-12 w-full flex items-center justify-center"
             disabled={loading}
+            isLoading={loading}
           >
-            {loading ? "Creating account..." : "Complete Signup"}
+            Complete Signup
           </Button>
 
           <div className="flex items-start gap-2 mt-3 text-sm">
@@ -312,39 +320,6 @@ const RegisterPage = () => {
             </label>
           </div>
         </form>
-      )}
-
-      {step === 1 && (
-        <>
-          <p className="text-destructive font-normal text-center text-sm">
-            or Sign up with
-          </p>
-
-          <Button
-            variant="outline"
-            className="h-10 w-full flex items-center justify-center gap-2"
-            onClick={handleGoogleLogin}
-            disabled={googleLoading}
-          >
-            {googleLoading ? (
-              <div className="w-5 h-5 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
-            ) : (
-              <img
-                src="https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp"
-                alt="Google"
-                className="w-5"
-              />
-            )}
-            <p>{googleLoading ? "Signing up..." : "Sign up with Google"}</p>
-          </Button>
-
-          <Button
-            variant="outline"
-            className="h-10 w-full flex items-center justify-center gap-2"
-          >
-            <BsLinkedin /> <p>LinkedIn</p>
-          </Button>
-        </>
       )}
 
       <p className="text-destructive text-sm py-10 text-center">
