@@ -6,6 +6,8 @@ import { Calendar } from "../models/calendar.model.js";
 import Otp from "../models/otp.model.js"; // Your OTP model
 import crypto from "crypto";
 import nodemailer from "nodemailer"; // You'll need to install this
+import { OAuth2Client } from 'google-auth-library';
+
 
 dotenv.config();
 
@@ -336,6 +338,67 @@ export const logout = async (req, res) => {
   } catch (error) {
     console.error("Error in logout:", error);
     res.status(500).json({ error: "Internal server error" });
+  }
+};
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+export const GoogleSignup = async (req, res) => {
+  const { credential } = req.body; // this is the Google JWT token from frontend
+
+  try {
+    // Verify token
+    const ticket = await client.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+
+    const { email, name, sub: googleId } = payload;
+
+    // Check if user exists
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      // Create unique username
+      const prefix = name.substring(0, 3).toLowerCase();
+      let username;
+      do {
+        const randomNum = Math.floor(Math.random() * 1000);
+        username = `${prefix}${randomNum}`;
+      } while (await User.findOne({ username }));
+
+      // Create new user
+      user = await User.create({
+        name,
+        email,
+        googleId,
+        username,
+      });
+    }
+
+    // Create token
+    const token = generateToken(user._id);
+
+    // Set cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    // Return user (without password)
+    const { password, ...userWithoutPassword } = user.toObject();
+
+    res.status(200).json({
+      message: "Google login/signup successful",
+      user: userWithoutPassword
+    });
+
+  } catch (error) {
+    console.error("GoogleSignup error:", error);
+    res.status(500).json({ error: "Google authentication failed" });
   }
 };
 

@@ -80,7 +80,7 @@ const LoginPage = () => {
         </p>
 
         <Button variant="outline" className="h-10 w-full flex items-center justify-center gap-2">
-          <BsGoogle /> <p>Google</p>
+         <img src="https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp=s96-fcrop64=1,00000000ffffffff-rw" alt="" className="w-5" /> <p>Continue with Google</p>
         </Button>
         <Button variant="outline" className="h-10 w-full flex items-center justify-center gap-2">
           <BsLinkedin /> <p>LinkedIn</p>
