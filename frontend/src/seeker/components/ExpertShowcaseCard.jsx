@@ -28,7 +28,7 @@ const ExpertShowcaseCard = ({
           <div className="flex-1 min-w-0 flex flex-col justify-between">
             <div>
               {/* Rating and Duration */}
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex items-center gap-2 mb-1">
                 <div className="flex items-center gap-1 bg-primary/60 expert text-foreground px-1 rounded text-sm font-medium">
                   <Star size={10} fill="currentColor" />
                   <span className="text-xs">{rating || '3.5'}</span>
@@ -37,7 +37,7 @@ const ExpertShowcaseCard = ({
               </div>
 
               {/* Title */}
-            <h3 className="text-lg sm:text-sm lg:text-sm xl:text-lg h-12 font-semibold text-[#383838] leading-tight mb-2 line-clamp-2">
+            <h3 className="text-[16px] sm:text-sm lg:text-sm xl:text-lg h-12 font-semibold text-[#383838] leading-tight mb-2 line-clamp-2">
 
                 {title}
               </h3>
