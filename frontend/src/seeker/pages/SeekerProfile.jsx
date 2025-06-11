@@ -67,18 +67,21 @@ const SeekerProfile = () => {
     };
 
     try {
-      if (selectedImage) {
-        // Compress the image
-        const compressedFile = await imageCompression(selectedImage, {
-          maxSizeMB: 0.2,
-          maxWidthOrHeight: 800,
-          useWebWorker: true,
-        });
+     if (selectedImage) {
+  console.log("Original size:", (selectedImage.size / 1024).toFixed(2), "KB");
 
-        // Convert to base64
-        const base64 = await imageCompression.getDataUrlFromFile(compressedFile);
-        profileData.image = base64;
-      }
+  const compressedFile = await imageCompression(selectedImage, {
+    maxSizeMB: 0.2,
+    maxWidthOrHeight: 800,
+    useWebWorker: true,
+  });
+
+  console.log("Compressed size:", (compressedFile.size / 1024).toFixed(2), "KB");
+
+  const base64 = await imageCompression.getDataUrlFromFile(compressedFile);
+  profileData.image = base64;
+}
+
 
       const response = await dispatch(updateProfile(profileData));
 
