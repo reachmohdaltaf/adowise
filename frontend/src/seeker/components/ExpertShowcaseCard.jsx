@@ -16,7 +16,7 @@ const ExpertShowcaseCard = ({
       <div className="p-2 pb-3 flex flex-col justify-between flex-1">
         <div className="flex gap-3">
           {/* Profile Image */}
-          <div className="w-16 h-16 flex-shrink-0">
+          <div className="w-14 h-14 md:w-16 md:h-16 flex-shrink-0">
             <img
               src={image}
               alt="Profile"
