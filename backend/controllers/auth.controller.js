@@ -375,6 +375,11 @@ export const GoogleSignup = async (req, res) => {
         googleId,
         username,
       });
+
+      // Create calendar for the new Google user
+      await Calendar.create({
+        userId: user._id,
+      });
     }
 
     // Create token
