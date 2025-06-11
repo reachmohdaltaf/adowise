@@ -43,7 +43,7 @@ const ExpertShowcaseCard = ({
               </h3>
 
               {/* Description */}
-              <p className="text-[#383838] text-xs font-normal leading-relaxed mb-2 line-clamp-2">
+              <p className="text-[#383838] text-xs font-normal h-10 leading-relaxed mb-2 line-clamp-2">
                 {description}
               </p>
 
