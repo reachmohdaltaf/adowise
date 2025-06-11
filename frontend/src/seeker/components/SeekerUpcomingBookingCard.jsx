@@ -144,9 +144,8 @@ const Demo = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <div className="max-w-md mx-auto">
-        <h1 className="text-2xl font-bold mb-6 text-center">Booking Card Demo</h1>
+    <div className="">
+      <div className="">
         <SeekerUpcomingBookingCard {...sampleBooking} />
       </div>
     </div>
