@@ -7,6 +7,7 @@ import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import ExpertServiceDetails from "../seeker/pages/ExpertServiceDetailPage";
 import SeekerChatBot from "../seeker/pages/SeekerChatBot";
+import CalendarBookingPage from "@/seeker/pages/CalendarBookingPage";
 
 const PublicRoutes = ({ user }) => {
   return (
@@ -14,7 +15,9 @@ const PublicRoutes = ({ user }) => {
       {/* Standalone public routes */}
       <Route path="chatbot" element={<SeekerChatBot />} />
       <Route path=":username/service/:id" element={<ExpertServiceDetails />} />
-
+      {/* Fixed: Use a proper route path for calendar booking */}
+<Route path="/calendar/booking/:serviceId" element={<CalendarBookingPage />} />
+      
 
       {/* Layout-wrapped public routes */}
       <Route path="/" element={<Layout />}>

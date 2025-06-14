@@ -11,7 +11,7 @@ import SeekerWhatsNew from "../seeker/pages/SeekerWhatsNew";
 import SeekerProfile from "../seeker/pages/SeekerProfile";
 import SeekerUpcomingBooking from "../seeker/pages/SeekerUpcomingBooking";
 import { SeekerCompletedBooking } from "../seeker/pages/SeekerCompletedBooking";
-import SeekerCalendarPage from "../seeker/pages/SeekerCalendarPage";
+import SeekerCalendarPage from "../seeker/pages/CalendarBookingPage";
 import SeekerNotificationsPage from "../seeker/pages/SeekerNotificationsPage";
 import SeekerAiSearch from "../seeker/pages/SeekerAiSearch";
 import SeekerSettingPage from "../seeker/pages/SeekerSettingPage";
@@ -38,15 +38,15 @@ const SeekerRoutes = ({ user }) => {
       >
         <Route path="home" element={<SeekerHomePage />} />
         <Route path="messages" element={<SeekerMessagePage />} />
-<Route path="payment" element={<PaymentPage />} />
-        
+        <Route path="payment" element={<PaymentPage />} />
+
         {/* Booking Routes */}
         <Route path="bookings" element={<SeekerBookingPage />}>
           <Route index element={<Navigate to="upcoming" replace />} />
           <Route path="upcoming" element={<SeekerUpcomingBooking />} />
           <Route path="completed" element={<SeekerCompletedBooking />} />
         </Route>
-        
+
         <Route path="whatsnew" element={<SeekerWhatsNew />} />
         <Route path="mentors" element={<SeekerMentorPage />} />
         <Route path="profile/:id" element={<SeekerProfile />} />
@@ -57,12 +57,14 @@ const SeekerRoutes = ({ user }) => {
         <Route path="settings" element={<SeekerSettingPage />} />
         <Route path="rewards" element={<SeekerRewardPage />} />
 
-        
         {/* Priority DM Routes */}
         <Route path="priority-dm" element={<SeekerPriorityDm />}>
           <Route index element={<Navigate to="sent-messages" replace />} />
           <Route path="sent-messages" element={<SeekerSentMessages />} />
-          <Route path="answered-by-experts" element={<ExpertAnsweredMessages />} />
+          <Route
+            path="answered-by-experts"
+            element={<ExpertAnsweredMessages />}
+          />
         </Route>
       </Route>
     </React.Fragment>

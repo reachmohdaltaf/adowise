@@ -40,7 +40,7 @@ const SeekerHomePage = () => {
         <CardHeader className="px-0">
           <FindExpertCard user={user} />
 
-          <Card className="h-80 w-full rounded-xl text-foreground px-2 d:p-6 flex flex-col justify-between relative overflow-hidden border border-primary">
+          <Card className="h-80 w-full rounded-xl text-foreground  flex flex-col justify-between relative overflow-hidden border border-primary">
       <CardContent className="flex flex-col gap-4 h-full relative z-10">
         {/* Top: Icon and Title */}
         <div className="flex items-center gap-3">
@@ -67,7 +67,7 @@ const SeekerHomePage = () => {
           <Button className="px-4 py-2 rounded-md shadow-md">
             Explore Rewards <Sparkles className="ml-2 h-4 w-4" />
           </Button>
-         
+
         </div>
       </CardContent>
 

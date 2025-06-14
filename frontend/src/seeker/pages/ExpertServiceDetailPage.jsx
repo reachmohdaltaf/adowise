@@ -7,11 +7,8 @@ import { fetchServiceById } from "@/redux/features/serviceThunk";
 import { Button } from "@/components/ui/button";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { ArrowLeft, Timer } from "lucide-react";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import SeekerCalendarPage from "./SeekerCalendarPage";
+import { ArrowLeft, Timer, Calendar } from "lucide-react";
 import { getCalendarByUserId } from "@/redux/features/calendarThunk";
-import { generateTimeSlots, isDateAvailable } from "@/utils/timeSlot";
 
 const ExpertServiceDetailPage = () => {
   const dispatch = useDispatch();
@@ -21,11 +18,6 @@ const ExpertServiceDetailPage = () => {
   const { service, loading, error } = useSelector((state) => state.service);
   const { calendar } = useSelector((state) => state.calendar);
   const { user } = useSelector((state) => state.auth);
-
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedTime, setSelectedTime] = useState("");
-
-  const dynamicTimeSlots = generateTimeSlots(calendar, selectedDate);
 
   useEffect(() => {
     if (id) {
@@ -45,28 +37,19 @@ const ExpertServiceDetailPage = () => {
     console.log("Service data:", service);
   }, [calendar, user, service]);
 
-  useEffect(() => {
-    setSelectedTime("");
-  }, [selectedDate]);
-
   const handleProceedToPayment = () => {
     if (!user) {
       alert("Please log in to book a service.");
       return;
     }
 
-    if (!selectedDate || !selectedTime) {
-      alert("Please select both date and time.");
-      return;
-    }
-
-    // Navigate to payment page with booking details
+    // For DM services, navigate directly to payment
     const bookingData = {
       serviceId: service._id,
       expertId: service.expertId._id,
-      calendarId: calendar._id,
-      selectedDate: selectedDate.toISOString(),
-      selectedTime: selectedTime,
+      calendarId: calendar?._id,
+      selectedDate: new Date().toISOString(),
+      selectedTime: "DM",
       amount: service.amount,
       duration: service.duration,
       title: service.title,
@@ -75,8 +58,34 @@ const ExpertServiceDetailPage = () => {
     };
 
     // Pass booking data through navigation state
-    navigate('/seeker/dashboard/payment', { 
+    navigate('/calendar/dashboard/payment', { 
       state: { bookingData },
+      replace: false 
+    });
+  };
+
+  const handleOpenCalendar = () => {
+    if (!user) {
+      alert("Please log in to book a service.");
+      return;
+    }
+
+    // Navigate to calendar page with service data
+    const calendarData = {
+      serviceId: service._id,
+      expertId: service.expertId._id,
+      calendarId: calendar?._id,
+      amount: service.amount,
+      duration: service.duration,
+      title: service.title,
+      expertName: service.expertId.name,
+      expertImage: service.expertId.image,
+      username: username
+    };
+
+    // Fixed: Navigate to proper calendar route with actual service ID
+    navigate(`/calendar/booking/${service._id}`, { 
+      state: { calendarData },
       replace: false 
     });
   };
@@ -149,70 +158,22 @@ const ExpertServiceDetailPage = () => {
 
             {service.type === "1:1" ? (
               <Button
-                disabled={!(selectedDate && selectedTime)}
-                className="w-full py-6 md:flex hidden mt-10"
-                onClick={handleProceedToPayment}
+                className="w-full py-6 mt-10"
+                onClick={handleOpenCalendar}
               >
-                Proceed to Payment
+                <Calendar className="mr-2" />
+                Select Date & Time
               </Button>
             ) : (
               <Button
-                className="w-full py-6 md:flex hidden mt-10"
+                className="w-full py-6 mt-10"
                 onClick={handleProceedToPayment}
               >
                 Send DM
               </Button>
             )}
-
-            <div className="mt-10 sm:flex flex-col gap-2">
-              <Dialog>
-                <DialogTrigger asChild>
-                  {service.type === "1:1" ? (
-                    <Button variant={""} className={"py-6 md:hidden w-full"}>
-                      Book 1:1 Session
-                    </Button>
-                  ) : (
-                    <Button variant={""} className={"py-6 md:hidden w-full"}>
-                      Send DM
-                    </Button>
-                  )}
-                </DialogTrigger>
-                <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-md w-full p-2 rounded-xl">
-                  <SeekerCalendarPage
-                    selectedDate={selectedDate}
-                    setSelectedDate={setSelectedDate}
-                    selectedTime={selectedTime}
-                    setSelectedTime={setSelectedTime}
-                    timeSlots={dynamicTimeSlots}
-                    calendar={calendar}
-                    isDateAvailable={(date) => isDateAvailable(date, calendar)}
-                  />
-                  <Button
-                    disabled={!(selectedDate && selectedTime)}
-                    className="py-6 mt-4 w-full"
-                    onClick={handleProceedToPayment}
-                  >
-                    Proceed to Payment
-                  </Button>
-                </DialogContent>
-              </Dialog>
-            </div>
           </CardContent>
         </Card>
-
-        {service.type == "1:1" && (
-          <Card className="px-2 hidden lg:block rounded-4xl">
-            <SeekerCalendarPage
-              selectedDate={selectedDate}
-              setSelectedDate={setSelectedDate}
-              selectedTime={selectedTime}
-              setSelectedTime={setSelectedTime}
-              timeSlots={dynamicTimeSlots}
-              calendar={calendar}
-              isDateAvailable={(date) => isDateAvailable(date, calendar)}
-            />
-          </Card>
-        )}
       </div>
     </div>
   );
