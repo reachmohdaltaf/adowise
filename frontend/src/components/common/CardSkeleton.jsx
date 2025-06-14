@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const CardSkeleton = () => {
   return (
-    <div className="w-full mx-auto h-full min-h-44 flex flex-col bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+    <div className="w-full mx-auto h-full min-h-44 flex flex-col bg-white border border-gray-200 rounded-lg overflow-hidden ">
       <div className="p-2 pb-3 flex flex-col justify-between flex-1">
         <div className="flex gap-3">
           {/* Profile Image */}

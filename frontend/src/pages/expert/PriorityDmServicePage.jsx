@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {  MyServices } from "@/redux/features/serviceThunk";
-import ServiceCard from "../components/ServiceCard";
+import { MyServices } from "@/redux/features/serviceThunk";
+import ServiceCard from "../../components/expert/ServiceCard";
 import { Link } from "react-router-dom";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 

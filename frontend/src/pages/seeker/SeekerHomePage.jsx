@@ -1,10 +1,17 @@
 import React, { useRef } from "react";
-import FindExpertCard from "../components/FindExpertCard";
+import FindExpertCard from "../../components/seeker/FindExpertCard";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { BsLightning } from "react-icons/bs";
-import { Sparkle, SparkleIcon, Sparkles, Star, Trophy, Users } from "lucide-react";
+import {
+  Sparkle,
+  SparkleIcon,
+  Sparkles,
+  Star,
+  Trophy,
+  Users,
+} from "lucide-react";
 import { GiPaperPlane, GiTrophy } from "react-icons/gi";
 import { HiTrophy } from "react-icons/hi2";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -41,44 +48,43 @@ const SeekerHomePage = () => {
           <FindExpertCard user={user} />
 
           <Card className="h-80 w-full rounded-xl text-foreground  flex flex-col justify-between relative overflow-hidden border border-primary">
-      <CardContent className="flex flex-col gap-4 h-full relative z-10">
-        {/* Top: Icon and Title */}
-        <div className="flex items-center gap-3">
-          <HiTrophy size={32} className="text-primary" />
-          <h2 className="text-xl font-bold">Start Unlocking Rewards!</h2>
-        </div>
+            <CardContent className="flex flex-col gap-4 h-full relative z-10">
+              {/* Top: Icon and Title */}
+              <div className="flex items-center gap-3">
+                <HiTrophy size={32} className="text-primary" />
+                <h2 className="text-xl font-bold">Start Unlocking Rewards!</h2>
+              </div>
 
-        {/* Description */}
-        <p className="text-sm text-destructive font-normal">
-          Earn points by learning, mentoring, and participating. Redeem them
-          for exciting perks and badges.
-        </p>
+              {/* Description */}
+              <p className="text-sm text-destructive font-normal">
+                Earn points by learning, mentoring, and participating. Redeem
+                them for exciting perks and badges.
+              </p>
 
-        {/* Progress Bar */}
-        <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
-          <div
-            className="h-full bg-primary rounded-full transition-all duration-500"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
+              {/* Progress Bar */}
+              <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-primary rounded-full transition-all duration-500"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
 
-        {/* Buttons */}
-        <div className="flex gap-2 mt-auto">
-          <Button className="px-4 py-2 rounded-md shadow-md">
-            Explore Rewards <Sparkles className="ml-2 h-4 w-4" />
-          </Button>
+              {/* Buttons */}
+              <div className="flex gap-2 mt-auto">
+                <Button className="px-4 py-2 rounded-md shadow-md">
+                  Explore Rewards <Sparkles className="ml-2 h-4 w-4" />
+                </Button>
+              </div>
+            </CardContent>
 
-        </div>
-      </CardContent>
+            {/* Folded Corner Design */}
+            <div className="absolute top-0 right-0 w-20 h-20 bg-primary rotate-45 translate-x-1/2 -translate-y-1/2 shadow-md" />
 
-      {/* Folded Corner Design */}
-      <div className="absolute top-0 right-0 w-20 h-20 bg-primary rotate-45 translate-x-1/2 -translate-y-1/2 shadow-md" />
-
-      {/* Watermark Icon */}
-      <div className="absolute -bottom-4 -right-4 opacity-10">
-        <HiTrophy size={140} className="text-primary" />
-      </div>
-    </Card>
+            {/* Watermark Icon */}
+            <div className="absolute -bottom-4 -right-4 opacity-10">
+              <HiTrophy size={140} className="text-primary" />
+            </div>
+          </Card>
 
           {/* // card content  */}
           <Card className=" mt-3     rounded-lg   gap-3 items-start w-full">

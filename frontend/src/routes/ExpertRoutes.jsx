@@ -1,37 +1,37 @@
 import React from "react";
 import { Route, Navigate } from "react-router-dom";
 
-import ExpertLayout from "../expert/components/Layout/ExpertLayout";
 
 // Import expert pages
-import ExpertHomePage from "../expert/pages/ExpertHomePage";
-import ExpertServicePage from "../expert/pages/ExpertServicePage";
-import ExpertAnalyticsPage from "../expert/pages/ExpertAnalyticsPage";
-import ExpertTestimonialsPage from "../expert/pages/ExpertTestimonialsPage";
-import ExpertPaymentsPage from "../expert/pages/ExpertPaymentsPage";
-import ExpertBookingPage from "../expert/pages/ExpertBookingPage";
-import ExpertUpcomingBooking from "../expert/pages/ExpertUpcomingBooking";
-import ExpertCompletedBooking from "../expert/pages/ExpertCompletedBooking";
-import ExpertPriorityDm from "../expert/pages/ExpertPriorityDm";
-import SeekerPendingMessages from "../expert/pages/SeekerPendingMessages";
-import ExpertAnsweredSeeker from "../expert/pages/ExpertAnsweredSeeker";
-import ExpertSettingPage from "../expert/pages/ExpertSettingPage";
-import ExpertProfile from "../expert/pages/ExpertProfile";
-import OnetoOneCallServicePage from "../expert/pages/OnetoOneCallServicePage";
-import PriorityDmServicePage from "../expert/pages/PriorityDmServicePage";
-import WebinarServicePage from "../expert/pages/WebinarServicePage";
-import CreateServciePage from "../expert/pages/CreateServicePage";
-import CreateOneToOnepage from "../expert/pages/CreateOneToOnepage";
-import CreateDmPage from "../expert/pages/CreateDmPage";
-import CreateWebinarPage from "../expert/pages/CreateWebinarPage";
-import CreateServicePage from "../expert/pages/CreateServicePage";
-import ExpertMessagePage from "../expert/pages/ExpertMessagePage";
-import ExpertLeadPage from "../expert/pages/ExpertLeadPage";
-import UpdateServicePage from "../expert/pages/UpdateServicePage";
-import ExpertSchedulePage from "../expert/pages/ExpertSchedulePage";
-import ExpertCalendarPage from "../expert/pages/ExpertCalendarPage";
-import ExpertAvailabilityPage from "../expert/pages/ExpertAvailabilityPage";
-import PostToLinkedinPage from "@/expert/pages/PostToLinkedinPage";
+import ExpertHomePage from "../pages/expert/ExpertHomePage";
+import ExpertServicePage from "../pages/expert/ExpertServicePage";
+import ExpertAnalyticsPage from "../pages/expert/ExpertAnalyticsPage";
+import ExpertTestimonialsPage from "../pages/expert/ExpertTestimonialsPage";
+import ExpertPaymentsPage from "../pages/expert/ExpertPaymentsPage";
+import ExpertBookingPage from "../pages/expert/ExpertBookingPage";
+import ExpertUpcomingBooking from "../pages/expert/ExpertUpcomingBooking";
+import ExpertCompletedBooking from "../pages/expert/ExpertCompletedBooking";
+import ExpertPriorityDm from "../pages/expert/ExpertPriorityDm";
+import SeekerPendingMessages from "../pages/expert/SeekerPendingMessages";
+import ExpertAnsweredSeeker from "../pages/expert/ExpertAnsweredSeeker";
+import ExpertSettingPage from "../pages/expert/ExpertSettingPage";
+import ExpertProfile from "../pages/expert/ExpertProfile";
+import OnetoOneCallServicePage from "../pages/expert/OnetoOneCallServicePage";
+import PriorityDmServicePage from "../pages/expert/PriorityDmServicePage";
+import WebinarServicePage from "../pages/expert/WebinarServicePage";
+import CreateServciePage from "../pages/expert/CreateServicePage";
+import CreateOneToOnepage from "../pages/expert/CreateOneToOnepage";
+import CreateDmPage from "../pages/expert/CreateDmPage";
+import CreateWebinarPage from "../pages/expert/CreateWebinarPage";
+import CreateServicePage from "../pages/expert/CreateServicePage";
+import ExpertMessagePage from "../pages/expert/ExpertMessagePage";
+import ExpertLeadPage from "../pages/expert/ExpertLeadPage";
+import UpdateServicePage from "../pages/expert/UpdateServicePage";
+import ExpertSchedulePage from "../pages/expert/ExpertSchedulePage";
+import ExpertCalendarPage from "../pages/expert/ExpertCalendarPage";
+import ExpertAvailabilityPage from "../pages/expert/ExpertAvailabilityPage";
+import PostToLinkedinPage from "@/pages/expert/PostToLinkedinPage";
+import ExpertLayout from "@/components/expert/Layout/ExpertLayout";
 
 const ExpertRoutes = ({ user }) => {
   return (

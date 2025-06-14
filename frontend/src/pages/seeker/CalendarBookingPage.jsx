@@ -212,9 +212,9 @@ const CalendarBookingPage = () => {
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold flex items-center gap-2">
                 <Calendar className="h-5 w-5" />
-                Select Date
+                <span className="md:flex hidden">Select Date</span>
               </h3>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center ">
                 <Button
                   variant="outline"
                   size="sm"
@@ -263,7 +263,7 @@ const CalendarBookingPage = () => {
                     }}
                     disabled={!isAvailable}
                     className={`
-                      p-3 text-sm rounded-lg transition-all duration-200
+                      p-3 text-sm rounded-lg font-normal  transition-all duration-200
                       ${isSelected 
                         ? 'bg-primary text-primary-foreground shadow-md' 
                         : isAvailable 

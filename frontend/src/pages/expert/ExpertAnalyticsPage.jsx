@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, DollarSign, StarIcon, TimerIcon } from "lucide-react";
 import React from "react";
-import Chart from "../components/Chart";
+import Chart from "../../components/expert/Chart";
 
 const ExpertAnalyticsPage = () => {
   return (
@@ -72,7 +72,9 @@ const ExpertAnalyticsPage = () => {
           <h4 className="font-medium text-lg">Top Reviews</h4>
           <div className="space-y-3">
             <div className="border p-3 rounded-md">
-              <p className="text-sm">"Very helpful session! Cleared all my doubts."</p>
+              <p className="text-sm">
+                "Very helpful session! Cleared all my doubts."
+              </p>
               <p className="text-xs text-gray-500 mt-1">— John Doe</p>
             </div>
             <div className="border p-3 rounded-md">
