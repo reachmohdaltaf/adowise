@@ -18,15 +18,15 @@ const FindExpertCard = ({ user }) => {
         <div>
           <div className=" flex justify-between items-center w-full">
             {/* show only first name  */}
-            <p className="text-4xl sm:text-4xl font-normal">
+            <p className="text-3xl sm:text-3xl font-normal">
               Hi, {user.name.split(" ")[0]}
             </p>
           <Dialog>
   <DialogTrigger asChild>
     <Button
       size="sm"
-      className="shimmer-button"
-      variant="colored"
+      className="shimmer-button text-foreground "
+      variant="outline"
     >
       <GiElectric className="mr-1" />
       Find Expert
