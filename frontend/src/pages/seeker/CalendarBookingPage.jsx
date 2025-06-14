@@ -40,13 +40,6 @@ const CalendarBookingPage = () => {
     setSelectedTime("");
   }, [selectedDate]);
 
-  useEffect(() => {
-    console.log("Calendar Data:", calendarData);
-    console.log("Selected Date:", selectedDate);
-    console.log("Selected Time:", selectedTime);
-    console.log("Calendar:", calendar);
-  }, [calendarData, selectedDate, selectedTime, calendar]);
-
   const handleProceedToPayment = () => {
     if (!user) {
       alert("Please log in to book a service.");
@@ -99,20 +92,8 @@ const CalendarBookingPage = () => {
 
   const calendarDays = generateCalendarDays();
   const today = new Date();
-  
-  // Modified to ensure we're working with proper time slot objects
   const dynamicTimeSlots = calendar ? generateTimeSlots(calendar, selectedDate) : [];
   
-  // Function to format time slot for display
-  const formatTimeSlot = (timeSlot) => {
-    if (typeof timeSlot === 'string') return timeSlot;
-    if (timeSlot.slot) return timeSlot.slot;
-    if (timeSlot.startTime && timeSlot.endTime) {
-      return `${timeSlot.startTime} - ${timeSlot.endTime}`;
-    }
-    return '';
-  };
-
   const navigateMonth = (direction) => {
     const newMonth = new Date(currentMonth);
     newMonth.setMonth(currentMonth.getMonth() + direction);
@@ -257,13 +238,12 @@ const CalendarBookingPage = () => {
                     key={index}
                     onClick={() => {
                       if (isAvailable) {
-                        console.log("Date selected:", date);
                         setSelectedDate(date);
                       }
                     }}
                     disabled={!isAvailable}
                     className={`
-                      p-3 text-sm rounded-lg font-normal  transition-all duration-200
+                      p-3 text-sm rounded-lg font-normal transition-all duration-200
                       ${isSelected 
                         ? 'bg-primary text-primary-foreground shadow-md' 
                         : isAvailable 
@@ -296,27 +276,21 @@ const CalendarBookingPage = () => {
             <CardContent>
               {dynamicTimeSlots.length > 0 ? (
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                  {dynamicTimeSlots.map((timeSlot, index) => {
-                    const timeString = formatTimeSlot(timeSlot);
-                    return (
-                      <button
-                        key={index}
-                        onClick={() => {
-                          console.log("Time selected:", timeSlot);
-                          setSelectedTime(timeString);
-                        }}
-                        className={`
-                          p-3 text-sm rounded-lg border transition-all duration-200
-                          ${selectedTime === timeString
-                            ? 'bg-primary text-primary-foreground border-primary shadow-md'
-                            : 'border-muted-foreground/20 hover:border-muted-foreground/40 hover:bg-muted'
-                          }
-                        `}
-                      >
-                        {timeString}
-                      </button>
-                    );
-                  })}
+                  {dynamicTimeSlots.map((timeSlot, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedTime(timeSlot.slot)}
+                      className={`
+                        p-3 text-sm rounded-lg border transition-all duration-200
+                        ${selectedTime === timeSlot.slot
+                          ? 'bg-primary text-primary-foreground border-primary shadow-md'
+                          : 'border-muted-foreground/20 hover:border-muted-foreground/40 hover:bg-muted'
+                        }
+                      `}
+                    >
+                      {timeSlot.slot}
+                    </button>
+                  ))}
                 </div>
               ) : (
                 <div className="text-center py-8 text-muted-foreground">
@@ -365,7 +339,7 @@ const CalendarBookingPage = () => {
         )}
 
         {/* Proceed Button */}
-        <div className="sticky bg-background  py-4 px-2 rounded-2xl bottom-0  z-10">
+        <div className="sticky bg-background py-4 px-2 rounded-2xl bottom-0 z-10">
           <Button
             disabled={!(selectedDate && selectedTime)}
             className="w-full py-6 text-lg shadow-lg"

@@ -115,11 +115,11 @@ const PaymentPage = () => {
             scheduleTitle: bookingData.title, // FIXED: Use the actual service title instead of "Default Schedule"
             startTime: startTime.toISOString(),
             endTime: endTime.toISOString(),
-            meetingLink: "https://meet.google.com/abc-defg-hij",
+            meetingLink: bookingData.meetingLink || "", // Ensure meeting link is provided
             locationType: "googleMeet",
             customLocation: "",
             notes: `Booking for ${bookingData.title} with ${bookingData.expertName}`, // Enhanced notes
-            paymentStatus: "pending",
+            paymentStatus: "success",
             razorpayOrderId: response.razorpay_order_id,
             razorpayPaymentId: response.razorpay_payment_id,
             razorpaySignature: response.razorpay_signature,

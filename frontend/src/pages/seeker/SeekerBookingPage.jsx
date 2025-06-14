@@ -12,10 +12,10 @@ const SeekerBookingPage = () => {
 
       <div className='flex sticky top-14 py-3 bg-background gap-4 mb-6'>
         <Link to="upcoming">
-          <Button variant={isUpcoming ? 'default' : 'outline'}>Upcoming (3)</Button>
+          <Button variant={isUpcoming ? 'default' : 'outline'}>Upcoming</Button>
         </Link>
         <Link to="completed">
-          <Button  variant={!isUpcoming ? 'default' : 'outline'}>Completed (4)</Button>
+          <Button  variant={!isUpcoming ? 'default' : 'outline'}>Completed</Button>
         </Link>
       </div>
     

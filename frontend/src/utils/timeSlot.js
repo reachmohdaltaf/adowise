@@ -99,8 +99,9 @@ export const generateTimeSlots = (calendar, selectedDate) => {
   const activeSchedule = getActiveSchedule(calendar);
   if (!activeSchedule) return [];
 
-  // Get day name from selected date
-  const dayName = selectedDate.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
+  // Get day name from selected date (e.g., "monday")
+  const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+  const dayName = dayNames[selectedDate.getDay()];
   
   // Find the day configuration
   const dayConfig = activeSchedule.availableDays.find(day => day.day === dayName);
@@ -115,53 +116,13 @@ export const generateTimeSlots = (calendar, selectedDate) => {
   }
 
   // Generate time slots for available time ranges
-  const timeSlots = [];
-  const selectedDateString = selectedDate.toISOString().split('T')[0];
-  
-  dayConfig.timeSlots.forEach(timeSlot => {
-    if (timeSlot.isAvailable) {
-      // Parse time slots (assuming they're in HH:MM format)
-      const [fromHour, fromMinute] = timeSlot.from.split(':').map(Number);
-      const [toHour, toMinute] = timeSlot.to.split(':').map(Number);
-      
-      // Handle same time (might be a single slot)
-      if (fromHour === toHour && fromMinute === toMinute) {
-        const timeString = formatTime(fromHour, fromMinute);
-        timeSlots.push({
-          date: selectedDateString,
-          slot: `${timeString} - ${formatTime(fromHour + 1, fromMinute)}`, // Assuming 1-hour slots
-          startTime: timeSlot.from,
-          endTime: formatTime24(fromHour + 1, fromMinute)
-        });
-      } else {
-        // Generate slots for the time range (assuming 1-hour intervals)
-        let currentHour = fromHour;
-        let currentMinute = fromMinute;
-        
-        while (currentHour < toHour || (currentHour === toHour && currentMinute < toMinute)) {
-          const startTime = formatTime(currentHour, currentMinute);
-          const nextHour = currentMinute + 60 >= 60 ? currentHour + 1 : currentHour;
-          const nextMinute = (currentMinute + 60) % 60;
-          const endTime = formatTime(nextHour, nextMinute);
-          
-          timeSlots.push({
-            date: selectedDateString,
-            slot: `${startTime} - ${endTime}`,
-            startTime: formatTime24(currentHour, currentMinute),
-            endTime: formatTime24(nextHour, nextMinute)
-          });
-          
-          currentHour = nextHour;
-          currentMinute = nextMinute;
-          
-          // Prevent infinite loop
-          if (currentHour > 23) break;
-        }
-      }
-    }
-  });
-
-  return timeSlots;
+  return dayConfig.timeSlots
+    .filter(timeSlot => timeSlot.isAvailable)
+    .map(timeSlot => ({
+      slot: `${timeSlot.from} - ${timeSlot.to}`,
+      startTime: timeSlot.from,
+      endTime: timeSlot.to
+    }));
 };
 
 /**
@@ -172,61 +133,26 @@ export const generateTimeSlots = (calendar, selectedDate) => {
  */
 export const isDateAvailable = (date, calendar) => {
   if (!calendar) return false;
-
+  
+  // Check if date is in the past
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  if (date < today) return false;
+  
   const activeSchedule = getActiveSchedule(calendar);
   if (!activeSchedule) return false;
 
-  const dayName = date.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
+  // Check if date is blocked
+  if (isDateBlocked(date, calendar, activeSchedule)) {
+    return false;
+  }
+
+  // Check if day has available time slots
+  const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+  const dayName = dayNames[date.getDay()];
   const dayConfig = activeSchedule.availableDays.find(day => day.day === dayName);
   
-  // Check if day has available time slots
-  const hasAvailableSlots = dayConfig && 
-    dayConfig.timeSlots && 
-    dayConfig.timeSlots.some(slot => slot.isAvailable);
-
-  // Check if date is not blocked
-  const isBlocked = isDateBlocked(date, calendar, activeSchedule);
-
-  return hasAvailableSlots && !isBlocked;
-};
-
-/**
- * Gets all available dates within a date range
- * @param {Date} startDate - Start date of the range
- * @param {Date} endDate - End date of the range
- * @param {Object} calendar - Calendar object
- * @returns {Array} Array of available dates
- */
-export const getAvailableDatesInRange = (startDate, endDate, calendar) => {
-  const availableDates = [];
-  const currentDate = new Date(startDate);
-  
-  while (currentDate <= endDate) {
-    if (isDateAvailable(currentDate, calendar)) {
-      availableDates.push(new Date(currentDate));
-    }
-    currentDate.setDate(currentDate.getDate() + 1);
-  }
-  
-  return availableDates;
-};
-
-/**
- * Gets the next available date from a given start date
- * @param {Date} startDate - Starting date to search from
- * @param {Object} calendar - Calendar object
- * @param {number} maxDays - Maximum days to search (default: 30)
- * @returns {Date|null} Next available date or null if none found
- */
-export const getNextAvailableDate = (startDate, calendar, maxDays = 30) => {
-  const currentDate = new Date(startDate);
-  
-  for (let i = 0; i < maxDays; i++) {
-    if (isDateAvailable(currentDate, calendar)) {
-      return new Date(currentDate);
-    }
-    currentDate.setDate(currentDate.getDate() + 1);
-  }
-  
-  return null;
+  return dayConfig && 
+         dayConfig.timeSlots && 
+         dayConfig.timeSlots.some(slot => slot.isAvailable);
 };

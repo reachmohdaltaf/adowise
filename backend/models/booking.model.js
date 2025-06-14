@@ -33,7 +33,7 @@ const bookingSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: ["pending", "confirmed", "completed", "cancelled", "rescheduled"],
-      default: "pending",
+      default: "confirmed",
     },
     meetingLink: {
       type: String,
@@ -74,6 +74,7 @@ const bookingSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    
   },
   {
     timestamps: true,

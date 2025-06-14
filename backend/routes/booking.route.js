@@ -7,4 +7,5 @@ const router = express.Router();
 router.post("/create", authMiddleware, createBooking);
 router.get('/seeker', authMiddleware, bookingsAsSeeker)
 
+
 export default router;

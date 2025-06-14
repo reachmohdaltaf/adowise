@@ -49,7 +49,7 @@ if (loading || !user) {
   const progress = 60; // You can make this dynamic
 
   return (
-    <div className="md:py-6 px-0 gap-2 w-full flex flex-col">
+    <div className="md:py-6 px-1 gap-2 w-full flex flex-col">
       <Card className="w-full border-none shadow-none mt-5 gap-0 py-0 px-0">
         <CardHeader className="px-0">
           <FindExpertCard user={user} />

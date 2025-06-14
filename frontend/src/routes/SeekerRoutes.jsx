@@ -39,6 +39,7 @@ const SeekerRoutes = ({ user }) => {
         <Route path="home" element={<SeekerHomePage />} />
         <Route path="messages" element={<SeekerMessagePage />} />
         <Route path="payment" element={<PaymentPage />} />
+        
 
         {/* Booking Routes */}
         <Route path="bookings" element={<SeekerBookingPage />}>

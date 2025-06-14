@@ -1,50 +1,59 @@
   import { Booking } from "../models/booking.model.js";
 
-  export const createBooking = async (req, res) => {
-    try {
-          console.log("Booking request body:", req.body);  // <-- Add this here
-      const {
-        calendarId,
-        seekerId,
-        expertId,
-        scheduleTitle,
-        startTime,
-        endTime,
-        meetingLink,
-        locationType,
-        customLocation,
-        notes,
-        paymentStatus,    // e.g., "pending" or "success"
-        paymentIntentId,  // e.g., Razorpay order ID or payment ID
-      } = req.body;
+export const createBooking = async (req, res) => {
+  try {
+    const {
+      calendarId,
+      seekerId,
+      expertId,
+      scheduleTitle,
+      startTime,
+      endTime,
+      locationType,
+      customLocation,
+      notes,
+      paymentStatus,
+      paymentIntentId,
+    } = req.body;
 
-      // Create new booking document
-      const newBooking = new Booking({
-        calendarId,
-        seekerId,
-        expertId,
-        scheduleTitle,
-        startTime,
-        endTime,
-        meetingLink,
-        locationType,
-        customLocation,
-        notes,
-        paymentStatus,
-        paymentIntentId,
-      });
-
-      await newBooking.save();
-
-      res.status(201).json({
-        message: "Booking created successfully",
-        booking: newBooking,
-      });
-    } catch (error) {
-      console.error("Booking creation error:", error);
-      res.status(500).json({ error: "Failed to create booking" });
+    // Generate meeting link
+    let meetingLink = "";
+    if (locationType === "googleMeet") {
+      // Option 1: Simple guaranteed-working link (recommended)
+      meetingLink = "https://meet.google.com/new"; // Creates fresh room when clicked
+      
+     
+    } else if (locationType === "custom") {
+      meetingLink = customLocation;
     }
-  };
+
+    // Create and save booking
+    const newBooking = new Booking({
+      calendarId,
+      seekerId,
+      expertId,
+      scheduleTitle,
+      startTime,
+      endTime,
+      meetingLink,
+      locationType,
+      customLocation,
+      notes,
+      paymentStatus,
+      paymentIntentId,
+    });
+
+    await newBooking.save();
+
+    res.status(201).json({
+      message: "Booking created successfully",
+      booking: newBooking,
+    });
+  } catch (error) {
+    console.error("Booking creation error:", error);
+    res.status(500).json({ error: "Failed to create booking" });
+  }
+};
 
   export const bookingsAsSeeker = async (req, res) => {
     try {
@@ -63,4 +72,8 @@
       res.status(500).json({ error: "Failed to fetch bookings as seeker" });
     }
   };
+  
 
+
+
+  

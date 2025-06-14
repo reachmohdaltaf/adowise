@@ -58,7 +58,7 @@ const ExpertServiceDetailPage = () => {
     };
 
     // Pass booking data through navigation state
-    navigate('/calendar/dashboard/payment', { 
+    navigate('/seeker/dashboard/payment', { 
       state: { bookingData },
       replace: false 
     });
