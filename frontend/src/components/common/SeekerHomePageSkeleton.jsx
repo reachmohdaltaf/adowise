@@ -16,7 +16,7 @@ const SeekerHomePageSkeleton = () => {
           </Card>
 
           {/* Rewards Card Skeleton */}
-          <Card className="h-80 w-full rounded-xl relative overflow-hidden border border-primary">
+          <Card className="h-80 w-full rounded-xl relative overflow-hidden">
             <CardContent className="flex flex-col gap-4 h-full">
               <Skeleton className="w-48 h-6" />
               <Skeleton className="w-full h-4" />
