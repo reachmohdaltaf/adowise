@@ -12,7 +12,7 @@ const ExpertShowcaseCard = ({
   type,
 }) => {
   return (
-    <div className="w-full cursor-pointer hover:shadow-md duration-300 transition  mx-auto h-full min-h-44 flex flex-col bg-white border border-gray-200 rounded-lg overflow-hidden shadow-xs">
+    <div className="w-full hover:scale-[1.005] cursor-pointer hover:shadow-md duration-300 transition  mx-auto h-full min-h-44 flex flex-col bg-white border border-gray-200 rounded-lg overflow-hidden shadow-xs">
       <div className="p-2 pb-3 flex flex-col justify-between flex-1">
         <div className="flex gap-3">
           {/* Profile Image */}
@@ -29,12 +29,13 @@ const ExpertShowcaseCard = ({
             <div>
               {/* Rating and Duration */}
               <div className="flex items-center gap-2 mb-1">
-                <div className="flex items-center gap-1 bg-primary/60  text-foreground px-1 rounded text-sm font-medium">
+                <div className="flex items-center gap-1   text-foreground px-1 rounded text-sm font-medium">
                   <Star size={10} fill="currentColor" />
                   <span className="text-xs ">{rating || '3.5'}</span>
                 </div>
 
                 <span className="text-gray-500 text-xs">30 mins</span>
+                <div></div>
               </div>
               
 
