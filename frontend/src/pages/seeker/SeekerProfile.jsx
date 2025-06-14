@@ -10,6 +10,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { HiInformationCircle } from "react-icons/hi2";
 import { useDispatch, useSelector } from "react-redux";
 import imageCompression from "browser-image-compression";
+import SeekerProfileSkeleton from "@/components/common/SeekerProfileSkeleton";
 
 const SeekerProfile = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,6 @@ const SeekerProfile = () => {
   const SuccessPopRef = useRef(null);
 
   useEffect(() => {
-    // Fetch user profile on component mount
     dispatch(getUserProfile());
   }, [dispatch]);
 
@@ -44,6 +44,9 @@ const SeekerProfile = () => {
       reader.readAsDataURL(file);
     }
   };
+
+      if (loading) return <SeekerProfileSkeleton />; // 👈 ADD THIS
+
 
   const handleUploadClick = () => {
     fileInputRef.current.click();
@@ -67,21 +70,16 @@ const SeekerProfile = () => {
     };
 
     try {
-     if (selectedImage) {
-  console.log("Original size:", (selectedImage.size / 1024).toFixed(2), "KB");
+      if (selectedImage) {
+        const compressedFile = await imageCompression(selectedImage, {
+          maxSizeMB: 0.2,
+          maxWidthOrHeight: 800,
+          useWebWorker: true,
+        });
 
-  const compressedFile = await imageCompression(selectedImage, {
-    maxSizeMB: 0.2,
-    maxWidthOrHeight: 800,
-    useWebWorker: true,
-  });
-
-  console.log("Compressed size:", (compressedFile.size / 1024).toFixed(2), "KB");
-
-  const base64 = await imageCompression.getDataUrlFromFile(compressedFile);
-  profileData.image = base64;
-}
-
+        const base64 = await imageCompression.getDataUrlFromFile(compressedFile);
+        profileData.image = base64;
+      }
 
       const response = await dispatch(updateProfile(profileData));
 
@@ -101,7 +99,6 @@ const SeekerProfile = () => {
     <Card className="px-2 mt-1 md:mt-6 border-none gap-0 ">
       <h1 className="text-2xl font-semibold mb-4 px-2">Personal Information</h1>
 
-      {/* Tip Box */}
       <div className="flex bg-muted py-3 rounded-md px-4 gap-4 mb-6 ">
         <div>
           <HiInformationCircle />
@@ -116,9 +113,7 @@ const SeekerProfile = () => {
         </div>
       </div>
 
-      {/* Form */}
       <form onSubmit={handleSubmit}>
-        {/* Hidden File Input */}
         <input
           type="file"
           accept="image/*"
@@ -127,7 +122,6 @@ const SeekerProfile = () => {
           className="hidden"
         />
 
-        {/* Profile Image */}
         <div className="flex gap-4 justify-start items-center mb-6">
           <img
             src={imagePreview}
@@ -159,7 +153,6 @@ const SeekerProfile = () => {
           )}
         </div>
 
-        {/* Other Inputs */}
         <div>
           <Label className="flex flex-col mb-4 justify-start items-start">
             Full Name
@@ -247,7 +240,6 @@ const SeekerProfile = () => {
         </div>
 
         <div className="flex justify-end mt-6">
-          {/* Save Changes Button */}
           <Button
             type="submit"
             disabled={loading}
