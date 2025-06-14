@@ -1,19 +1,15 @@
-import { useLayoutEffect } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
-  useLayoutEffect(() => {
-    const scrollableDiv = document.getElementById("seeker-scroll");
-    if (scrollableDiv) {
-      scrollableDiv.scrollTo(0, 0);
-    } else {
-      window.scrollTo(0, 0);
-    }
+  useEffect(() => {
+    // Scroll to top smoothly when route/pathname changes
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, [pathname]);
 
-  return null;
+  return null; // This component doesn't render anything visible
 };
 
 export default ScrollToTop;
