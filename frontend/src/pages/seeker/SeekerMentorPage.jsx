@@ -6,7 +6,7 @@ const SeekerMentorPage = () => {
   return (
     <div className="relative ">
       {/* Simple Sticky Filter */}
-      <div className="sticky top-12 z-10 bg-background shadow-none md:shadow-none py-3 md:pt-6 md:py-4">
+      <div className="sticky top-14 z-10 bg-background shadow-none md:shadow-none py-3 md:pt-6 md:py-4">
         <CategoryFilter />
       </div>
 

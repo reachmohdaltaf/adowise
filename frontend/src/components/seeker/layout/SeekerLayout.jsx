@@ -30,33 +30,25 @@ const SeekerLayout = () => {
     [loading, page, totalPages]
   );
 
-  // Scroll detection logic
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = containerRef.current?.scrollTop || 0;
+  const handleScroll = () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-      if (scrollTop > lastScrollTop.current) {
-        // Scrolling down
-        setShowFooter(false);
-      } else {
-        // Scrolling up
-        setShowFooter(true);
-      }
-
-      lastScrollTop.current = scrollTop;
-    };
-
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener("scroll", handleScroll);
+    if (scrollTop > lastScrollTop.current) {
+      setShowFooter(false);
+    } else {
+      setShowFooter(true);
     }
 
-    return () => {
-      if (container) {
-        container.removeEventListener("scroll", handleScroll);
-      }
-    };
-  }, []);
+    lastScrollTop.current = scrollTop;
+  };
+
+  window.addEventListener("scroll", handleScroll);
+
+  return () => {
+    window.removeEventListener("scroll", handleScroll);
+  };
+}, []);
 
   return (
     <div className="max-w-screen-2xl mx-auto md:px-10 relative">
