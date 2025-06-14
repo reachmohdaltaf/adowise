@@ -1,7 +1,7 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import FindExpertCard from "../../components/seeker/FindExpertCard";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { BsLightning } from "react-icons/bs";
 import {
@@ -16,15 +16,22 @@ import { GiPaperPlane, GiTrophy } from "react-icons/gi";
 import { HiTrophy } from "react-icons/hi2";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { authCheck } from "@/redux/features/authThunk";
+import SeekerHomePageSkeleton from "@/components/common/SeekerHomePageSkeleton";
 
 const SeekerHomePage = () => {
+  const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.auth);
   const carouselRef = useRef(null);
   console.log("userinfo", user);
 
-  if (!user && loading) {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    dispatch(authCheck())
+  }, [dispatch]);
+
+if (loading || !user) {
+  return <SeekerHomePageSkeleton />;
+}
 
   const scrollLeft = () => {
     if (carouselRef.current) {
