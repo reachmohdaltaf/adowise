@@ -28,19 +28,39 @@ const SeekerUpcomingBookingCard = ({ booking }) => {
     setIsDetailsVisible(!isDetailsVisible);
   };
 
-  // Format date and time
+  // FIXED: Better date and time formatting
   const formatDateTime = (start, end) => {
-    const optionsDate = { weekday: "short", day: "2-digit", month: "short" };
-    const optionsTime = { hour: "2-digit", minute: "2-digit", hour12: true };
-
     const startDate = new Date(start);
     const endDate = new Date(end);
 
+    // Check if dates are valid
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      console.error("Invalid date format:", { start, end });
+      return { date: "Invalid Date", time: "Invalid Time" };
+    }
+
+    // Format date
+    const optionsDate = { 
+      weekday: "short", 
+      day: "2-digit", 
+      month: "short",
+      year: "numeric"
+    };
+    
+    // Format time with proper timezone handling
+    const optionsTime = { 
+      hour: "2-digit", 
+      minute: "2-digit", 
+      hour12: true,
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone // Use user's timezone
+    };
+
     const date = startDate.toLocaleDateString("en-US", optionsDate);
-    const time = `${startDate.toLocaleTimeString(
-      "en-US",
-      optionsTime
-    )} - ${endDate.toLocaleTimeString("en-US", optionsTime)}`;
+    const startTime = startDate.toLocaleTimeString("en-US", optionsTime);
+    const endTime = endDate.toLocaleTimeString("en-US", optionsTime);
+    const time = `${startTime} - ${endTime}`;
+
+ 
 
     return { date, time };
   };
@@ -54,15 +74,29 @@ const SeekerUpcomingBookingCard = ({ booking }) => {
       const start = new Date(booking.startTime);
       const diff = start - now;
 
-      if (diff <= 0) {
+      // Enable join button 10 minutes before meeting
+      const joinThreshold = 10 * 60 * 1000; // 10 minutes in milliseconds
+      
+      if (diff <= joinThreshold) {
         setIsJoinEnabled(true);
-        setTimeLeft("00:00:00");
+      }
+
+      if (diff <= 0) {
+        setTimeLeft("Meeting Started");
         clearInterval(interval);
       } else {
-        const hours = String(Math.floor(diff / (1000 * 60 * 60))).padStart(2, "0");
-        const minutes = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, "0");
-        const seconds = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, "0");
-        setTimeLeft(`${hours}:${minutes}:${seconds}`);
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        if (days > 0) {
+          setTimeLeft(`${days}d ${hours}h ${minutes}m`);
+        } else if (hours > 0) {
+          setTimeLeft(`${hours}h ${minutes}m ${seconds}s`);
+        } else {
+          setTimeLeft(`${minutes}m ${seconds}s`);
+        }
       }
     }, 1000);
 
@@ -193,27 +227,29 @@ const SeekerUpcomingBookingCard = ({ booking }) => {
 
           {booking.meetingLink && (
             <div className="pt-2 space-y-2">
-              <p className="text-xs text-gray-500">
-                {isJoinEnabled
-                  ? "Meeting is live now!"
-                  : `Meeting starts in: ${timeLeft}`}
-              </p>
+              <div className="bg-blue-50 p-3 rounded-lg">
+                <p className="text-xs text-blue-600 font-medium">
+                  {isJoinEnabled
+                    ? "🟢 Meeting is ready to join!"
+                    : `⏰ Meeting starts in: ${timeLeft}`}
+                </p>
+                {!isJoinEnabled && (
+                  <p className="text-xs text-gray-500 mt-1">
+                    Join button will be enabled 10 minutes before the meeting
+                  </p>
+                )}
+              </div>
 
               <Button
                 variant="default"
                 size="sm"
                 className="w-full"
                 disabled={!isJoinEnabled}
-                title={
-                  !isJoinEnabled
-                    ? "The meeting link will be generated when time is near"
-                    : ""
-                }
                 onClick={() =>
                   isJoinEnabled && window.open(booking.meetingLink, "_blank")
                 }
               >
-                Join Meeting
+                {isJoinEnabled ? "Join Meeting Now" : "Join Meeting (Not Available Yet)"}
               </Button>
             </div>
           )}

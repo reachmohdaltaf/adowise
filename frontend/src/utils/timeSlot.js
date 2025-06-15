@@ -93,6 +93,7 @@ export const isDateBlocked = (date, calendar, schedule) => {
  * @param {Date} selectedDate - Date to generate time slots for
  * @returns {Array} Array of time slot objects
  */
+// Updated generateTimeSlots function in your time slot utilities
 export const generateTimeSlots = (calendar, selectedDate) => {
   if (!calendar || !selectedDate) return [];
 
@@ -115,11 +116,19 @@ export const generateTimeSlots = (calendar, selectedDate) => {
     return [];
   }
 
-  // Generate time slots for available time ranges
+  // Helper function to convert 24-hour time to 12-hour format
+  const formatTo12Hour = (time24) => {
+    const [hours, minutes] = time24.split(':').map(Number);
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const hours12 = hours % 12 || 12;
+    return `${hours12}:${minutes.toString().padStart(2, '0')} ${period}`;
+  };
+
+  // Generate time slots for available time ranges in 12-hour format
   return dayConfig.timeSlots
     .filter(timeSlot => timeSlot.isAvailable)
     .map(timeSlot => ({
-      slot: `${timeSlot.from} - ${timeSlot.to}`,
+      slot: `${formatTo12Hour(timeSlot.from)} - ${formatTo12Hour(timeSlot.to)}`,
       startTime: timeSlot.from,
       endTime: timeSlot.to
     }));
